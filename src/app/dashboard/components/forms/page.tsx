@@ -1,8 +1,4 @@
 import type { Metadata } from "next";
-import { FormSection } from "../_sections/form-section";
-
+import { ComponentsShowcase } from "../_components/components-showcase";
 export const metadata: Metadata = { title: "Forms" };
-
-export default function FormsPage() {
-  return <div className="pb-12"><FormSection /></div>;
-}
+export default function FormsPage() { return <ComponentsShowcase scrollTo="forms" />; }

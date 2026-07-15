@@ -1,8 +1,4 @@
 import type { Metadata } from "next";
-import { PaginationSection } from "../_sections/pagination-section";
-
+import { ComponentsShowcase } from "../_components/components-showcase";
 export const metadata: Metadata = { title: "Pagination" };
-
-export default function PaginationPage() {
-  return <div className="pb-12"><PaginationSection /></div>;
-}
+export default function PaginationPage() { return <ComponentsShowcase scrollTo="pagination" />; }

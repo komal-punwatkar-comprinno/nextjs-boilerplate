@@ -1,8 +1,4 @@
 import type { Metadata } from "next";
-import { AvatarSection } from "../_sections/avatar-section";
-
+import { ComponentsShowcase } from "../_components/components-showcase";
 export const metadata: Metadata = { title: "Avatars" };
-
-export default function AvatarsPage() {
-  return <div className="pb-12"><AvatarSection /></div>;
-}
+export default function AvatarsPage() { return <ComponentsShowcase scrollTo="avatars" />; }

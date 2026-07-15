@@ -1,8 +1,4 @@
 import type { Metadata } from "next";
-import { ColorSection } from "../_sections/color-section";
-
+import { ComponentsShowcase } from "../_components/components-showcase";
 export const metadata: Metadata = { title: "Colors" };
-
-export default function ColorsPage() {
-  return <div className="pb-12"><ColorSection /></div>;
-}
+export default function ColorsPage() { return <ComponentsShowcase scrollTo="colors" />; }

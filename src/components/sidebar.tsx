@@ -28,19 +28,19 @@ export const COMPONENT_SECTION_IDS = [
 
 export type ComponentSectionId = (typeof COMPONENT_SECTION_IDS)[number];
 
-const componentSubItems: { id: ComponentSectionId; label: string }[] = [
-  { id: "colors",     label: "Colors" },
-  { id: "typography", label: "Typography" },
-  { id: "buttons",    label: "Buttons" },
-  { id: "badges",     label: "Badges" },
-  { id: "forms",      label: "Forms" },
-  { id: "cards",      label: "Cards" },
-  { id: "avatars",    label: "Avatars" },
-  { id: "icons",      label: "Icons" },
-  { id: "spinners",   label: "Spinners" },
-  { id: "pagination", label: "Pagination" },
-  { id: "modals",     label: "Modals" },
-  { id: "tables",     label: "Tables" },
+const componentSubItems: { id: ComponentSectionId; label: string; href: string }[] = [
+  { id: "colors",     label: "Colors",     href: routes.componentsColors },
+  { id: "typography", label: "Typography", href: routes.componentsTypography },
+  { id: "buttons",    label: "Buttons",    href: routes.componentsButtons },
+  { id: "badges",     label: "Badges",     href: routes.componentsBadges },
+  { id: "forms",      label: "Forms",      href: routes.componentsForms },
+  { id: "cards",      label: "Cards",      href: routes.componentsCards },
+  { id: "avatars",    label: "Avatars",    href: routes.componentsAvatars },
+  { id: "icons",      label: "Icons",      href: routes.componentsIcons },
+  { id: "spinners",   label: "Spinners",   href: routes.componentsSpinners },
+  { id: "pagination", label: "Pagination", href: routes.componentsPagination },
+  { id: "modals",     label: "Modals",     href: routes.componentsModals },
+  { id: "tables",     label: "Tables",     href: routes.componentsTables },
 ];
 
 // ─── SVG icon components ──────────────────────────────────────────────────────
@@ -106,11 +106,16 @@ export interface SidebarProps {
   className?: string;
   /** Active section ID passed from parent scroll-spy — only used on components page */
   activeSection?: string | null;
+  /**
+   * When provided, clicking a component sub-item calls this instead of
+   * navigating — lets the shell force-set active + URL + scroll instantly.
+   */
+  onSectionClick?: (id: string) => void;
 }
 
-export function Sidebar({ className = "", activeSection }: SidebarProps) {
+export function Sidebar({ className = "", activeSection, onSectionClick }: SidebarProps) {
   const pathname = usePathname();
-  const isOnComponents = pathname === routes.components;
+  const isOnComponents = pathname === routes.components || pathname.startsWith(routes.components + "/");
   const [componentsOpen, setComponentsOpen] = useState(isOnComponents);
 
   function isRouteActive(href: string) {
@@ -207,18 +212,27 @@ export function Sidebar({ className = "", activeSection }: SidebarProps) {
               {componentsOpen && (
                 <ul className="mt-0.5 ml-4 space-y-0.5 border-l border-[#1e293b] pl-3">
                   {componentSubItems.map((sub) => {
-                    // On the components page: highlight based on scroll-spy activeSection
-                    // On other pages: never highlight
-                    const isSubActive = isOnComponents && activeSection === sub.id;
+                    // Active when the URL matches this sub-route,
+                    // OR on the main page and scroll-spy says this section is in view
+                    const isSubActive =
+                      pathname === sub.href ||
+                      (pathname === routes.components && activeSection === sub.id);
                     return (
                       <li key={sub.id}>
-                        <a
-                          href={`${routes.components}#${sub.id}`}
+                        <Link
+                          href={sub.href}
                           onClick={(e) => {
-                            // If already on the components page, smooth-scroll instead of navigating
                             if (isOnComponents) {
                               e.preventDefault();
-                              document.getElementById(sub.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+                              if (onSectionClick) {
+                                // Shell handles highlight + URL + scroll atomically
+                                onSectionClick(sub.id);
+                              } else {
+                                document.getElementById(sub.id)?.scrollIntoView({
+                                  behavior: "smooth",
+                                  block: "start",
+                                });
+                              }
                             }
                           }}
                           className={[
@@ -230,7 +244,7 @@ export function Sidebar({ className = "", activeSection }: SidebarProps) {
                         >
                           <span className={`h-1.5 w-1.5 rounded-full ${isSubActive ? "bg-indigo-400" : "bg-slate-600"}`} />
                           {sub.label}
-                        </a>
+                        </Link>
                       </li>
                     );
                   })}

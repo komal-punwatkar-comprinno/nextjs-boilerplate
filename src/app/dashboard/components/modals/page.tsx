@@ -1,8 +1,4 @@
 import type { Metadata } from "next";
-import { ModalSection } from "../_sections/modal-section";
-
+import { ComponentsShowcase } from "../_components/components-showcase";
 export const metadata: Metadata = { title: "Modals" };
-
-export default function ModalsPage() {
-  return <div className="pb-12"><ModalSection /></div>;
-}
+export default function ModalsPage() { return <ComponentsShowcase scrollTo="modals" />; }

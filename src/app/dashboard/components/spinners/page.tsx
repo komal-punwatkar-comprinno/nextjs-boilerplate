@@ -1,8 +1,4 @@
 import type { Metadata } from "next";
-import { SpinnerSection } from "../_sections/spinner-section";
-
+import { ComponentsShowcase } from "../_components/components-showcase";
 export const metadata: Metadata = { title: "Spinners" };
-
-export default function SpinnersPage() {
-  return <div className="pb-12"><SpinnerSection /></div>;
-}
+export default function SpinnersPage() { return <ComponentsShowcase scrollTo="spinners" />; }
