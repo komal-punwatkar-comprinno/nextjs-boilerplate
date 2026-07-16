@@ -36,7 +36,7 @@ function getInitials(name: string): string {
  * <Avatar name="Jane Smith" size="sm" />
  */
 export function Avatar({ src, name, size = "md", className = "" }: AvatarProps) {
-  const base = `inline-flex items-center justify-center rounded-full bg-zinc-200 font-medium text-zinc-700 overflow-hidden shrink-0 ${sizeClasses[size]} ${className}`;
+  const base = `inline-flex items-center justify-center rounded-full bg-zinc-200 font-medium text-zinc-700 overflow-hidden shrink-0 dark:bg-[#353B46] dark:text-[#9FAEC1] ${sizeClasses[size]} ${className}`;
 
   if (src) {
     return (
@@ -61,7 +61,7 @@ export function Avatar({ src, name, size = "md", className = "" }: AvatarProps) 
   return (
     <span className={base} aria-hidden="true">
       <svg
-        className="h-3/5 w-3/5 text-zinc-400"
+        className="h-3/5 w-3/5 text-zinc-400 dark:text-[#9FAEC1]/60"
         fill="currentColor"
         viewBox="0 0 24 24"
       >
@@ -70,3 +70,4 @@ export function Avatar({ src, name, size = "md", className = "" }: AvatarProps) 
     </span>
   );
 }
+

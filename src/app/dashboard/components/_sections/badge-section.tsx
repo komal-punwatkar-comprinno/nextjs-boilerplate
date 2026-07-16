@@ -15,12 +15,12 @@ export function BadgeSection() {
       <div className="space-y-4">
         {/* Standard badges */}
         <div>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400">Variants</p>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-400">Variants</p>
           <div className="flex flex-wrap gap-3">
             {variants.map(({ variant, label }) => (
               <div key={variant} className="flex flex-col items-center gap-1.5">
                 <Badge variant={variant}>{label}</Badge>
-                <span className="text-[10px] text-slate-400">{variant}</span>
+                <span className="text-[10px] text-slate-400 dark:text-slate-400">{variant}</span>
               </div>
             ))}
           </div>
@@ -28,7 +28,7 @@ export function BadgeSection() {
 
         {/* Contextual usage examples */}
         <div>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-400">
             Contextual Examples
           </p>
           <div className="flex flex-wrap gap-3">
@@ -48,3 +48,4 @@ export function BadgeSection() {
     </SectionWrapper>
   );
 }
+

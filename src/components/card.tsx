@@ -23,51 +23,38 @@ export interface CardFooterProps {
  *
  * @example
  * <Card>
- *   <Card.Header>
- *     <h2>Title</h2>
- *   </Card.Header>
+ *   <Card.Header><h2>Title</h2></Card.Header>
  *   <Card.Body>Content here</Card.Body>
- *   <Card.Footer>
- *     <Button>Save</Button>
- *   </Card.Footer>
+ *   <Card.Footer><Button>Save</Button></Card.Footer>
  * </Card>
  */
 export function Card({ children, className = "" }: CardProps) {
   return (
     <div
-      className={`rounded-xl border border-zinc-200 bg-white shadow-sm ${className}`}
+      className={`rounded-xl border border-slate-200 bg-white shadow-sm dark:border-[#2D3640] dark:bg-[#242B33] ${className}`}
     >
       {children}
     </div>
   );
 }
 
-Card.Header = function CardHeader({
-  children,
-  className = "",
-}: CardHeaderProps) {
+Card.Header = function CardHeader({ children, className = "" }: CardHeaderProps) {
   return (
-    <div
-      className={`border-b border-zinc-200 px-6 py-4 ${className}`}
-    >
+    <div className={`border-b border-slate-100 px-5 py-4 dark:border-[#2D3640] ${className}`}>
       {children}
     </div>
   );
 };
 
 Card.Body = function CardBody({ children, className = "" }: CardBodyProps) {
-  return <div className={`px-6 py-4 ${className}`}>{children}</div>;
+  return <div className={`px-5 py-4 ${className}`}>{children}</div>;
 };
 
-Card.Footer = function CardFooter({
-  children,
-  className = "",
-}: CardFooterProps) {
+Card.Footer = function CardFooter({ children, className = "" }: CardFooterProps) {
   return (
-    <div
-      className={`border-t border-zinc-200 px-6 py-4 ${className}`}
-    >
+    <div className={`border-t border-slate-100 px-5 py-3 dark:border-[#2D3640] ${className}`}>
       {children}
     </div>
   );
 };
+

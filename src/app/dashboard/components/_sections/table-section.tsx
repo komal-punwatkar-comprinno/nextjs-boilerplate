@@ -68,7 +68,7 @@ export function TableSection() {
       <div className="space-y-3">
         {/* Toolbar */}
         <div className="flex items-center justify-between">
-          <p className="text-sm text-slate-600">
+          <p className="text-sm text-slate-600 dark:text-slate-300">
             {selected.size > 0
               ? `${selected.size} row${selected.size > 1 ? "s" : ""} selected`
               : `${users.length} users`}
@@ -89,10 +89,10 @@ export function TableSection() {
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto rounded-xl border border-slate-200">
+        <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-slate-100 bg-slate-50">
+              <tr className="border-b border-slate-100 bg-slate-50 dark:border-slate-700 dark:bg-slate-700/50">
                 <th className="px-4 py-3">
                   <input
                     type="checkbox"
@@ -103,18 +103,20 @@ export function TableSection() {
                     className="h-4 w-4 rounded accent-indigo-600"
                   />
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Name</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Email</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Role</th>
-                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Status</th>
-                <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">Actions</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">Name</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">Email</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">Role</th>
+                <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">Status</th>
+                <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-300">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50">
+            <tbody className="divide-y divide-slate-50 dark:divide-slate-600/60">
               {users.map((user) => (
                 <tr
                   key={user.id}
-                  className={`transition-colors hover:bg-slate-50 ${selected.has(user.id) ? "bg-indigo-50/40" : ""}`}
+                  className={`transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/40 ${
+                    selected.has(user.id) ? "bg-indigo-50/40 dark:bg-indigo-900/20" : ""
+                  }`}
                 >
                   <td className="px-4 py-3">
                     <input
@@ -133,10 +135,10 @@ export function TableSection() {
                         alt={user.name}
                         className="h-8 w-8 rounded-full object-cover"
                       />
-                      <span className="font-medium text-slate-800">{user.name}</span>
+                      <span className="font-medium text-slate-800 dark:text-slate-100">{user.name}</span>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-slate-500">{user.email}</td>
+                  <td className="px-4 py-3 text-slate-500 dark:text-slate-400">{user.email}</td>
                   <td className="px-4 py-3">
                     <Badge variant={roleVariant[user.role] ?? "default"}>{user.role}</Badge>
                   </td>
@@ -158,3 +160,4 @@ export function TableSection() {
     </SectionWrapper>
   );
 }
+

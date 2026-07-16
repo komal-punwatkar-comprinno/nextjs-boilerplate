@@ -1,89 +1,99 @@
 import { SectionWrapper } from "./section-wrapper";
 
+/*
+ * These are the ACTUAL colors used in this boilerplate.
+ * Grouped to match globals.css + component dark-mode classes.
+ */
 const palettes = [
   {
-    name: "Primary (Indigo)",
+    name: "Primary - Teal",
+    
     shades: [
-      { shade: "50", hex: "#eef2ff" },
-      { shade: "100", hex: "#e0e7ff" },
-      { shade: "200", hex: "#c7d2fe" },
-      { shade: "300", hex: "#a5b4fc" },
-      { shade: "400", hex: "#818cf8" },
-      { shade: "500", hex: "#6366f1" },
-      { shade: "600", hex: "#4f46e5" },
-      { shade: "700", hex: "#4338ca" },
-      { shade: "800", hex: "#3730a3" },
-      { shade: "900", hex: "#312e81" },
+      { label: "50",    hex: "#edfaf9" },
+      { label: "100",   hex: "#d0f4f1" },
+      { label: "200",   hex: "#a3e9e4" },
+      { label: "300",   hex: "#6dd9d2" },
+      { label: "400 ★", hex: "#4CCBBF" },
+      { label: "500",   hex: "#31b0a5" },
+      { label: "600",   hex: "#268d84" },
+      { label: "700",   hex: "#1e6e68" },
+      { label: "800",   hex: "#175250" },
+      { label: "900",   hex: "#103c3a" },
     ],
   },
   {
-    name: "Success (Green)",
+    name: "Dark Surfaces - Navy",
+    
     shades: [
-      { shade: "50", hex: "#f0fdf4" },
-      { shade: "100", hex: "#dcfce7" },
-      { shade: "200", hex: "#bbf7d0" },
-      { shade: "400", hex: "#4ade80" },
-      { shade: "500", hex: "#22c55e" },
-      { shade: "600", hex: "#16a34a" },
-      { shade: "700", hex: "#15803d" },
-      { shade: "800", hex: "#166534" },
-      { shade: "900", hex: "#14532d" },
+      { label: "Canvas",  hex: "#1C2127" },
+      { label: "Surface", hex: "#242B33" },
+      { label: "Raised",  hex: "#2D3640" },
+      { label: "Border",  hex: "#3D4A5C" },
+      { label: "Sidebar", hex: "#1A1F2E" },
     ],
   },
   {
-    name: "Warning (Amber)",
+    name: "Light Surfaces",
+    
     shades: [
-      { shade: "50", hex: "#fffbeb" },
-      { shade: "100", hex: "#fef3c7" },
-      { shade: "200", hex: "#fde68a" },
-      { shade: "400", hex: "#fbbf24" },
-      { shade: "500", hex: "#f59e0b" },
-      { shade: "600", hex: "#d97706" },
-      { shade: "700", hex: "#b45309" },
-      { shade: "800", hex: "#92400e" },
-      { shade: "900", hex: "#78350f" },
+      { label: "Page bg",    hex: "#F5F6FA" },
+      { label: "Card",       hex: "#FFFFFF" },
+      { label: "Border",     hex: "#E5E7EB" },
+      { label: "Muted bg",   hex: "#F8FAFC" },
+      { label: "Hover row",  hex: "#F1F5F9" },
     ],
   },
   {
-    name: "Danger (Red)",
+    name: "Success - Teal Green",
+    
     shades: [
-      { shade: "50", hex: "#fef2f2" },
-      { shade: "100", hex: "#fee2e2" },
-      { shade: "200", hex: "#fecaca" },
-      { shade: "400", hex: "#f87171" },
-      { shade: "500", hex: "#ef4444" },
-      { shade: "600", hex: "#dc2626" },
-      { shade: "700", hex: "#b91c1c" },
-      { shade: "800", hex: "#991b1b" },
-      { shade: "900", hex: "#7f1d1d" },
+      { label: "Light", hex: "#d0f4e7" },
+      { label: "Base ★",hex: "#4CCB98" },
+      { label: "Dark",  hex: "#268d62" },
     ],
   },
   {
-    name: "Info (Blue)",
+    name: "Warning - Amber",
+    
     shades: [
-      { shade: "50", hex: "#eff6ff" },
-      { shade: "100", hex: "#dbeafe" },
-      { shade: "200", hex: "#bfdbfe" },
-      { shade: "400", hex: "#60a5fa" },
-      { shade: "500", hex: "#3b82f6" },
-      { shade: "600", hex: "#2563eb" },
-      { shade: "700", hex: "#1d4ed8" },
-      { shade: "800", hex: "#1e40af" },
-      { shade: "900", hex: "#1e3a8a" },
+      { label: "Light", hex: "#fef3c7" },
+      { label: "Base ★",hex: "#FCA90B" },
+      { label: "Dark",  hex: "#b77608" },
     ],
   },
   {
-    name: "Neutral (Slate)",
+    name: "Danger - Red",
+    
     shades: [
-      { shade: "50", hex: "#f8fafc" },
-      { shade: "100", hex: "#f1f5f9" },
-      { shade: "200", hex: "#e2e8f0" },
-      { shade: "400", hex: "#94a3b8" },
-      { shade: "500", hex: "#64748b" },
-      { shade: "600", hex: "#475569" },
-      { shade: "700", hex: "#334155" },
-      { shade: "800", hex: "#1e293b" },
-      { shade: "900", hex: "#0f172a" },
+      { label: "Light", hex: "#fde8eb" },
+      { label: "Base ★",hex: "#ED495D" },
+      { label: "Dark",  hex: "#c0283a" },
+    ],
+  },
+  {
+    name: "Info - Blue",
+   
+    shades: [
+      { label: "Light", hex: "#dbeafe" },
+      { label: "Base ★",hex: "#3B82F6" },
+      { label: "Dark",  hex: "#1d4ed8" },
+    ],
+  },
+  {
+    name: "Text Scale",
+    
+    shades: [
+      { label: "Primary",   hex: "#1A1D23" },
+      { label: "Secondary", hex: "#475569" },
+      { label: "Muted",     hex: "#64748B" },
+      { label: "Subtle",    hex: "#94A3B8" },
+      { label: "Disabled",  hex: "#CBD5E1" },
+      // Dark mode text scale
+      { label: "D Primary",  hex: "#E2E8F0" },
+      { label: "D Secondary",hex: "#CBD5E1" },
+      { label: "D Muted",    hex: "#94A3B8" },
+      { label: "D Subtle",   hex: "#64748B" },
+      { label: "D Disabled", hex: "#475569" },
     ],
   },
 ];
@@ -98,25 +108,27 @@ function isDark(hex: string): boolean {
 export function ColorSection() {
   return (
     <SectionWrapper id="colors" title="1. Theme Colors">
-      <div className="space-y-8">
+      <div className="space-y-10">
         {palettes.map((palette) => (
           <div key={palette.name}>
-            <p className="mb-3 text-sm font-semibold text-slate-600">{palette.name}</p>
+            <div className="mb-3">
+              <p className="text-sm font-semibold text-slate-700 dark:text-[#E2E8F0]">{palette.name}</p>
+              {palette.description && (
+                <p className="text-xs text-slate-400 dark:text-[#64748B] mt-0.5">{palette.description}</p>
+              )}
+            </div>
             <div className="flex flex-wrap gap-2">
-              {palette.shades.map(({ shade, hex }) => (
-                <div key={shade} className="flex flex-col items-center gap-1">
+              {palette.shades.map(({ label, hex }) => (
+                <div key={label} className="flex flex-col items-center gap-1">
                   <div
-                    className="h-12 w-14 rounded-lg border border-black/5 shadow-sm"
+                    className="h-12 w-16 rounded-lg border border-black/5 shadow-sm"
                     style={{ backgroundColor: hex }}
                     title={hex}
                   />
-                  <span className="text-[10px] font-medium text-slate-500">{shade}</span>
+                  <span className="text-[10px] font-medium text-slate-500 dark:text-[#64748B]">{label}</span>
                   <span
                     className="rounded px-1 py-0.5 font-mono text-[9px]"
-                    style={{
-                      backgroundColor: hex,
-                      color: isDark(hex) ? "#fff" : "#1e293b",
-                    }}
+                    style={{ backgroundColor: hex, color: isDark(hex) ? "#fff" : "#1A1D23" }}
                   >
                     {hex}
                   </span>

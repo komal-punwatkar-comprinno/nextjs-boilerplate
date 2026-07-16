@@ -52,9 +52,19 @@ export function ComponentsShowcase({ scrollTo }: ComponentsShowcaseProps) {
     return () => window.removeEventListener("resize", calcPadding);
   }, []);
 
-  // Scroll to section on mount (when navigating from another page)
+  // Scroll to section on mount (when navigating from another page via a sub-route
+  // like /dashboard/components/buttons). We:
+  //  1. Immediately set the correct URL via replaceState so scroll-spy can't
+  //     clobber it during its 100ms init delay.
+  //  2. Scroll after a short delay to let the layout paint first.
   useEffect(() => {
     if (!scrollTo) return;
+
+    // Pin the URL to the intended section right away so that the scroll-spy
+    // initialisation (which fires ~100ms after mount) doesn't overwrite it
+    // with the first visible section (usually "colors").
+    window.history.replaceState(null, "", `/dashboard/components/${scrollTo}`);
+
     const timer = setTimeout(() => {
       document.getElementById(scrollTo)?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 80);
@@ -64,8 +74,8 @@ export function ComponentsShowcase({ scrollTo }: ComponentsShowcaseProps) {
   return (
     <div ref={containerRef} className="space-y-16">
       <div>
-        <h1 className="text-2xl font-bold text-slate-800">Component Showcase</h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Component Showcase</h1>
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
           All UI primitives — scroll to explore or click a section in the sidebar.
         </p>
       </div>
@@ -85,3 +95,4 @@ export function ComponentsShowcase({ scrollTo }: ComponentsShowcaseProps) {
     </div>
   );
 }
+

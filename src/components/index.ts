@@ -48,3 +48,6 @@ export { FormInput, FormSelect, FormTextarea } from "./form-fields";
 export { Icon } from "./icon";
 export type { IconProps, IconName, IconSize } from "./icon";
 export { iconPaths } from "./icons";
+
+// Theme
+export { ThemeToggle } from "./theme-toggle";

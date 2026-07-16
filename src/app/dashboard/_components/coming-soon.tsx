@@ -42,26 +42,26 @@ export function ComingSoon({
   return (
     <div className="flex flex-1 flex-col items-center justify-center py-16 text-center">
       {/* Icon */}
-      <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-indigo-50 text-4xl ring-1 ring-indigo-100">
+      <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-indigo-50 text-4xl ring-1 ring-indigo-100 dark:bg-indigo-900/30 dark:ring-indigo-800">
         {icon}
       </div>
 
       {/* Heading */}
-      <h1 className="mt-6 text-2xl font-bold text-slate-800">{title}</h1>
-      <p className="mt-2 max-w-md text-sm leading-relaxed text-slate-500">{description}</p>
+      <h1 className="mt-6 text-2xl font-bold text-slate-800 dark:text-slate-100">{title}</h1>
+      <p className="mt-2 max-w-md text-sm leading-relaxed text-slate-500 dark:text-slate-400">{description}</p>
 
       {/* Developer notice */}
-      <div className="mt-8 w-full max-w-lg rounded-xl border border-dashed border-amber-300 bg-amber-50 px-6 py-5 text-left">
+      <div className="mt-8 w-full max-w-lg rounded-xl border border-dashed border-amber-300 bg-amber-50 px-6 py-5 text-left dark:border-amber-700/50 dark:bg-amber-900/20">
         <div className="flex items-start gap-3">
           <span className="mt-0.5 text-lg">👨‍💻</span>
           <div>
-            <p className="text-sm font-semibold text-amber-800">Boilerplate stub — implement your logic here</p>
-            <p className="mt-1 text-sm text-amber-700">
+            <p className="text-sm font-semibold text-amber-800 dark:text-amber-300">Boilerplate stub — implement your logic here</p>
+            <p className="mt-1 text-sm text-amber-700 dark:text-amber-400">
               This page is a placeholder. Build your feature inside this route and your
               content will appear here automatically.
             </p>
             {implementationHint && (
-              <p className="mt-2 text-xs text-amber-600">
+              <p className="mt-2 text-xs text-amber-600 dark:text-amber-500">
                 <span className="font-medium">Hint: </span>
                 {implementationHint}
               </p>
@@ -72,13 +72,13 @@ export function ComingSoon({
 
       {/* Planned features */}
       {features.length > 0 && (
-        <div className="mt-6 w-full max-w-lg rounded-xl border border-slate-200 bg-white px-6 py-5 text-left">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400">
+        <div className="mt-6 w-full max-w-lg rounded-xl border border-slate-200 bg-white px-6 py-5 text-left dark:border-slate-700 dark:bg-slate-800">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
             Planned features
           </p>
           <ul className="space-y-2">
             {features.map((f) => (
-              <li key={f} className="flex items-center gap-2 text-sm text-slate-600">
+              <li key={f} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
                 <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-400" />
                 {f}
               </li>
@@ -89,3 +89,4 @@ export function ComingSoon({
     </div>
   );
 }
+

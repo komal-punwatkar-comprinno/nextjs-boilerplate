@@ -10,10 +10,10 @@ export function CardSection() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Basic card */}
         <div>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400">Basic Card</p>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">Basic Card</p>
           <Card>
             <Card.Body>
-              <p className="text-sm text-slate-700">
+              <p className="text-sm text-slate-700 dark:text-slate-300">
                 A simple card with just a body section. Useful for displaying any generic content
                 inside a contained, styled container.
               </p>
@@ -23,18 +23,18 @@ export function CardSection() {
 
         {/* Card with header + body + footer */}
         <div>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
             Header + Body + Footer
           </p>
           <Card>
             <Card.Header>
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold text-slate-800">Project Notes</h3>
+                <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Project Notes</h3>
                 <Badge variant="info">Editing</Badge>
               </div>
             </Card.Header>
             <Card.Body>
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-slate-600 dark:text-slate-300">
                 Document key decisions, blockers, and next steps for the team here.
               </p>
             </Card.Body>
@@ -49,21 +49,21 @@ export function CardSection() {
 
         {/* Stat card */}
         <div>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400">Stat Card</p>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">Stat Card</p>
           <Card className="p-5">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm font-medium text-slate-500">Monthly Revenue</p>
-                <p className="mt-2 text-3xl font-bold text-slate-900">$48,295</p>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Monthly Revenue</p>
+                <p className="mt-2 text-3xl font-bold text-slate-900 dark:text-slate-100">$48,295</p>
               </div>
-              <div className="rounded-xl bg-emerald-100 p-3">
-                <svg className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <div className="rounded-xl bg-emerald-100 dark:bg-emerald-900/40 p-3">
+                <svg className="h-6 w-6 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
             </div>
             <div className="mt-3 flex items-center gap-1.5">
-              <span className="inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-700">
+              <span className="inline-flex items-center rounded-full bg-emerald-100 dark:bg-emerald-900/40 px-2.5 py-0.5 text-xs font-medium text-emerald-700 dark:text-emerald-400">
                 ↑ +18.2% vs last month
               </span>
             </div>
@@ -72,22 +72,22 @@ export function CardSection() {
 
         {/* Profile card */}
         <div>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400">Profile Card</p>
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">Profile Card</p>
           <Card className="p-5">
             <div className="flex items-start gap-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://i.pravatar.cc/150?img=5"
                 alt="User avatar"
-                className="h-14 w-14 rounded-full object-cover ring-2 ring-indigo-100"
+                className="h-14 w-14 rounded-full object-cover ring-2 ring-indigo-100 dark:ring-indigo-800"
               />
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-semibold text-slate-800">Sarah Chen</h3>
+                  <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Sarah Chen</h3>
                   <Badge variant="success">Online</Badge>
                 </div>
-                <p className="text-xs text-slate-500">Senior Product Designer</p>
-                <p className="mt-2 text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-slate-500 dark:text-slate-400">Senior Product Designer</p>
+                <p className="mt-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                   Crafting intuitive digital experiences with a focus on accessibility and design systems.
                 </p>
                 <div className="mt-3 flex gap-2">
@@ -102,3 +102,4 @@ export function CardSection() {
     </SectionWrapper>
   );
 }
+

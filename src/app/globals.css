@@ -1,48 +1,61 @@
 @import "tailwindcss";
 
+/*
+ * Tailwind v4: make dark: utilities respond to the .dark class on <html>
+ * instead of the default prefers-color-scheme media query.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
-  /* ── Primary (Indigo) ─────────────────────────────────── */
-  --color-primary-50: #eef2ff;
-  --color-primary-100: #e0e7ff;
-  --color-primary-200: #c7d2fe;
-  --color-primary-300: #a5b4fc;
-  --color-primary-400: #818cf8;
-  --color-primary-500: #6366f1;
-  --color-primary-600: #4f46e5;
-  --color-primary-700: #4338ca;
-  --color-primary-800: #3730a3;
-  --color-primary-900: #312e81;
+  /* ── Primary — Teal accent ────────────────────────────── */
+  --color-primary-50:  #edfaf9;
+  --color-primary-100: #d0f4f1;
+  --color-primary-200: #a3e9e4;
+  --color-primary-300: #6dd9d2;
+  --color-primary-400: #4CCBBF;
+  --color-primary-500: #31b0a5;
+  --color-primary-600: #268d84;
+  --color-primary-700: #1e6e68;
+  --color-primary-800: #175250;
+  --color-primary-900: #103c3a;
 
-  --color-primary: #6366f1;
-  --color-primary-hover: #4f46e5;
+  --color-primary:       #4CCBBF;
+  --color-primary-hover: #3AAFA4;
 
-  /* ── Sidebar ──────────────────────────────────────────── */
-  --color-sidebar: #0f172a;
-  --color-sidebar-hover: #1e293b;
-  --color-sidebar-active: #4f46e5;
-  --color-sidebar-border: #1e293b;
+  /* ── Sidebar (dark — Taskhub inspired) ───────────────── */
+  --color-sidebar:        #1C2127;
+  --color-sidebar-hover:  #262D35;
+  --color-sidebar-active: #2D3640;
+  --color-sidebar-border: #2D3640;
 
   /* ── Surfaces ─────────────────────────────────────────── */
-  --color-surface: #ffffff;
-  --color-page-bg: #f1f5f9;
+  --color-surface:  #ffffff;
+  --color-page-bg:  #F5F6FA;   /* EmployeeHub light bg */
+
+  /* ── Dark surfaces (Taskhub palette) ─────────────────── */
+  --color-dark-canvas:  #1C2127;   /* page background      */
+  --color-dark-sidebar: #1C2127;   /* sidebar              */
+  --color-dark-surface: #242B33;   /* cards, navbar        */
+  --color-dark-raised:  #2D3640;   /* inputs, table rows   */
+  --color-dark-border:  #2D3640;   /* subtle dividers      */
 
   /* ── Text ─────────────────────────────────────────────── */
-  --color-foreground: #0f172a;
-  --color-muted: #64748b;
-  --color-subtle: #94a3b8;
+  --color-foreground: #1A1D23;
+  --color-muted:      #6B7280;
+  --color-subtle:     #9CA3AF;
 
   /* ── Border ───────────────────────────────────────────── */
-  --color-border: #e2e8f0;
+  --color-border: #E5E7EB;
 
-  /* ── Status colors ────────────────────────────────────── */
-  --color-success: #22c55e;
-  --color-success-light: #dcfce7;
-  --color-warning: #f59e0b;
+  /* ── Status ───────────────────────────────────────────── */
+  --color-success:       #4CCB98;
+  --color-success-light: #d0f4e7;
+  --color-warning:       #FCA90B;
   --color-warning-light: #fef3c7;
-  --color-danger: #ef4444;
-  --color-danger-light: #fee2e2;
-  --color-info: #3b82f6;
-  --color-info-light: #dbeafe;
+  --color-danger:        #ED495D;
+  --color-danger-light:  #fde8eb;
+  --color-info:          #3B82F6;
+  --color-info-light:    #dbeafe;
 
   /* ── Font ─────────────────────────────────────────────── */
   --font-sans: var(--font-geist-sans);
@@ -52,12 +65,28 @@
   --radius-card: 0.75rem;
 
   /* ── Shadow ───────────────────────────────────────────── */
-  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.07);
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06);
 }
 
+/* ── Light mode (EmployeeHub) ─────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
+  --background: #F5F6FA;
+  --foreground: #1A1D23;
+}
+
+/* ── Dark mode (Taskhub) ──────────────────────────────────────────────────── */
+/*
+ * Sidebar   #1C2127   darkest surface
+ * Canvas    #1C2127   page background
+ * Surface   #242B33   cards, navbar
+ * Raised    #2D3640   inputs, hover rows, table headers
+ * Border    #2D3640   dividers
+ * Accent    #4CCBBF   teal — active states, highlights
+ * Text      #E2E8F0 / #94A3B8 / #64748B
+ */
+.dark {
+  --background: #1C2127;
+  --foreground: #E2E8F0;
 }
 
 body {
@@ -67,12 +96,10 @@ body {
 }
 
 /* ── Sidebar scrollbar ────────────────────────────────────────────────────── */
-/* Targets the sidebar wrapper and the sidebar's internal nav */
 .sidebar-scroll,
-aside.sidebar-scroll *,
 aside[aria-label="Main navigation"] {
   scrollbar-width: thin;
-  scrollbar-color: #1e293b transparent;
+  scrollbar-color: rgba(255,255,255,0.08) transparent;
 }
 
 aside[aria-label="Main navigation"]::-webkit-scrollbar,
@@ -87,11 +114,11 @@ aside[aria-label="Main navigation"]::-webkit-scrollbar-track,
 
 aside[aria-label="Main navigation"]::-webkit-scrollbar-thumb,
 .sidebar-scroll::-webkit-scrollbar-thumb {
-  background-color: #334155;
+  background-color: rgba(255,255,255,0.08);
   border-radius: 9999px;
 }
 
 aside[aria-label="Main navigation"]::-webkit-scrollbar-thumb:hover,
 .sidebar-scroll::-webkit-scrollbar-thumb:hover {
-  background-color: #475569;
+  background-color: #4CCBBF;
 }

@@ -23,17 +23,6 @@ const sizeClasses = {
   xl: "max-w-4xl",
 };
 
-/**
- * Accessible modal dialog with backdrop, keyboard trap, and focus management.
- *
- * @example
- * const { isOpen, open, close } = useModal();
- * <Button onClick={open}>Open</Button>
- * <Modal isOpen={isOpen} onClose={close} title="Confirm delete">
- *   Are you sure?
- *   <Modal.Footer><Button onClick={close}>Cancel</Button></Modal.Footer>
- * </Modal>
- */
 export function Modal({
   isOpen,
   onClose,
@@ -78,7 +67,7 @@ export function Modal({
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/40"
+        className="absolute inset-0 bg-black/50"
         aria-hidden="true"
         onClick={onClose}
       />
@@ -87,13 +76,13 @@ export function Modal({
       <div
         ref={dialogRef}
         tabIndex={-1}
-        className={`relative z-10 w-full ${sizeClasses[size]} rounded-xl bg-white shadow-xl outline-none`}
+        className={`relative z-10 w-full ${sizeClasses[size]} rounded-xl bg-white shadow-xl outline-none dark:bg-[#2A3441] dark:shadow-black/50`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-zinc-200 px-6 py-4">
+        <div className="flex items-center justify-between border-b border-zinc-200 px-6 py-4 dark:border-[#3D4A5C]">
           <h2
             id="modal-title"
-            className="text-base font-semibold text-zinc-900"
+            className="text-base font-semibold text-zinc-900 dark:text-[#E8EDF2]"
           >
             {title}
           </h2>
@@ -101,7 +90,7 @@ export function Modal({
             type="button"
             onClick={onClose}
             aria-label="Close modal"
-            className="rounded-md p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700"
+            className="rounded-md p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:text-[#9FAEC1] dark:hover:bg-[#353B46] dark:hover:text-[#E8EDF2]"
           >
             <svg
               className="h-5 w-5"
@@ -119,7 +108,7 @@ export function Modal({
 
         {/* Footer */}
         {footer && (
-          <div className="flex items-center justify-end gap-3 border-t border-zinc-200 px-6 py-4">
+          <div className="flex items-center justify-end gap-3 border-t border-zinc-200 px-6 py-4 dark:border-[#3D4A5C]">
             {footer}
           </div>
         )}
@@ -127,3 +116,4 @@ export function Modal({
     </div>
   );
 }
+

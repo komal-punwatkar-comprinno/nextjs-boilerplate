@@ -59,9 +59,11 @@ export function Pagination({
 
   const btnBase =
     "inline-flex h-8 min-w-[2rem] items-center justify-center rounded-md px-2 text-sm font-medium transition-colors";
-  const btnActive = "bg-zinc-900 text-white";
+  const btnActive =
+    "bg-[#4CCBBF] text-[#1F2937] dark:bg-[#4CCBBF] dark:text-[#1F2937]";
   const btnInactive =
-    "border border-zinc-300 bg-white text-zinc-700 hover:bg-zinc-50";
+    "border border-zinc-300 bg-white text-zinc-700 hover:bg-zinc-50 " +
+    "dark:border-[#3D4A5C] dark:bg-[#2A3441] dark:text-[#9FAEC1] dark:hover:bg-[#353B46] dark:hover:text-[#E8EDF2]";
   const btnDisabled = "pointer-events-none opacity-40";
 
   return (
@@ -82,7 +84,7 @@ export function Pagination({
       {/* Page numbers */}
       {pages.map((p, i) =>
         p === "..." ? (
-          <span key={`ellipsis-${i}`} className="px-1 text-zinc-400 select-none">
+          <span key={`ellipsis-${i}`} className="px-1 text-zinc-400 dark:text-[#9FAEC1]/60 select-none">
             …
           </span>
         ) : (
@@ -118,3 +120,4 @@ export function Pagination({
     </nav>
   );
 }
+
