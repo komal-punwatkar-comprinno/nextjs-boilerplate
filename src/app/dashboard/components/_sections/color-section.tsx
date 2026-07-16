@@ -113,9 +113,7 @@ export function ColorSection() {
           <div key={palette.name}>
             <div className="mb-3">
               <p className="text-sm font-semibold text-slate-700 dark:text-[#E2E8F0]">{palette.name}</p>
-              {palette.description && (
-                <p className="text-xs text-slate-400 dark:text-[#64748B] mt-0.5">{palette.description}</p>
-              )}
+              
             </div>
             <div className="flex flex-wrap gap-2">
               {palette.shades.map(({ label, hex }) => (
