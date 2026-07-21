@@ -2,24 +2,92 @@
 
 import { useMemo, useCallback, useRef, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { Sidebar, COMPONENT_SECTION_IDS } from "@/components/sidebar";
-import { Navbar } from "@/components/navbar";
+import { Sidebar, COMPONENT_SECTION_IDS, Navbar } from "@/components";
 import { useScrollSpy } from "@/hooks/use-scroll-spy";
 import { routes } from "@/config/routes";
 
 const sectionRoutes: Record<string, string> = {
-  colors:     routes.componentsColors,
-  typography: routes.componentsTypography,
-  buttons:    routes.componentsButtons,
-  badges:     routes.componentsBadges,
-  forms:      routes.componentsForms,
-  cards:      routes.componentsCards,
-  avatars:    routes.componentsAvatars,
-  icons:      routes.componentsIcons,
-  spinners:   routes.componentsSpinners,
-  pagination: routes.componentsPagination,
-  modals:     routes.componentsModals,
-  tables:     routes.componentsTables,
+  // Components
+  "colors":           routes.componentsColors,
+  "typography":       routes.componentsTypography,
+  "accordion":        routes.componentsAccordion,
+  "alerts":           routes.componentsAlerts,
+  "avatars":          routes.componentsAvatars,
+  "badges":           routes.componentsBadges,
+  "breadcrumb":       routes.componentsBreadcrumb,
+  "buttons":          routes.componentsButtons,
+  "button-group":     routes.componentsButtonGroup,
+  "cards":            routes.componentsCards,
+  "collapse":         routes.componentsCollapse,
+  "column-divider":   routes.componentsColumnDivider,
+  "devices":          routes.componentsDevices,
+  "divider":          routes.componentsDivider,
+  "dropdowns":        routes.componentsDropdowns,
+  "icons":            routes.componentsIcons,
+  "list-group":       routes.componentsListGroup,
+  "legend-indicator": routes.componentsLegendIndicator,
+  "modals":           routes.componentsModals,
+  "offcanvas":        routes.componentsOffcanvas,
+  "page-header":      routes.componentsPageHeader,
+  "pagination":       routes.componentsPagination,
+  "popovers":         routes.componentsPopovers,
+  "progress":         routes.componentsProgress,
+  "profile":          routes.componentsProfile,
+  "shapes":           routes.componentsShapes,
+  "sliding-image":    routes.componentsSlidingImage,
+  "spinners":         routes.componentsSpinners,
+  "steps":            routes.componentsSteps,
+  "tab":              routes.componentsTab,
+  "toasts":           routes.componentsToasts,
+  "tooltips":         routes.componentsTooltips,
+
+  // Navbars
+  "navbar":           routes.componentsNavbar,
+  "navs":             routes.componentsNavs,
+  "mega-menu":        routes.componentsMegaMenu,
+  "vertical-nav":     routes.componentsVerticalNav,
+  "scrollspy":        routes.componentsScrollspy,
+
+  // Tables
+  "tables":           routes.componentsTables,
+  "datatables":       routes.componentsDatatables,
+  "sticky-header":    routes.componentsStickyHeader,
+
+  // Basic Forms
+  "basic-forms":      routes.componentsBasicForms,
+  "checks":           routes.componentsChecks,
+  "input-group":      routes.componentsInputGroup,
+
+  // Advanced Forms
+  "advanced-select":  routes.componentsAdvSelect,
+  "datepicker":       routes.componentsDatepicker,
+  "date-range":       routes.componentsDateRange,
+  "file-upload":      routes.componentsFileUpload,
+  "dropzone":         routes.componentsDropzone,
+  "wysiwyg":          routes.componentsWysiwyg,
+  "quantity-counter": routes.componentsQuantity,
+  "copy-to-clipboard": routes.componentsCopyClipboard,
+  "input-mask":       routes.componentsInputMask,
+  "step-form":        routes.componentsStepForm,
+  "add-field":        routes.componentsAddField,
+  "toggle-password":  routes.componentsTogglePassword,
+  "count-characters": routes.componentsCountChars,
+  "form-search":      routes.componentsFormSearch,
+  "toggle-switch":    routes.componentsToggleSwitch,
+
+  // Charts
+  "charts":           routes.componentsCharts,
+  "counter":          routes.componentsCounter,
+  "pie-chart":        routes.componentsPieChart,
+  "stat-card":        routes.componentsStatCard,
+
+  // Others
+  "lightbox":         routes.componentsLightbox,
+  "leaflet":          routes.componentsLeaflet,
+  "vector-map":       routes.componentsVectorMap,
+  "sortable":         routes.componentsSortable,
+  "sticky-block":     routes.componentsStickyBlock,
+  "go-to":            routes.componentsGoTo,
 };
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {

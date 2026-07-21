@@ -6,9 +6,7 @@ import { useState } from "react";
 import { useZodForm } from "@/hooks/use-zod-form";
 import { loginSchema } from "@/lib/schemas";
 import type { LoginFormValues } from "@/lib/schemas";
-import { Input } from "@/components/input";
-import { Button } from "@/components/button";
-import { Icon } from "@/components/icon";
+import { Input, Button, Icon } from "@/components";
 import { routes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
 

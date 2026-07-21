@@ -1,4 +1,4 @@
-import { Button } from "@/components/button";
+import { Button } from "@/components";
 import { SectionWrapper } from "./section-wrapper";
 
 const PlusIcon = (
@@ -21,7 +21,7 @@ const DownloadIcon = (
 
 export function ButtonSection() {
   return (
-    <SectionWrapper id="buttons" title="3. Buttons">
+    <SectionWrapper id="buttons" title="Buttons">
       <div className="space-y-8">
         {/* Variants × Sizes grid */}
         {(["primary", "secondary", "ghost", "danger"] as const).map((variant) => (

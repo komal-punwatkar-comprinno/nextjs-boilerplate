@@ -6,4 +6,7 @@
  */
 export { siteConfig } from "./site";
 export { routes } from "./routes";
-export { primaryNavigation } from "./navigation";
+export { sidebarNavigation, topbarNavigation, footerNavigation, navigationConfig, primaryNavigation } from "./navigation";
+export type { NavItem, NavigationConfig } from "./navigation";
+export { dashboardConfig } from "./dashboard";
+export type { DashboardConfig, DashboardWidget } from "./dashboard";

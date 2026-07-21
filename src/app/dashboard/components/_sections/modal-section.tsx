@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Modal } from "@/components/modal";
-import { Button } from "@/components/button";
+import { Modal, Button } from "@/components";
 import { SectionWrapper } from "./section-wrapper";
 
 export function ModalSection() {
@@ -10,7 +9,7 @@ export function ModalSection() {
   const [formOpen, setFormOpen] = useState(false);
 
   return (
-    <SectionWrapper id="modals" title="10. Modal">
+    <SectionWrapper id="modals" title="Modal">
       <div className="space-y-4">
         <p className="text-sm text-slate-600 dark:text-slate-300">
           Click a button below to open a fully functional modal dialog. Supports keyboard{" "}

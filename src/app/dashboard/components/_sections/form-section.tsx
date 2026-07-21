@@ -1,6 +1,4 @@
-import { Input } from "@/components/input";
-import { Select } from "@/components/select";
-import { Textarea } from "@/components/textarea";
+import { Input, Select, Textarea } from "@/components";
 import { SectionWrapper } from "./section-wrapper";
 
 const MailIcon = (
@@ -24,7 +22,7 @@ const roleOptions = [
 
 export function FormSection() {
   return (
-    <SectionWrapper id="forms" title="5. Form Inputs">
+    <SectionWrapper id="forms" title="Form Inputs">
       <div className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
         {/* Normal text input */}
         <Input

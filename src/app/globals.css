@@ -122,3 +122,29 @@ aside[aria-label="Main navigation"]::-webkit-scrollbar-thumb:hover,
 .sidebar-scroll::-webkit-scrollbar-thumb:hover {
   background-color: #4CCBBF;
 }
+
+
+/* ── Syntax highlighting tokens (ComponentPreview) ────────────────────────── */
+.tok-keyword  { color: #ff7b72; }
+.tok-string   { color: #a5d6ff; }
+.tok-comment  { color: #8b949e; font-style: italic; }
+.tok-tag      { color: #7ee787; }
+.tok-attr     { color: #d2a8ff; }
+.tok-number   { color: #79c0ff; }
+.tok-bracket  { color: #8b949e; }
+.tok-type     { color: #ffa657; }
+
+/* Code block scrollbar */
+.overflow-x-auto::-webkit-scrollbar {
+  height: 6px;
+}
+.overflow-x-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+.overflow-x-auto::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.15);
+  border-radius: 9999px;
+}
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255,255,255,0.3);
+}

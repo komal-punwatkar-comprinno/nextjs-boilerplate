@@ -1,11 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Avatar } from "@/components/avatar";
-import { Badge } from "@/components/badge";
-import { Button } from "@/components/button";
+import { Avatar, Badge, Button } from "@/components";
 import { SectionWrapper } from "./section-wrapper";
-import type { BadgeVariant } from "@/components/badge";
+import type { BadgeVariant } from "@/components";
 
 interface User {
   id: number;
@@ -64,7 +62,7 @@ export function TableSection() {
   const someChecked = selected.size > 0 && !allChecked;
 
   return (
-    <SectionWrapper id="tables" title="11. Data Table">
+    <SectionWrapper id="tables" title="Data Table">
       <div className="space-y-3">
         {/* Toolbar */}
         <div className="flex items-center justify-between">

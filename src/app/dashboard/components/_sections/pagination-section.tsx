@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Pagination } from "@/components/pagination";
+import { Pagination } from "@/components";
 import { SectionWrapper } from "./section-wrapper";
 
 export function PaginationSection() {
@@ -9,12 +9,12 @@ export function PaginationSection() {
   const totalPages = 10;
 
   return (
-    <SectionWrapper id="pagination" title="9. Pagination">
+    <SectionWrapper id="pagination" title="Pagination">
       <div className="space-y-6">
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-600 dark:text-slate-300">
           Live demo — click the buttons to change pages. Currently on page{" "}
-          <strong className="font-semibold text-indigo-600">{page}</strong> of{" "}
-          <strong className="font-semibold text-slate-800">{totalPages}</strong>.
+          <strong className="font-semibold text-[#4CCBBF]">{page}</strong> of{" "}
+          <strong className="font-semibold text-slate-800 dark:text-slate-100">{totalPages}</strong>.
         </p>
 
         <Pagination
@@ -25,15 +25,14 @@ export function PaginationSection() {
         />
 
         {/* Visual feedback */}
-        <div className="rounded-lg border border-dashed border-slate-200 bg-slate-50 px-4 py-6 text-center">
-          <p className="text-xs text-slate-400 uppercase tracking-widest font-medium mb-1">
+        <div className="rounded-lg border border-dashed border-slate-200 bg-slate-50 px-4 py-6 text-center dark:border-[#2D3640] dark:bg-[#1A1F26]">
+          <p className="text-xs text-slate-400 uppercase tracking-widest font-medium mb-1 dark:text-slate-500">
             Showing page
           </p>
-          <p className="text-5xl font-bold text-indigo-600">{page}</p>
-          <p className="mt-1 text-xs text-slate-400">of {totalPages} pages</p>
+          <p className="text-5xl font-bold text-[#4CCBBF]">{page}</p>
+          <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">of {totalPages} pages</p>
         </div>
       </div>
     </SectionWrapper>
   );
 }
-

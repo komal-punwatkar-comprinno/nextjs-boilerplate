@@ -1,4 +1,4 @@
-import { Badge } from "@/components/badge";
+import { Badge } from "@/components";
 import { SectionWrapper } from "./section-wrapper";
 
 const variants = [
@@ -11,7 +11,7 @@ const variants = [
 
 export function BadgeSection() {
   return (
-    <SectionWrapper id="badges" title="4. Badges">
+    <SectionWrapper id="badges" title="Badges">
       <div className="space-y-4">
         {/* Standard badges */}
         <div>

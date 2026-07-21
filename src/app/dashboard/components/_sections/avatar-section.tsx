@@ -1,9 +1,9 @@
-import { Avatar } from "@/components/avatar";
+import { Avatar } from "@/components";
 import { SectionWrapper } from "./section-wrapper";
 
 export function AvatarSection() {
   return (
-    <SectionWrapper id="avatars" title="7. Avatars">
+    <SectionWrapper id="avatars" title="Avatars">
       <div className="space-y-8">
         {/* Sizes with image */}
         <div>

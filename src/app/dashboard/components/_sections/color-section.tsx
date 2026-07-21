@@ -107,7 +107,7 @@ function isDark(hex: string): boolean {
 
 export function ColorSection() {
   return (
-    <SectionWrapper id="colors" title="1. Theme Colors">
+    <SectionWrapper id="colors" title=" Theme Colors">
       <div className="space-y-10">
         {palettes.map((palette) => (
           <div key={palette.name}>

@@ -1,10 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Modal } from "@/components/modal";
-import { Button } from "@/components/button";
-import { Input } from "@/components/input";
-import { Select } from "@/components/select";
+import { Modal, Button, Input, Select } from "@/components";
 
 export interface ProjectRow {
   name: string;

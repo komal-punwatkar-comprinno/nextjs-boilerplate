@@ -7,26 +7,38 @@ import { usePathname } from "next/navigation";
 import { siteConfig } from "@/config/site";
 import { routes } from "@/config/routes";
 
-export const COMPONENT_SECTION_IDS = [
-  "colors", "typography", "buttons", "badges", "forms",
-  "cards", "avatars", "icons", "spinners", "pagination", "modals", "tables",
-] as const;
+// Single source of truth lives in lib — re-exported here for convenience
+export { COMPONENT_SECTION_IDS } from "@/lib/component-sections";
+export type { ComponentSectionId } from "@/lib/component-sections";
 
-export type ComponentSectionId = (typeof COMPONENT_SECTION_IDS)[number];
+// ─── Grouped structure matching the reference site ───────────────────────────
+interface SubItem  { id: string; label: string; href: string }
+interface SubGroup { heading: string; items: SubItem[] }
 
-const componentSubItems: { id: ComponentSectionId; label: string; href: string }[] = [
-  { id: "colors",     label: "Colors",     href: routes.componentsColors },
-  { id: "typography", label: "Typography", href: routes.componentsTypography },
-  { id: "buttons",    label: "Buttons",    href: routes.componentsButtons },
-  { id: "badges",     label: "Badges",     href: routes.componentsBadges },
-  { id: "forms",      label: "Forms",      href: routes.componentsForms },
-  { id: "cards",      label: "Cards",      href: routes.componentsCards },
-  { id: "avatars",    label: "Avatars",    href: routes.componentsAvatars },
-  { id: "icons",      label: "Icons",      href: routes.componentsIcons },
-  { id: "spinners",   label: "Spinners",   href: routes.componentsSpinners },
-  { id: "pagination", label: "Pagination", href: routes.componentsPagination },
-  { id: "modals",     label: "Modals",     href: routes.componentsModals },
-  { id: "tables",     label: "Tables",     href: routes.componentsTables },
+const componentGroups: SubGroup[] = [
+  {
+    heading: "Components",
+    items: [
+      { id: "colors",     label: "Colors",     href: routes.componentsColors },
+      { id: "typography", label: "Typography", href: routes.componentsTypography },
+      { id: "accordion",  label: "Accordion",  href: routes.componentsAccordion },
+      { id: "alerts", label: "Alerts", href: routes.componentsAlerts },
+      { id: "buttons",    label: "Buttons",    href: routes.componentsButtons },
+      { id: "badges",     label: "Badges",     href: routes.componentsBadges },
+      { id: "breadcrumb",   label: "Breadcrumb",   href: routes.componentsBreadcrumb },
+      { id: "collapse", label: "Collapse", href: routes.componentsCollapse },
+      { id: "column-divider", label: "Column Divider", href: routes.componentsColumnDivider },
+      { id: "button-group", label: "Button Group", href: routes.componentsButtonGroup },
+      { id: "forms",      label: "Forms",      href: routes.componentsForms },
+      { id: "cards",      label: "Cards",      href: routes.componentsCards },
+      { id: "avatars",    label: "Avatars",    href: routes.componentsAvatars },
+      { id: "icons",      label: "Icons",      href: routes.componentsIcons },
+      { id: "spinners",   label: "Spinners",   href: routes.componentsSpinners },
+      { id: "pagination", label: "Pagination", href: routes.componentsPagination },
+      { id: "modals",     label: "Modals",     href: routes.componentsModals },
+      { id: "tables",     label: "Tables",     href: routes.componentsTables },
+    ],
+  },
 ];
 
 /* ─── Icons ─────────────────────────────────────────────────────────────── */
@@ -248,37 +260,47 @@ export function Sidebar({ className = "", collapsed = false, activeSection, onSe
                   </button>
 
                   {componentsOpen && (
-                    <ul className="mt-0.5 ml-3.5 space-y-0.5 border-l border-white/[0.06] pl-3">
-                      {componentSubItems.map((sub) => {
-                        const isSubActive =
-                          pathname === sub.href ||
-                          (pathname === routes.components && activeSection === sub.id);
-                        return (
-                          <li key={sub.id}>
-                            <Link
-                              href={sub.href}
-                              onClick={(e) => {
-                                const el = document.getElementById(sub.id);
-                                if (isOnComponents && el) {
-                                  e.preventDefault();
-                                  if (onSectionClick) onSectionClick(sub.id);
-                                  else el.scrollIntoView({ behavior: "smooth", block: "start" });
-                                }
-                              }}
-                              className={[
-                                "flex items-center gap-2 rounded-md px-3 py-1.5 text-sm transition-colors",
-                                isSubActive
-                                  ? "font-medium text-[#4CCBBF]"
-                                  : "text-[#64748B] hover:text-[#E2E8F0]",
-                              ].join(" ")}
-                            >
-                              <span className={`h-1.5 w-1.5 rounded-full ${isSubActive ? "bg-[#4CCBBF]" : "bg-white/10"}`} />
-                              {sub.label}
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
+                    <div className="mt-0.5 ml-3.5 border-l border-white/[0.06] pl-3 space-y-3">
+                      {componentGroups.map((group) => (
+                        <div key={group.heading}>
+                          {/* Group heading */}
+                          <p className="mb-1 px-3 text-[10px] font-semibold uppercase tracking-widest text-[#475569]">
+                            {group.heading}
+                          </p>
+                          <ul className="space-y-0.5">
+                            {group.items.map((sub) => {
+                              const isSubActive =
+                                pathname === sub.href ||
+                                (isOnComponents && activeSection === sub.id);
+                              return (
+                                <li key={sub.id}>
+                                  <Link
+                                    href={sub.href}
+                                    onClick={(e) => {
+                                      const el = document.getElementById(sub.id);
+                                      if (isOnComponents && el) {
+                                        e.preventDefault();
+                                        if (onSectionClick) onSectionClick(sub.id);
+                                        else el.scrollIntoView({ behavior: "smooth", block: "start" });
+                                      }
+                                    }}
+                                    className={[
+                                      "flex items-center gap-2 rounded-md px-3 py-1.5 text-sm transition-colors",
+                                      isSubActive
+                                        ? "font-medium text-[#4CCBBF]"
+                                        : "text-[#64748B] hover:text-[#E2E8F0]",
+                                    ].join(" ")}
+                                  >
+                                    <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${isSubActive ? "bg-[#4CCBBF]" : "bg-white/10"}`} />
+                                    {sub.label}
+                                  </Link>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
                   )}
                 </>
               )}

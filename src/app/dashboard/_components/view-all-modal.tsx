@@ -1,10 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Modal } from "@/components/modal";
-import { Button } from "@/components/button";
-import { Badge } from "@/components/badge";
-import { Avatar } from "@/components/avatar";
+import { Modal, Button, Badge, Avatar } from "@/components";
 
 /* ── View All Projects ────────────────────────────────────────────────────── */
 const allProjects = [

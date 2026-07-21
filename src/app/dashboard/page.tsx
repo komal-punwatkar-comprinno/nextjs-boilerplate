@@ -1,10 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Badge } from "@/components/badge";
-import { Button } from "@/components/button";
-import { Card } from "@/components/card";
-import { Avatar } from "@/components/avatar";
+import { Badge, Button, Card, Avatar } from "@/components";
 import { AddTaskModal } from "./_components/add-task-modal";
 import { EditProjectModal, type ProjectRow } from "./_components/edit-project-modal";
 import { ViewAllProjectsModal, ViewAllTasksModal } from "./_components/view-all-modal";

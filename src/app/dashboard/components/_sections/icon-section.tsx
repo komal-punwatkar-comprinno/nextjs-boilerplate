@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Icon, iconPaths } from "@/components";
+import { Icon, iconPaths, Button } from "@/components";
 import type { IconName, IconSize } from "@/components";
-import { Button } from "@/components/button";
 import { SectionWrapper } from "./section-wrapper";
 
 const sizes: { label: string; size: IconSize }[] = [
@@ -37,7 +36,7 @@ export function IconSection() {
   }
 
   return (
-    <SectionWrapper id="icons" title="7. Icons">
+    <SectionWrapper id="icons" title="Icons">
       <div className="space-y-10">
 
         {/* Usage note */}

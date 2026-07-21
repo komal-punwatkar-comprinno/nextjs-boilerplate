@@ -2,7 +2,7 @@ import { SectionWrapper } from "./section-wrapper";
 
 export function TypographySection() {
   return (
-    <SectionWrapper id="typography" title="2. Typography">
+    <SectionWrapper id="typography" title=" Typography">
       <div className="space-y-8 divide-y divide-slate-100 dark:divide-[#2D3640]">
 
         {/* Headings */}

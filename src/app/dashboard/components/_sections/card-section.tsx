@@ -1,12 +1,9 @@
-import { Card } from "@/components/card";
-import { Button } from "@/components/button";
-import { Badge } from "@/components/badge";
-import { Avatar } from "@/components/avatar";
+import { Card, Button, Badge, Avatar } from "@/components";
 import { SectionWrapper } from "./section-wrapper";
 
 export function CardSection() {
   return (
-    <SectionWrapper id="cards" title="6. Cards">
+    <SectionWrapper id="cards" title="Cards">
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Basic card */}
         <div>

@@ -1,9 +1,9 @@
-import { Spinner } from "@/components/spinner";
+import { Spinner } from "@/components";
 import { SectionWrapper } from "./section-wrapper";
 
 export function SpinnerSection() {
   return (
-    <SectionWrapper id="spinners" title="8. Spinner / Loading">
+    <SectionWrapper id="spinners" title="Spinner / Loading">
       <div className="space-y-8">
         {/* Three sizes */}
         <div>
