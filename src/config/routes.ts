@@ -7,7 +7,9 @@ export const routes = {
     dashboard: "/dashboard",
     components: "/dashboard/components",
   
-    // ── Existing ──────────────────────────────────────────────────────────────
+    documentation: "/dashboard/documentation",
+
+  // ── Existing ──────────────────────────────────────────────────────────────
     componentsColors:      "/dashboard/components/colors",
     componentsTypography:  "/dashboard/components/typography",
     componentsButtons:     "/dashboard/components/buttons",

@@ -91,6 +91,13 @@ function IconCog() {
     </svg>
   );
 }
+function IconDocument() {
+  return (
+    <svg className="h-[18px] w-[18px] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+    </svg>
+  );
+}
 function IconChevron({ open }: { open: boolean }) {
   return (
     <svg className={`h-3.5 w-3.5 shrink-0 transition-transform duration-200 ${open ? "rotate-90" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -231,6 +238,22 @@ export function Sidebar({ className = "", collapsed = false, activeSection, onSe
             </p>
           )}
           <ul className="space-y-0.5">
+
+            {/* Documentation */}
+            <li>
+              {collapsed ? (
+                <Tooltip label="Documentation">
+                  <Link href={routes.documentation} className={`${iconLinkCls(isRouteActive(routes.documentation))} w-full`}>
+                    <span className={iconCls(isRouteActive(routes.documentation))}><IconDocument /></span>
+                  </Link>
+                </Tooltip>
+              ) : (
+                <Link href={routes.documentation} className={linkCls(isRouteActive(routes.documentation))}>
+                  <span className={iconCls(isRouteActive(routes.documentation))}><IconDocument /></span>
+                  <span className="flex-1">Documentation</span>
+                </Link>
+              )}
+            </li>
 
             {/* Components */}
             <li>

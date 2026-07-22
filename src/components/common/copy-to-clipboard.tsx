@@ -9,9 +9,7 @@ export interface CopyToClipboardProps {
   className?: string;
 }
 
-/**
- * Click-to-copy component. Shows "Copied!" feedback after copying.
- */
+
 export function CopyToClipboard({
   text,
   children,

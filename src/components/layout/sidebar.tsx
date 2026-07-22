@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { siteConfig } from "@/config/site";
 import { routes } from "@/config/routes";
@@ -203,6 +203,7 @@ export interface SidebarProps {
 
 export function Sidebar({ className = "", collapsed = false, activeSection, onSectionClick }: SidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const isOnComponents = pathname === routes.components || pathname.startsWith(routes.components + "/");
   const [componentsOpen, setComponentsOpen] = useState(isOnComponents);
 
@@ -312,6 +313,31 @@ export function Sidebar({ className = "", collapsed = false, activeSection, onSe
           )}
           <ul className="space-y-0.5">
 
+
+            {/* Documentation */}
+            <li>
+              {collapsed ? (
+                <Tooltip label="Documentation">
+                  <Link href={routes.documentation} className={`${iconLinkCls(isRouteActive(routes.documentation))} w-full`}>
+                    <span className={iconCls(isRouteActive(routes.documentation))}>
+                      <svg className="h-[18px] w-[18px] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                      </svg>
+                    </span>
+                  </Link>
+                </Tooltip>
+              ) : (
+                <Link href={routes.documentation} className={linkCls(isRouteActive(routes.documentation))}>
+                  <span className={iconCls(isRouteActive(routes.documentation))}>
+                    <svg className="h-[18px] w-[18px] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                    </svg>
+                  </span>
+                  <span className="flex-1">Documentation</span>
+                </Link>
+              )}
+            </li>
+
             {/* Components */}
             <li>
               {collapsed ? (
@@ -322,9 +348,19 @@ export function Sidebar({ className = "", collapsed = false, activeSection, onSe
                 </Tooltip>
               ) : (
                 <>
-                  <Link
-                    href={routes.components}
-                    onClick={() => setComponentsOpen(v => !v)}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      if (!componentsOpen) {
+                        // Opening: navigate to components page
+                        setComponentsOpen(true);
+                        router.push(routes.components);
+                      } else {
+                        // Closing: just collapse the list, stay on current page
+                        e.preventDefault();
+                        setComponentsOpen(false);
+                      }
+                    }}
                     className={[
                       "flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-[15px] transition-colors",
                       isOnComponents
@@ -337,7 +373,7 @@ export function Sidebar({ className = "", collapsed = false, activeSection, onSe
                     <span className={isOnComponents ? "text-[#4CCBBF]" : "text-[#475569]"}>
                       <IconChevron open={componentsOpen} />
                     </span>
-                  </Link>
+                  </button>
 
                   {componentsOpen && (
                     <div className="mt-1 ml-3.5 border-l border-white/[0.06] pl-3 space-y-4">

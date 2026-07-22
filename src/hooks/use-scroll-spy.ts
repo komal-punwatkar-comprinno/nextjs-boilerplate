@@ -79,16 +79,19 @@ export function useScrollSpy(
     const initTimer = setTimeout(() => {
       const container = getScrollContainer();
       const target = container ?? window;
+      targetRef = target;
       target.addEventListener("scroll", onScroll, { passive: true });
       onScroll(); // set initial state
     }, 100);
 
+    let targetRef: Element | Window | null = null;
+
     return () => {
       clearTimeout(initTimer);
       if (debounceTimer.current) clearTimeout(debounceTimer.current);
-      const container = getScrollContainer();
-      const target = container ?? window;
-      target.removeEventListener("scroll", onScroll);
+      if (targetRef) {
+        targetRef.removeEventListener("scroll", onScroll);
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idsKey, offset, urlDebounceMs]);

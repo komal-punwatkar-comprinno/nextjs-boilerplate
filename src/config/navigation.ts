@@ -47,6 +47,11 @@ export const sidebarNavigation: NavItem[] = [
     href: "/dashboard/settings",
     icon: "cog-6-tooth",
   },
+  {
+    label: "Documentation",
+    href: "/dashboard/documentation",
+    icon: "book-open",
+  },
 ];
 
 /** Top navigation bar links (public/marketing pages). */

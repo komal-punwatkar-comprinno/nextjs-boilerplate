@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useCallback, useRef, useState } from "react";
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 export interface DropzoneFile {
@@ -96,21 +96,32 @@ export const Dropzone = forwardRef<HTMLDivElement, DropzoneProps>(
             setLocalError(`Maximum ${maxFiles} files allowed`);
             next = next.slice(0, maxFiles);
           }
-          onFiles?.(next.map((f) => f.file));
           return next;
         });
       },
-      [isAccepted, maxSize, maxFiles, onFiles]
+      [isAccepted, maxSize, maxFiles]
     );
 
     const removeFile = (id: string) => {
       setFiles((prev) => {
         const next = prev.filter((f) => f.id !== id);
-        onFiles?.(next.map((f) => f.file));
         return next;
       });
       setLocalError(null);
     };
+
+    // Notify parent of file changes after state settles (avoids setState-in-render)
+    const onFilesRef = useRef(onFiles);
+    onFilesRef.current = onFiles;
+    const isInitialMount = useRef(true);
+
+    useEffect(() => {
+      if (isInitialMount.current) {
+        isInitialMount.current = false;
+        return;
+      }
+      onFilesRef.current?.(files.map((f) => f.file));
+    }, [files]);
 
     const handleDragOver = (e: React.DragEvent) => {
       e.preventDefault();
