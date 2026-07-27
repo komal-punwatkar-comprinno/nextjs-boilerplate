@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useState, useCallback } from "react";
 import { cn } from "@/lib/utils";
 
 export interface CountCharactersProps
@@ -35,11 +35,24 @@ export const CountCharacters = forwardRef<HTMLTextAreaElement, CountCharactersPr
     },
     ref
   ) {
-    const currentLength = typeof value === "string"
-      ? value.length
-      : typeof defaultValue === "string"
-        ? defaultValue.length
-        : 0;
+    // Track internal length for uncontrolled usage
+    const [internalLength, setInternalLength] = useState(
+      typeof value === "string"
+        ? value.length
+        : typeof defaultValue === "string"
+          ? defaultValue.length
+          : 0
+    );
+
+    const currentLength = typeof value === "string" ? value.length : internalLength;
+
+    const handleChange = useCallback(
+      (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setInternalLength(e.target.value.length);
+        onChange?.(e);
+      },
+      [onChange]
+    );
 
     const remaining = maxLength - currentLength;
     const isWarning = remaining <= warningThreshold && remaining > 0;
@@ -61,7 +74,7 @@ export const CountCharacters = forwardRef<HTMLTextAreaElement, CountCharactersPr
             maxLength={maxLength}
             value={value}
             defaultValue={defaultValue}
-            onChange={onChange}
+            onChange={handleChange}
             aria-invalid={Boolean(error)}
             aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
             className={cn(

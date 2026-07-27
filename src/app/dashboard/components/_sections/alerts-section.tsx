@@ -11,34 +11,37 @@
       <SectionWrapper id="alerts" title="Alerts">
         <div className="space-y-8">
   
-          {/* Variants */}
-          <div>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-              Variants
-            </p>
-            <div className="space-y-3">
-              <Alert variant="success" title="Success">
-                Your profile changes have been successfully saved to the server.
-              </Alert>
-              <Alert variant="info" title="Info">
-                A new version of the application is available. Update now.
-              </Alert>
-              <Alert variant="warning" title="Warning">
-                You are approaching your subscription usage limit.
-              </Alert>
-              <Alert variant="danger" title="Error">
-                Could not fetch server logs. Please retry later.
-              </Alert>
+          {/* Variants & Dismissible side by side */}
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            {/* Variants */}
+            <div>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                Variants
+              </p>
+              <div className="space-y-3">
+                <Alert variant="success" title="Success">
+                  Your profile changes have been successfully saved to the server.
+                </Alert>
+                <Alert variant="info" title="Info">
+                  A new version of the application is available. Update now.
+                </Alert>
+                <Alert variant="warning" title="Warning">
+                  You are approaching your subscription usage limit.
+                </Alert>
+                <Alert variant="danger" title="Error">
+                  Could not fetch server logs. Please retry later.
+                </Alert>
+              </div>
             </div>
-          </div>
   
-          {/* Dismissible */}
-          <div>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-              Dismissible
-            </p>
-            <div className="space-y-3">
-              <DismissibleDemo />
+            {/* Dismissible */}
+            <div>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                Dismissible
+              </p>
+              <div className="space-y-3">
+                <DismissibleDemo />
+              </div>
             </div>
           </div>
   

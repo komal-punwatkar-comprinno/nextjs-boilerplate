@@ -70,13 +70,28 @@ export function MegaMenuSection() {
   return (
     <SectionWrapper id="mega-menu" title="Mega Menu">
       <div className="space-y-8">
-        <div>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-            Interactive Demo
-          </p>
-          <p className="mb-4 text-sm text-zinc-600 dark:text-[#9FAEC1]">
-            Click the trigger button to reveal the mega menu. It closes on outside click or Escape key.
-          </p>
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+          <div>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+              Interactive Demo
+            </p>
+            <p className="mb-4 text-sm text-zinc-600 dark:text-[#9FAEC1]">
+              Click the trigger button to reveal the mega menu. It closes on outside click or Escape key.
+            </p>
+          </div>
+
+          <div>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+              Features
+            </p>
+            <ul className="list-inside list-disc space-y-1 text-sm text-zinc-600 dark:text-[#9FAEC1]">
+              <li>Grouped sections with headings</li>
+              <li>Icon and description support per item</li>
+              <li>Closes on outside click or Escape</li>
+              <li>Animated entrance (fade + slide)</li>
+              <li>Responsive grid layout (1-3 columns)</li>
+            </ul>
+          </div>
         </div>
 
         <div className="relative min-h-[360px]">
@@ -90,19 +105,6 @@ export function MegaMenuSection() {
             isOpen={isOpen}
             onToggle={() => setIsOpen(!isOpen)}
           />
-        </div>
-
-        <div>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-            Features
-          </p>
-          <ul className="list-inside list-disc space-y-1 text-sm text-zinc-600 dark:text-[#9FAEC1]">
-            <li>Grouped sections with headings</li>
-            <li>Icon and description support per item</li>
-            <li>Closes on outside click or Escape</li>
-            <li>Animated entrance (fade + slide)</li>
-            <li>Responsive grid layout (1-3 columns)</li>
-          </ul>
         </div>
       </div>
     </SectionWrapper>

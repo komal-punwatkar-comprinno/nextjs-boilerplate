@@ -36,7 +36,7 @@ const sampleItems = [
 export function NavsSection() {
   return (
     <SectionWrapper id="navs" title="Sidebar Navigation">
-      <div className="space-y-8">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Expanded */}
         <div>
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
@@ -58,7 +58,7 @@ export function NavsSection() {
         </div>
 
         {/* Features */}
-        <div>
+        <div className="lg:col-span-2">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
             Features
           </p>

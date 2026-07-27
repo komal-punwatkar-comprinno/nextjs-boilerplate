@@ -6,7 +6,7 @@ import { SectionWrapper } from "./section-wrapper";
 export function VerticalNavSection() {
   return (
     <SectionWrapper id="vertical-nav" title="Vertical Nav (Sidebar)">
-      <div className="space-y-8">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div>
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
             Full Sidebar Component
@@ -15,12 +15,6 @@ export function VerticalNavSection() {
             The Sidebar component is the primary navigation for the dashboard. It includes
             the logo, grouped navigation links, an active state indicator, and a collapsible
             component sections panel.
-          </p>
-        </div>
-
-        <div>
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-            Constrained Preview
           </p>
           <div className="h-[500px] w-64 overflow-hidden rounded-lg border border-zinc-200 dark:border-[#2D3640]">
             <Sidebar />

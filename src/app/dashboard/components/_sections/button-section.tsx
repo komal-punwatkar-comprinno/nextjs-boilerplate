@@ -22,7 +22,7 @@ const DownloadIcon = (
 export function ButtonSection() {
   return (
     <SectionWrapper id="buttons" title="Buttons">
-      <div className="space-y-8">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Variants × Sizes grid */}
         {(["primary", "secondary", "ghost", "danger"] as const).map((variant) => (
           <div key={variant}>
@@ -37,8 +37,8 @@ export function ButtonSection() {
           </div>
         ))}
 
-        {/* Special states */}
-        <div>
+        {/* Special states — full width */}
+        <div className="lg:col-span-2">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-400">Special States</p>
           <div className="flex flex-wrap items-center gap-3">
             <Button variant="primary" isLoading>Loading</Button>

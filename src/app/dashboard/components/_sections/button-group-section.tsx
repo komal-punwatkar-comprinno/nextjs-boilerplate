@@ -4,7 +4,7 @@ import { Button, ButtonGroup } from "@/components";
   export function ButtonGroupSection() {
     return (
       <SectionWrapper id="button-group" title="Button Group">
-        <div className="space-y-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
   
           {/* Basic */}
           <div>

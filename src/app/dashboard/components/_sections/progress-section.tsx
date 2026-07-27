@@ -4,7 +4,7 @@ import { SectionWrapper } from "./section-wrapper";
 export function ProgressSection() {
   return (
     <SectionWrapper id="progress" title="Progress">
-      <div className="space-y-8 max-w-lg">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
 
         <div>
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">Values</p>
@@ -55,9 +55,9 @@ export function ProgressSection() {
           </div>
         </div>
 
-        <div>
+        <div className="lg:col-span-2">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">Labeled</p>
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
             {[
               { label: "Storage",    value: 72, color: "bg-[#4CCBBF]" },
               { label: "Bandwidth",  value: 45, color: "bg-amber-500" },

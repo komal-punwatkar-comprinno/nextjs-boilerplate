@@ -14,8 +14,10 @@ export function CountCharactersSection() {
               label="Tweet"
               placeholder="What's happening?"
               maxLength={100}
+              warningThreshold={10}
             />
           </div>
+          <p className="mt-1 text-xs text-slate-400">Shows warning when only 10 characters remaining</p>
         </div>
 
         <div>
@@ -25,10 +27,10 @@ export function CountCharactersSection() {
               label="Bio"
               placeholder="Tell us about yourself..."
               maxLength={100}
-              warningThreshold={80}
+              warningThreshold={20}
             />
           </div>
-          <p className="mt-1 text-xs text-slate-400">Shows warning color when 80% of characters used</p>
+          <p className="mt-1 text-xs text-slate-400">Shows warning color when 80% of characters used (20 remaining)</p>
         </div>
       </div>
     </SectionWrapper>

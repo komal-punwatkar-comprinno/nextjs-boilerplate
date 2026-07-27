@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useCallback, useRef } from "react";
+import { forwardRef, useCallback, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 export interface WysiwygEditorProps {
@@ -41,6 +41,27 @@ export const WysiwygEditor = forwardRef<HTMLDivElement, WysiwygEditorProps>(
     ref
   ) {
     const editorRef = useRef<HTMLDivElement>(null);
+    const isInternalChange = useRef(false);
+    const hasInitialized = useRef(false);
+
+    // Set initial content once after mount
+    useEffect(() => {
+      if (!hasInitialized.current && editorRef.current && value !== undefined) {
+        editorRef.current.innerHTML = value;
+        hasInitialized.current = true;
+      }
+    });
+
+    // Sync external value changes (not from typing)
+    useEffect(() => {
+      if (isInternalChange.current) {
+        isInternalChange.current = false;
+        return;
+      }
+      if (hasInitialized.current && editorRef.current && value !== undefined && editorRef.current.innerHTML !== value) {
+        editorRef.current.innerHTML = value;
+      }
+    }, [value]);
 
     const execCommand = useCallback(
       (command: string, arg?: string) => {
@@ -49,6 +70,7 @@ export const WysiwygEditor = forwardRef<HTMLDivElement, WysiwygEditorProps>(
         document.execCommand(command, false, arg);
         // Notify parent of change
         if (editorRef.current) {
+          isInternalChange.current = true;
           onChange?.(editorRef.current.innerHTML);
         }
       },
@@ -57,6 +79,7 @@ export const WysiwygEditor = forwardRef<HTMLDivElement, WysiwygEditorProps>(
 
     const handleInput = () => {
       if (editorRef.current) {
+        isInternalChange.current = true;
         onChange?.(editorRef.current.innerHTML);
       }
     };
@@ -183,8 +206,8 @@ export const WysiwygEditor = forwardRef<HTMLDivElement, WysiwygEditorProps>(
           ref={editorRef}
           contentEditable={!disabled}
           suppressContentEditableWarning
+          dir="ltr"
           onInput={handleInput}
-          dangerouslySetInnerHTML={value !== undefined ? { __html: value } : undefined}
           data-placeholder={placeholder}
           style={{ minHeight }}
           className={cn(

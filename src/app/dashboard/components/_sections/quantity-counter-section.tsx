@@ -11,7 +11,7 @@ export function QuantityCounterSection() {
 
   return (
     <SectionWrapper id="quantity-counter" title="Quantity Counter">
-      <div className="space-y-8">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div>
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">Basic</p>
           <QuantityCounter value={basic} onChange={setBasic} />

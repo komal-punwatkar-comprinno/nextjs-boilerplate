@@ -29,7 +29,7 @@ const variantClasses: Record<ButtonVariant, string> = {
   primary: [
     // Light — dark zinc
     "bg-zinc-900 text-white hover:bg-zinc-700 focus-visible:ring-zinc-900",
-    // Dark — Tevico teal fill
+    // Dark —  teal fill
     "dark:bg-[#4CCBBF] dark:text-[#1F2937] dark:hover:bg-[#3AAFA4] dark:focus-visible:ring-[#4CCBBF]",
   ].join(" "),
 
@@ -50,7 +50,7 @@ const variantClasses: Record<ButtonVariant, string> = {
   danger: [
     // Light — solid red
     "bg-red-600 text-white hover:bg-red-500 focus-visible:ring-red-600",
-    // Dark — Tevico danger #ED495D, brighter on hover
+    // Dark — danger #ED495D, brighter on hover
     "dark:bg-[#ED495D] dark:text-white dark:hover:bg-[#f05d6f] dark:focus-visible:ring-[#ED495D]",
   ].join(" "),
 };

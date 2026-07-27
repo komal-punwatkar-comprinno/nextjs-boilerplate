@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { routes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
 import { Logo } from "@/components/common/logo";
@@ -241,12 +242,13 @@ export function Sidebar({ className, collapsed, activeSection, onSectionClick }:
         avatarUrl: "https://i.pravatar.cc/150?img=8",
       }}
       userAction={
-        <button
+        <Link
+          href="/dashboard/settings"
           aria-label="Account settings"
-          className="rounded-md p-1 text-[#64748B] transition-colors hover:bg-white/[0.05] hover:text-[#E2E8F0]"
+          className="cursor-pointer rounded-md p-1 text-[#64748B] transition-colors hover:bg-white/[0.05] hover:text-[#E2E8F0]"
         >
           <IconCog />
-        </button>
+        </Link>
       }
     />
   );

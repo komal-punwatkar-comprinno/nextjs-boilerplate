@@ -66,6 +66,7 @@ export function DateRangeSection() {
               value={basicRange}
               onChange={setBasicRange}
               placeholder="Select date range"
+              presets={[]}
             />
           </div>
         </ComponentPreview>

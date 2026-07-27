@@ -24,7 +24,7 @@ export function VectorMapSection() {
             SVG-based world map with interactive regions. Hover over continents to see tooltips.
             Regions can be highlighted with custom colors and values.
           </p>
-          <div className="max-w-lg">
+          <div className="mx-auto max-w-lg">
             <VectorMap
               regions={sampleRegions}
               showTooltip

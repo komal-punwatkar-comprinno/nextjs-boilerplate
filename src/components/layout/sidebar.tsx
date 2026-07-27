@@ -304,7 +304,13 @@ export function Sidebar({
                               {/* Collapsible sub-group heading */}
                               <button
                                 type="button"
-                                onClick={() => toggleSubGroup(group.heading)}
+                                onClick={() => {
+                                  toggleSubGroup(group.heading);
+                                  // Navigate to components page if not already there
+                                  if (!isOnComponents) {
+                                    router.push(componentsHref);
+                                  }
+                                }}
                                 className={[
                                   "flex w-full items-center gap-2 rounded-md px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider transition-colors",
                                   hasActiveItem

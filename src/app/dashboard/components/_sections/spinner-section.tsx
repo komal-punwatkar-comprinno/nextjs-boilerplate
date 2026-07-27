@@ -4,7 +4,7 @@ import { SectionWrapper } from "./section-wrapper";
 export function SpinnerSection() {
   return (
     <SectionWrapper id="spinners" title="Spinner / Loading">
-      <div className="space-y-8">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Three sizes */}
         <div>
           <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">Sizes</p>
@@ -23,7 +23,7 @@ export function SpinnerSection() {
           <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500">
             Skeleton Loading State
           </p>
-          <div className="rounded-xl border border-slate-200 bg-white p-5 space-y-4 max-w-sm dark:border-slate-700 dark:bg-slate-700">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 space-y-4 dark:border-slate-700 dark:bg-slate-700">
             {/* Header row */}
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-full bg-slate-200 animate-pulse dark:bg-slate-500" />
