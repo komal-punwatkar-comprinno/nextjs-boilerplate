@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Modal, Button, Input, Select } from "@/components";
+import { Modal, Button, Input, Select, Textarea, Checkbox } from "@/components";
 
 interface AddTaskModalProps {
   isOpen: boolean;
@@ -13,7 +13,14 @@ export function AddTaskModal({ isOpen, onClose }: AddTaskModalProps) {
   const [priority, setPriority] = useState("medium");
   const [dueDate, setDueDate] = useState("");
   const [description, setDescription] = useState("");
+  const [assignees, setAssignees] = useState<string[]>([]);
   const [saving, setSaving] = useState(false);
+
+  function toggleAssignee(name: string) {
+    setAssignees((prev) =>
+      prev.includes(name) ? prev.filter((n) => n !== name) : [...prev, name]
+    );
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -22,7 +29,7 @@ export function AddTaskModal({ isOpen, onClose }: AddTaskModalProps) {
     setTimeout(() => {
       setSaving(false);
       onClose();
-      setTitle(""); setPriority("medium"); setDueDate(""); setDescription("");
+      setTitle(""); setPriority("medium"); setDueDate(""); setDescription(""); setAssignees([]);
     }, 900);
   }
 
@@ -70,28 +77,25 @@ export function AddTaskModal({ isOpen, onClose }: AddTaskModalProps) {
           />
         </div>
 
-        <div className="flex flex-col gap-1">
-          <label className="text-sm font-medium text-zinc-700 dark:text-[#E2E8F0]">
-            Description
-          </label>
-          <textarea
-            rows={3}
-            placeholder="Optional details about this task…"
-            value={description}
-            onChange={e => setDescription(e.target.value)}
-            className="w-full resize-none rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-zinc-900 dark:border-[#2D3640] dark:bg-[#2D3640] dark:text-[#E2E8F0] dark:placeholder:text-[#64748B] dark:focus:ring-[#4CCBBF] dark:focus:ring-offset-[#242B33]"
-          />
-        </div>
+        <Textarea
+          label="Description"
+          rows={3}
+          placeholder="Optional details about this task…"
+          value={description}
+          onChange={e => setDescription(e.target.value)}
+        />
 
         {/* Assignee row */}
         <div className="flex flex-col gap-1">
           <label className="text-sm font-medium text-zinc-700 dark:text-[#E2E8F0]">Assign to</label>
           <div className="flex flex-wrap gap-2">
             {["Alice", "Bob", "Carol", "Dave", "Eve"].map(name => (
-              <label key={name} className="flex cursor-pointer items-center gap-1.5 rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 transition-colors hover:border-[#4CCBBF] hover:text-[#4CCBBF] dark:border-[#2D3640] dark:text-[#94A3B8]">
-                <input type="checkbox" className="accent-[#4CCBBF]" />
-                {name}
-              </label>
+              <Checkbox
+                key={name}
+                label={name}
+                checked={assignees.includes(name)}
+                onChange={() => toggleAssignee(name)}
+              />
             ))}
           </div>
         </div>

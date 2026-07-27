@@ -10,3 +10,7 @@ export * from "./forms";
 export * from "./data";
 export * from "./maps";
 export * from "./media";
+
+// App-specific sidebar (thin wrapper around SidebarShell)
+export { Sidebar, COMPONENT_SECTION_IDS } from "./sidebar";
+export type { SidebarProps, ComponentSectionId } from "./sidebar";

@@ -1,27 +1,37 @@
 import { cn } from "@/lib/utils";
 
-interface FooterLink {
+export interface FooterLink {
   label: string;
   href: string;
 }
 
-interface FooterSocialLink {
+export interface FooterSocialLink {
   label: string;
   href: string;
   /** SVG path data for the social icon. */
   icon: string;
 }
 
-interface FooterProps {
+export interface FooterProps {
+  /** Brand name displayed in the footer. */
+  brandName?: string;
+  /** Logo image src (optional). */
+  logo?: string;
+  /** Navigation links. */
+  links?: FooterLink[];
+  /** Social media links with SVG icon paths. */
+  socialLinks?: FooterSocialLink[];
   /** Additional class names. */
   className?: string;
+  /** Use "dark" variant when placed on a dark background without CSS dark mode. */
+  variant?: "auto" | "dark";
 }
 
 const defaultLinks: FooterLink[] = [
-  { label: "About", href: "/about" },
-  { label: "Privacy", href: "/privacy" },
-  { label: "Terms", href: "/terms" },
-  { label: "Contact", href: "/contact" },
+  { label: "About", href: "#" },
+  { label: "Privacy", href: "#" },
+  { label: "Terms", href: "#" },
+  { label: "Contact", href: "#" },
 ];
 
 const defaultSocialLinks: FooterSocialLink[] = [
@@ -43,80 +53,113 @@ const defaultSocialLinks: FooterSocialLink[] = [
 ];
 
 /**
- * Site footer with copyright, links, and social links.
+ * Site footer with brand, copyright, navigation links, and social links.
+ * Fully configurable via props — no hardcoded brand values.
  *
  * @example
- * <Footer className="mt-auto" />
+ * <Footer
+ *   brandName="Comprinno"
+ *   logo="/logo-300x300.png"
+ *   links={[{ label: "Docs", href: "/docs" }]}
+ *   socialLinks={[{ label: "GitHub", href: "https://github.com/comprinno", icon: "M12 0C5.37..." }]}
+ * />
  */
-export function Footer({ className }: FooterProps) {
+export function Footer({
+  brandName = "Your Brand",
+  logo,
+  links = defaultLinks,
+  socialLinks = defaultSocialLinks,
+  className,
+  variant = "auto",
+}: FooterProps) {
   const currentYear = new Date().getFullYear();
+  const isDark = variant === "dark";
 
   return (
     <footer
       className={cn(
-        "border-t border-zinc-200 bg-white px-4 py-8 sm:px-6 lg:px-8",
-        "dark:border-[#2D3640] dark:bg-[#242B33]",
+        "border-t px-4 py-8 sm:px-6 lg:px-8",
+        isDark
+          ? "border-white/[0.06] bg-[#0A0D14]"
+          : "border-zinc-200 bg-white dark:border-[#2D3640] dark:bg-[#242B33]",
         className
       )}
     >
       <div className="mx-auto grid max-w-7xl gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {/* Brand / Copyright */}
         <div className="flex flex-col gap-2">
-          <span className="text-sm font-semibold text-zinc-900 dark:text-[#E8EDF2]">
-            SaaS Boilerplate
-          </span>
-          <p className="text-xs text-zinc-500 dark:text-[#9FAEC1]">
-            © {currentYear} All rights reserved.
+          <div className="flex items-center gap-2">
+            {logo && (
+              <img src={logo} alt={brandName} className="h-6 w-6 object-contain" />
+            )}
+            <span className={cn(
+              "text-sm font-semibold",
+              isDark ? "text-[#E8EDF2]" : "text-zinc-900 dark:text-[#E8EDF2]"
+            )}>
+              {brandName}
+            </span>
+          </div>
+          <p className={cn(
+            "text-xs",
+            isDark ? "text-[#9FAEC1]" : "text-zinc-500 dark:text-[#9FAEC1]"
+          )}>
+            © {currentYear} {brandName}. All rights reserved.
           </p>
         </div>
 
         {/* Links */}
-        <nav aria-label="Footer navigation">
-          <ul className="flex flex-wrap gap-x-6 gap-y-2">
-            {defaultLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  className={cn(
-                    "text-sm text-zinc-600 transition-colors hover:text-zinc-900",
-                    "dark:text-[#9FAEC1] dark:hover:text-[#E8EDF2]"
-                  )}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        {links.length > 0 && (
+          <nav aria-label="Footer navigation" className="flex items-center justify-center">
+            <ul className="flex flex-wrap gap-x-6 gap-y-2 justify-center">
+              {links.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className={cn(
+                      "text-sm transition-colors",
+                      isDark
+                        ? "text-[#9FAEC1] hover:text-[#E8EDF2]"
+                        : "text-zinc-600 hover:text-zinc-900 dark:text-[#9FAEC1] dark:hover:text-[#E8EDF2]"
+                    )}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
 
         {/* Social Links */}
-        <div className="flex items-center gap-4 sm:justify-end">
-          {defaultSocialLinks.map((social) => (
-            <a
-              key={social.label}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={social.label}
-              className={cn(
-                "text-zinc-500 transition-colors hover:text-zinc-700",
-                "dark:text-[#9FAEC1] dark:hover:text-[#4CCBBF]"
-              )}
-            >
-              <svg
-                className="h-5 w-5"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
+        {socialLinks.length > 0 && (
+          <div className="flex items-center gap-4 sm:justify-end">
+            {socialLinks.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className={cn(
+                  "transition-colors",
+                  isDark
+                    ? "text-[#9FAEC1] hover:text-[#4CCBBF]"
+                    : "text-zinc-500 hover:text-zinc-700 dark:text-[#9FAEC1] dark:hover:text-[#4CCBBF]"
+                )}
               >
-                <path d={social.icon} />
-              </svg>
-            </a>
-          ))}
-        </div>
+                <svg
+                  className="h-5 w-5"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d={social.icon} />
+                </svg>
+              </a>
+            ))}
+          </div>
+        )}
       </div>
     </footer>
   );
 }
-
-export type { FooterProps, FooterLink, FooterSocialLink };

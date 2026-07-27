@@ -7,9 +7,7 @@ export interface GoToTopProps {
   className?: string;
 }
 
-/**
- * Floating scroll-to-top button that appears after scrolling down.
- */
+
 export function GoToTop({ threshold = 300, className = "" }: GoToTopProps) {
   const [visible, setVisible] = useState(false);
 

@@ -4,6 +4,8 @@ export interface StatCardProps {
   title: string;
   value: string | number;
   change?: number;
+  /** Custom trend text — overrides the default "X% vs last period" */
+  trendText?: string;
   icon?: React.ReactNode;
   trend?: "up" | "down";
   className?: string;
@@ -16,6 +18,7 @@ export function StatCard({
   title,
   value,
   change,
+  trendText,
   icon,
   trend,
   className = "",
@@ -43,7 +46,7 @@ export function StatCard({
         )}
       </div>
 
-      {change !== undefined && (
+      {(change !== undefined || trendText) && (
         <div className="mt-3 flex items-center gap-1">
           {/* Trend arrow */}
           <svg
@@ -63,17 +66,32 @@ export function StatCard({
               <path d="M8 6l4 4H4l4-4z" />
             )}
           </svg>
-          <span
-            className={[
-              "text-xs font-medium",
-              isPositive ? "text-emerald-600 dark:text-emerald-400" : "",
-              isNegative ? "text-[#ED495D]" : "",
-              !isPositive && !isNegative ? "text-zinc-500 dark:text-[#9FAEC1]" : "",
-            ].join(" ")}
-          >
-            {Math.abs(change)}%
-          </span>
-          <span className="text-xs text-zinc-400 dark:text-[#9FAEC1]">vs last period</span>
+          {trendText ? (
+            <span
+              className={[
+                "text-xs font-medium",
+                isPositive ? "text-emerald-600 dark:text-emerald-400" : "",
+                isNegative ? "text-[#ED495D]" : "",
+                !isPositive && !isNegative ? "text-zinc-500 dark:text-[#9FAEC1]" : "",
+              ].join(" ")}
+            >
+              {trendText}
+            </span>
+          ) : (
+            <>
+              <span
+                className={[
+                  "text-xs font-medium",
+                  isPositive ? "text-emerald-600 dark:text-emerald-400" : "",
+                  isNegative ? "text-[#ED495D]" : "",
+                  !isPositive && !isNegative ? "text-zinc-500 dark:text-[#9FAEC1]" : "",
+                ].join(" ")}
+              >
+                {Math.abs(change!)}%
+              </span>
+              <span className="text-xs text-zinc-400 dark:text-[#9FAEC1]">vs last period</span>
+            </>
+          )}
         </div>
       )}
     </div>

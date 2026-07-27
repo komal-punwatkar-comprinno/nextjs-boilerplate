@@ -3,10 +3,8 @@
  */
 
 export { Header } from "./header";
-export { Sidebar } from "./sidebar";
-export type { SidebarProps } from "./sidebar";
-export { COMPONENT_SECTION_IDS } from "./sidebar";
-export type { ComponentSectionId } from "./sidebar";
+export { Sidebar as SidebarShell } from "./sidebar";
+export type { SidebarProps as SidebarShellProps, SubItem, SubGroup, NavItem, PageLink, UserInfo } from "./sidebar";
 export { Navbar } from "./navbar";
 export type { TopBarProps } from "./navbar";
 

@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { routes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
+import { Footer } from "@/components/layout/footer";
+import { Logo } from "@/components/common/logo";
+import { ThemeToggle } from "@/components/common/theme-toggle";
+import { GoToTop } from "@/components/common/go-to-top";
 
 const features = [
   {
@@ -54,7 +58,7 @@ const features = [
 ];
 
 const stats = [
-  { value: "11+", label: "UI Components" },
+  { value: "60+", label: "UI Components" },
   { value: "100%", label: "TypeScript" },
   { value: "0", label: "Config needed" },
 ];
@@ -69,30 +73,12 @@ export default function Home() {
         style={{ borderColor: "rgba(255,255,255,0.06)", backgroundColor: "rgba(10,13,20,0.85)", backdropFilter: "blur(12px)" }}
       >
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
-          {/* Logo */}
-          <div className="flex items-center gap-2.5">
-            <span
-              className="flex h-7 w-7 items-center justify-center rounded-md text-xs font-black"
-              style={{ backgroundColor: "#4CCBBF", color: "#0A0D14" }}
-            >
-              N
-            </span>
-            <span className="text-sm font-semibold" style={{ color: "#E2E8F0" }}>
-              {siteConfig.name.split(" ")[0]}
-            </span>
-          </div>
+          {/* Logo — boilerplate component */}
+          <Logo src="/logo-300x300.png" name="Comprinno" size="md" textClassName="text-white" />
 
-          {/* Nav links */}
-          <div className="hidden items-center gap-6 md:flex">
-            {["Features", "Components", "Dashboard"].map((item) => (
-              <span key={item} className="cursor-pointer text-sm text-[#64748B] transition-colors hover:text-[#E2E8F0]">
-                {item}
-              </span>
-            ))}
-          </div>
-
-          {/* CTAs */}
+          {/* Right side */}
           <div className="flex items-center gap-2">
+            
             <Link
               href={routes.login}
               className="rounded-lg px-4 py-2 text-sm font-medium transition-colors"
@@ -160,23 +146,17 @@ export default function Home() {
           <div className="relative mt-10 flex flex-col items-center gap-3 sm:flex-row">
             <Link
               href={routes.dashboard}
-              className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition-all"
+              className="rounded-xl px-7 py-3.5 text-sm font-semibold transition-all"
               style={{ backgroundColor: "#4CCBBF", color: "#0A0D14", boxShadow: "0 0 24px rgba(76,203,191,0.25)" }}
             >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-              View dashboard
+              Open Dashboard →
             </Link>
             <Link
               href={routes.components}
-              className="inline-flex items-center gap-2 rounded-xl border px-6 py-3 text-sm font-medium transition-all"
+              className="rounded-xl border px-7 py-3.5 text-sm font-medium transition-all"
               style={{ borderColor: "rgba(255,255,255,0.1)", color: "#94A3B8" }}
             >
-              Browse components
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              Browse Components
             </Link>
           </div>
 
@@ -212,8 +192,8 @@ export default function Home() {
                 {/* Fake sidebar */}
                 <div className="hidden w-48 shrink-0 border-r p-4 sm:block" style={{ borderColor: "rgba(255,255,255,0.06)", backgroundColor: "#1C2127" }}>
                   <div className="mb-4 flex items-center gap-2">
-                    <span className="flex h-6 w-6 items-center justify-center rounded text-[10px] font-black" style={{ backgroundColor: "#4CCBBF", color: "#0A0D14" }}>N</span>
-                    <span className="text-xs font-semibold" style={{ color: "#E2E8F0" }}>NextSaaS</span>
+                    <img src="/logo-300x300.png" alt="Logo" className="h-6 w-6 object-contain" />
+                    <span className="text-xs font-semibold" style={{ color: "#E2E8F0" }}>{siteConfig.name}</span>
                   </div>
                   <div className="space-y-0.5">
                     {[
@@ -421,33 +401,15 @@ export default function Home() {
         </section>
       </main>
 
-      {/* ── Footer ─────────────────────────────────────────────────────────── */}
-      <footer
-        className="border-t py-10"
-        style={{ borderColor: "rgba(255,255,255,0.06)" }}
-      >
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 sm:flex-row">
-          <div className="flex items-center gap-2">
-            <span
-              className="flex h-6 w-6 items-center justify-center rounded text-[10px] font-black"
-              style={{ backgroundColor: "#4CCBBF", color: "#0A0D14" }}
-            >
-              N
-            </span>
-            <span className="text-sm font-semibold" style={{ color: "#E2E8F0" }}>{siteConfig.name.split(" ")[0]}</span>
-          </div>
-          <p className="text-xs" style={{ color: "#475569" }}>
-            © {new Date().getFullYear()} {siteConfig.name}. Built with Next.js + Tailwind CSS v4.
-          </p>
-          <div className="flex items-center gap-6">
-            {["Dashboard", "Components", "Login"].map(item => (
-              <span key={item} className="cursor-pointer text-xs transition-colors" style={{ color: "#475569" }}>
-                {item}
-              </span>
-            ))}
-          </div>
-        </div>
-      </footer>
+      {/* ── Footer — boilerplate component ─────────────────────────────────── */}
+      <Footer
+        brandName="Comprinno"
+        logo="/logo-300x300.png"
+        variant="dark"
+      />
+
+      {/* ── GoToTop — boilerplate component ────────────────────────────────── */}
+      <GoToTop />
     </div>
   );
 }

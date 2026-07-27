@@ -49,7 +49,7 @@ export function Tabs({ items, defaultTab, className = "" }: TabsProps) {
               id={`tab-${item.id}`}
               onClick={() => setActive(item.id)}
               className={[
-                "px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px",
+                "cursor-pointer px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px",
                 isActive
                   ? "border-[#4CCBBF] text-[#4CCBBF]"
                   : "border-transparent text-zinc-500 hover:text-zinc-700 dark:text-[#64748B] dark:hover:text-[#E2E8F0]",

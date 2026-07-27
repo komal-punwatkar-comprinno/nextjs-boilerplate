@@ -1,54 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Badge, Button, Card, Avatar } from "@/components";
+import { Badge, Button, Card, Avatar, Icon, StatCard, PageHeader, Checkbox } from "@/components";
 import { AddTaskModal } from "./_components/add-task-modal";
 import { EditProjectModal, type ProjectRow } from "./_components/edit-project-modal";
 import { ViewAllProjectsModal, ViewAllTasksModal } from "./_components/view-all-modal";
 
-/* ─── Icons ─────────────────────────────────────────────────────────────── */
-function IconFolder({ className = "h-5 w-5" }) {
-  return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-    </svg>
-  );
-}
-function IconClipboard({ className = "h-5 w-5" }) {
-  return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-    </svg>
-  );
-}
-function IconUsers({ className = "h-5 w-5" }) {
-  return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-    </svg>
-  );
-}
-function IconTrend({ className = "h-5 w-5" }) {
-  return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-    </svg>
-  );
-}
-function IconPlus({ className = "h-4 w-4" }) {
-  return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-    </svg>
-  );
-}
-
 /* ─── Static data ────────────────────────────────────────────────────────── */
 const statCards = [
-  { label: "Total Projects", value: "6",   trend: "+2 this month",  trendUp: true,  icon: <IconFolder /> },
-  { label: "Total Tasks",    value: "132", trend: "+12% this month", trendUp: true,  icon: <IconClipboard /> },
-  { label: "Team Members",   value: "8",   trend: "-1 this month",  trendUp: false, icon: <IconUsers /> },
-  { label: "Productivity",   value: "76%", trend: "+4% this month", trendUp: true,  icon: <IconTrend /> },
+  { label: "Total Projects", value: "6",   trend: "+2 this month",  trendUp: true,  icon: "folder"    as const },
+  { label: "Total Tasks",    value: "132", trend: "+12% this month", trendUp: true,  icon: "clipboard" as const },
+  { label: "Team Members",   value: "8",   trend: "-1 this month",  trendUp: false, icon: "users"     as const },
+  { label: "Productivity",   value: "76%", trend: "+4% this month", trendUp: true,  icon: "trendUp"   as const },
 ];
 
 const initialProjects: ProjectRow[] = [
@@ -145,32 +108,28 @@ export default function DashboardPage() {
       <div className="space-y-5">
 
         {/* ── Greeting ───────────────────────────────────────────────────── */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-semibold text-slate-800 dark:text-[#E2E8F0]">{greeting}, User 👋</h1>
-            <p className="mt-0.5 text-sm text-slate-400 dark:text-[#64748B]">{today}</p>
-          </div>
-          <Button variant="primary" size="sm" onClick={() => setAddTaskOpen(true)}>
-            <IconPlus />
-            New Project
-          </Button>
-        </div>
+        <PageHeader
+          title={`${greeting}, User 👋`}
+          description={today}
+          actions={
+            <Button variant="primary" size="sm" onClick={() => setAddTaskOpen(true)}>
+              <Icon name="plus" size="xs" />
+              New Project
+            </Button>
+          }
+        />
 
         {/* ── Stat cards ─────────────────────────────────────────────────── */}
         <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           {statCards.map((card) => (
-            <div key={card.label} className="flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-5 dark:border-[#2D3640] dark:bg-[#242B33]">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-500 dark:bg-[#2D3640] dark:text-[#94A3B8]">
-                {card.icon}
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-xs font-medium text-slate-400 dark:text-[#64748B]">{card.label}</p>
-                <p className="mt-0.5 text-2xl font-bold text-slate-800 dark:text-[#E2E8F0]">{card.value}</p>
-                <p className={`mt-0.5 text-xs font-medium ${card.trendUp ? "text-[#4CCB98]" : "text-[#ED495D]"}`}>
-                  {card.trendUp ? "↑" : "↓"} {card.trend}
-                </p>
-              </div>
-            </div>
+            <StatCard
+              key={card.label}
+              title={card.label}
+              value={card.value}
+              trendText={card.trend}
+              trend={card.trendUp ? "up" : "down"}
+              icon={<Icon name={card.icon} size="md" />}
+            />
           ))}
         </div>
 
@@ -267,7 +226,7 @@ export default function DashboardPage() {
                 <div className="flex items-center gap-2">
                   <Badge variant="info">{tasks.filter(t => !t.done).length} pending</Badge>
                   <Button variant="ghost" size="sm" onClick={() => setAddTaskOpen(true)}>
-                    <IconPlus className="h-3.5 w-3.5" />
+                    <Icon name="plus" size="xs" />
                     Add
                   </Button>
                 </div>
@@ -279,20 +238,11 @@ export default function DashboardPage() {
                   key={i}
                   className="flex items-center gap-3 border-b border-slate-50 py-3 last:border-0 dark:border-[#2D3640]/50"
                 >
-                  {/* Clickable checkbox */}
-                  <button
-                    type="button"
-                    onClick={() => toggleTask(i)}
-                    className={`flex h-4 w-4 shrink-0 cursor-pointer items-center justify-center rounded border-2 transition-colors ${
-                      task.done ? "border-[#4CCB98] bg-[#4CCB98]" : "border-slate-200 hover:border-[#4CCB98] dark:border-[#2D3640] dark:hover:border-[#4CCB98]"
-                    }`}
-                  >
-                    {task.done && (
-                      <svg className="h-2.5 w-2.5 text-white" fill="none" viewBox="0 0 12 12" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M2 6l3 3 5-5" />
-                      </svg>
-                    )}
-                  </button>
+                  <Checkbox
+                    checked={task.done}
+                    onChange={() => toggleTask(i)}
+                    aria-label={`Mark "${task.title}" as ${task.done ? "incomplete" : "complete"}`}
+                  />
                   <p className={`flex-1 text-sm transition-all ${task.done ? "line-through text-slate-300 dark:text-[#475569]" : "text-slate-600 dark:text-[#CBD5E1]"}`}>
                     {task.title}
                   </p>

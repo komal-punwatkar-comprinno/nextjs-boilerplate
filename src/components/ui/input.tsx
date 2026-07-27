@@ -15,6 +15,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   function Input({ label, error, hint, leftAddon, rightAddon, id, className = "", ...props }, ref) {
     const inputId = id ?? `input-${label?.toLowerCase().replace(/\s+/g, "-")}`;
 
+    const isDateType = props.type === "date" || props.type === "datetime-local" || props.type === "time";
+
     return (
       <div className="flex flex-col gap-1">
         {label && (
@@ -44,6 +46,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               error ? "border-red-500 focus:ring-red-500" : "border-zinc-300 dark:border-[#2D3640]",
               leftAddon ? "pl-9" : "",
               rightAddon ? "pr-9" : "",
+              isDateType ? "dark:[color-scheme:dark]" : "",
               className,
             ].join(" ")}
             {...props}

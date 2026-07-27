@@ -94,9 +94,6 @@ export function Navbar({ onMenuToggle }: TopBarProps) {
             placeholder="Search…"
             className="w-32 bg-transparent text-xs text-slate-700 outline-none placeholder:text-slate-400 dark:text-[#E2E8F0] dark:placeholder:text-[#64748B]"
           />
-          <kbd className="ml-1 hidden rounded border border-slate-200 px-1 py-0.5 font-mono text-[10px] text-slate-300 lg:block dark:border-[#2D3640] dark:text-[#475569]">
-            ⌘K
-          </kbd>
         </div>
 
         {/* Mobile search icon */}

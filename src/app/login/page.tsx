@@ -6,9 +6,9 @@ import { useState } from "react";
 import { useZodForm } from "@/hooks/use-zod-form";
 import { loginSchema } from "@/lib/schemas";
 import type { LoginFormValues } from "@/lib/schemas";
-import { Input, Button, Icon } from "@/components";
+import { Input, Button, Icon, Divider, TogglePassword, Alert, Card } from "@/components";
+import { Logo } from "@/components/common/logo";
 import { routes } from "@/config/routes";
-import { siteConfig } from "@/config/site";
 
 /**
  * Login page — fully wired form with Zod validation and loading/error states.
@@ -29,7 +29,6 @@ import { siteConfig } from "@/config/site";
 
 export default function LoginPage() {
   const [serverError, setServerError] = useState<string | null>(null);
-  const [showPassword, setShowPassword] = useState(false);
 
   const form = useZodForm(loginSchema, {
     defaultValues: { email: "", password: "" },
@@ -42,15 +41,6 @@ export default function LoginPage() {
 
     try {
       // ─── TODO: Replace this block with your real auth call ────────────────
-      // Example with Cognito:
-      //   const session = await authService.login({
-      //     identifier: values.email,
-      //     password: values.password,
-      //   });
-      //   localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, session.accessToken);
-      //   router.push(routes.dashboard);
-      //
-      // Simulating network delay for the boilerplate demo:
       await new Promise((resolve) => setTimeout(resolve, 1200));
       setServerError("Auth provider not configured yet. Wire up your login logic in src/app/login/page.tsx.");
       // ──────────────────────────────────────────────────────────────────────
@@ -61,55 +51,44 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-50 px-6 py-16">
+    <main className="flex min-h-screen items-center justify-center bg-slate-50 px-6 py-16 dark:bg-[#0A0D14]">
       <div className="w-full max-w-md">
 
-        {/* Logo */}
+        {/* Logo — using boilerplate Logo component */}
         <div className="mb-8 flex flex-col items-center text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-600 text-lg font-black text-white shadow-lg shadow-indigo-500/30">
-            N
-          </div>
-          <h1 className="mt-4 text-2xl font-bold tracking-tight text-slate-800">
-            Sign in to {siteConfig.name.split(" ")[0]}
+          <Logo src="/logo-300x300.png" name="Comprinno" size="lg" />
+          <h1 className="mt-4 text-2xl font-bold tracking-tight text-slate-800 dark:text-white">
+            Sign in to your account
           </h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
             Enter your credentials to access your dashboard.
           </p>
         </div>
 
-        {/* Card */}
-        <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
+        {/* Card — using boilerplate Card component */}
+        <Card className="p-8">
 
-          {/* Developer notice */}
-          <div className="mb-6 rounded-lg border border-dashed border-amber-300 bg-amber-50 px-4 py-3">
-            <div className="flex items-start gap-2">
-              <span className="mt-0.5 text-base">👨‍💻</span>
-              <p className="text-xs leading-relaxed text-amber-700">
-                <span className="font-semibold">Boilerplate demo — </span>
-                form validation and loading states are fully wired. Connect your auth
-                provider in{" "}
-                <code className="rounded bg-amber-100 px-1 font-mono text-[11px]">
-                  src/app/login/page.tsx
-                </code>{" "}
-                inside the <code className="rounded bg-amber-100 px-1 font-mono text-[11px]">onSubmit</code> handler.
-              </p>
-            </div>
-          </div>
+          {/* Developer notice — using boilerplate Alert component */}
+          <Alert variant="warning" className="mb-6">
+            <span className="font-semibold">Boilerplate demo — </span>
+            form validation and loading states are fully wired. Connect your auth
+            provider in{" "}
+            <code className="rounded bg-amber-100 px-1 font-mono text-[11px] dark:bg-amber-500/20">
+              src/app/login/page.tsx
+            </code>{" "}
+            inside the <code className="rounded bg-amber-100 px-1 font-mono text-[11px] dark:bg-amber-500/20">onSubmit</code> handler.
+          </Alert>
 
           <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
 
-            {/* Server / API error */}
+            {/* Server / API error — using boilerplate Alert component */}
             {serverError && (
-              <div
-                role="alert"
-                className="flex items-start gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
-              >
-                <Icon name="xCircle" size="sm" className="mt-0.5 shrink-0 text-red-500" />
+              <Alert variant="danger" dismissible>
                 {serverError}
-              </div>
+              </Alert>
             )}
 
-            {/* Email */}
+            {/* Email — using boilerplate Input component */}
             <Input
               label="Email address"
               type="email"
@@ -120,23 +99,11 @@ export default function LoginPage() {
               {...register("email")}
             />
 
-            {/* Password */}
-            <Input
+            {/* Password — using boilerplate TogglePassword component */}
+            <TogglePassword
               label="Password"
-              type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               placeholder="••••••••"
-              leftAddon={<Icon name="lock" size="sm" />}
-              rightAddon={
-                <button
-                  type="button"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                  onClick={() => setShowPassword((v) => !v)}
-                  className="pointer-events-auto text-slate-400 hover:text-slate-600"
-                >
-                  <Icon name="eye" size="sm" />
-                </button>
-              }
               error={errors.password?.message}
               {...register("password")}
             />
@@ -145,37 +112,33 @@ export default function LoginPage() {
             <div className="flex justify-end">
               <button
                 type="button"
-                className="text-xs font-medium text-indigo-600 hover:text-indigo-700"
+                className="text-xs font-medium text-indigo-600 hover:text-indigo-700 dark:text-[#4CCBBF] dark:hover:text-[#6EE7DF]"
                 onClick={() => setServerError("Forgot password flow — implement in your auth provider.")}
               >
                 Forgot your password?
               </button>
             </div>
 
-            {/* Submit */}
+            {/* Submit — using boilerplate Button component */}
             <Button
               type="submit"
               variant="primary"
               size="lg"
               isLoading={isSubmitting}
-              className="w-full bg-indigo-600 hover:bg-indigo-500 focus-visible:ring-indigo-500"
+              className="w-full"
             >
               {isSubmitting ? "Signing in…" : "Sign in"}
             </Button>
           </form>
 
-          {/* Divider */}
-          <div className="my-6 flex items-center gap-3">
-            <div className="h-px flex-1 bg-slate-200" />
-            <span className="text-xs text-slate-400">or</span>
-            <div className="h-px flex-1 bg-slate-200" />
-          </div>
+          {/* Divider — using boilerplate Divider component */}
+          <Divider label="or" className="my-6" />
 
           {/* SSO placeholder */}
           <button
             type="button"
             onClick={() => setServerError("SSO / OAuth — configure your provider and implement this handler.")}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
+            className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10"
           >
             <svg className="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -185,12 +148,14 @@ export default function LoginPage() {
             </svg>
             Continue with Google
           </button>
-        </div>
+        </Card>
 
         {/* Footer */}
-        <p className="mt-6 text-center text-sm text-slate-500">
-          Don&apos;t have an account?{" "}
-          <Link href={routes.dashboard} className="font-medium text-indigo-600 hover:text-indigo-700">
+        <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
+          Don&a
+          
+          pos;t have an account?{" "}
+          <Link href={routes.dashboard} className="font-medium text-indigo-600 hover:text-indigo-700 dark:text-[#4CCBBF] dark:hover:text-[#6EE7DF]">
             View dashboard demo →
           </Link>
         </p>

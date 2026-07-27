@@ -14,6 +14,7 @@ import {
   Badge,
   Icon,
 } from "@/components";
+import { useTheme } from "@/contexts/theme-context";
 
 // ─── Mock Data ────────────────────────────────────────────────────────────────
 
@@ -29,7 +30,6 @@ const timezoneOptions = [
 const themeOptions = [
   { value: "light", label: "Light" },
   { value: "dark", label: "Dark" },
-  { value: "system", label: "System" },
 ];
 
 const languageOptions = [
@@ -37,11 +37,6 @@ const languageOptions = [
   { value: "es", label: "Spanish" },
   { value: "fr", label: "French" },
   { value: "de", label: "German" },
-];
-
-const sidebarPositionOptions = [
-  { value: "left", label: "Left" },
-  { value: "right", label: "Right" },
 ];
 
 const mockSessions = [
@@ -381,10 +376,9 @@ function NotificationsTab() {
 // ─── Appearance Tab ───────────────────────────────────────────────────────────
 
 function AppearanceTab() {
+  const { theme, setTheme } = useTheme();
   const [appearance, setAppearance] = useState({
-    theme: "system",
     language: "en",
-    sidebarPosition: "left",
     compactMode: false,
     animations: true,
   });
@@ -412,8 +406,8 @@ function AppearanceTab() {
             <Select
               label="Theme"
               options={themeOptions}
-              value={appearance.theme}
-              onChange={(e) => updateField("theme", e.target.value)}
+              value={theme}
+              onChange={(e) => setTheme(e.target.value as "light" | "dark")}
             />
             <Select
               label="Language"
@@ -421,34 +415,10 @@ function AppearanceTab() {
               value={appearance.language}
               onChange={(e) => updateField("language", e.target.value)}
             />
-            <Select
-              label="Sidebar Position"
-              options={sidebarPositionOptions}
-              value={appearance.sidebarPosition}
-              onChange={(e) => updateField("sidebarPosition", e.target.value)}
-            />
 
-            <div className="flex items-center justify-between pt-2">
-              <div>
-                <p className="text-sm font-medium text-zinc-900 dark:text-[#E8EDF2]">Compact Mode</p>
-                <p className="text-xs text-zinc-500 dark:text-[#9FAEC1]">Reduce spacing and padding</p>
-              </div>
-              <Switch
-                checked={appearance.compactMode}
-                onChange={() => updateField("compactMode", !appearance.compactMode)}
-              />
-            </div>
+          
 
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-zinc-900 dark:text-[#E8EDF2]">Animations</p>
-                <p className="text-xs text-zinc-500 dark:text-[#9FAEC1]">Enable interface animations</p>
-              </div>
-              <Switch
-                checked={appearance.animations}
-                onChange={() => updateField("animations", !appearance.animations)}
-              />
-            </div>
+            
           </div>
         </Card.Body>
       </Card>
