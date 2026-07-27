@@ -21,6 +21,10 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  icons: {
+    icon: "/logo-300x300.png",
+    apple: "/logo-300x300.png",
+  },
 };
 
 /**
