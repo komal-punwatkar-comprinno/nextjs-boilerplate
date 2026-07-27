@@ -79,7 +79,7 @@ export function Offcanvas({
             type="button"
             aria-label="Close"
             onClick={onClose}
-            className="ml-auto rounded-md p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-[#2D3640] dark:hover:text-[#E2E8F0]"
+            className="cursor-pointer ml-auto rounded-md p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-[#2D3640] dark:hover:text-[#E2E8F0]"
           >
             <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />

@@ -166,7 +166,7 @@ function ToastCard({ item, onDismiss }: ToastCardProps) {
         </div>
         <button
           onClick={onDismiss}
-          className="shrink-0 text-zinc-400 hover:text-zinc-600 dark:text-[#9FAEC1] dark:hover:text-[#E8EDF2] transition-colors"
+          className="cursor-pointer shrink-0 text-zinc-400 hover:text-zinc-600 dark:text-[#9FAEC1] dark:hover:text-[#E8EDF2] transition-colors"
           aria-label="Dismiss"
         >
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">

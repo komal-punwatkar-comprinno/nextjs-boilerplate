@@ -193,7 +193,7 @@ export default function MessagesPage() {
                 key={conversation.id}
                 type="button"
                 onClick={() => setActiveConversationId(conversation.id)}
-                className={`flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-zinc-50 dark:hover:bg-[#2A3441] ${
+                className={`flex w-full cursor-pointer items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-zinc-50 dark:hover:bg-[#2A3441] ${
                   conversation.id === activeConversationId
                     ? "bg-zinc-50 dark:bg-[#2A3441]"
                     : ""

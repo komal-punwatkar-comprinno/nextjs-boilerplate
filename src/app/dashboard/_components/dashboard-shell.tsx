@@ -164,7 +164,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           Desktop: static, collapses to icon-only              */}
       <aside
         className={[
-          "fixed inset-y-0 left-0 z-30 h-full overflow-y-auto sidebar-scroll transition-all duration-300",
+          "fixed inset-y-0 left-0 z-30 h-full overflow-visible sidebar-scroll transition-all duration-300",
           // Mobile: full-width drawer, hidden when collapsed
           collapsed ? "-translate-x-full lg:translate-x-0" : "translate-x-0",
           // Desktop: static, width toggles

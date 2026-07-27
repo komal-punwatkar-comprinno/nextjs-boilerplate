@@ -58,7 +58,7 @@ export function Pagination({
   const pages = buildRange(page, totalPages, siblingCount);
 
   const btnBase =
-    "inline-flex h-8 min-w-[2rem] items-center justify-center rounded-md px-2 text-sm font-medium transition-colors";
+    "cursor-pointer inline-flex h-8 min-w-[2rem] items-center justify-center rounded-md px-2 text-sm font-medium transition-colors";
   const btnActive =
     "bg-[#4CCBBF] text-[#1F2937] dark:bg-[#4CCBBF] dark:text-[#1F2937]";
   const btnInactive =

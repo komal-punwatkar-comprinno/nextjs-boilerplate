@@ -91,7 +91,7 @@ function Tooltip({ label, children }: { label: string; children: React.ReactNode
   return (
     <div className="group/tip relative flex items-center">
       {children}
-      <div className="pointer-events-none absolute left-full ml-3 z-50 whitespace-nowrap rounded-lg border border-white/10 bg-[#0f172a] px-2.5 py-1.5 text-xs font-medium text-[#E2E8F0] opacity-0 shadow-xl transition-opacity group-hover/tip:opacity-100">
+      <div className="pointer-events-none absolute left-full ml-3 z-[9999] whitespace-nowrap rounded-lg border border-white/10 bg-[#0f172a] px-2.5 py-1.5 text-xs font-medium text-[#E2E8F0] opacity-0 shadow-xl transition-opacity group-hover/tip:opacity-100">
         {label}
         <span className="absolute -left-1 top-1/2 -translate-y-1/2 border-4 border-transparent border-r-[#0f172a]" />
       </div>
@@ -173,7 +173,7 @@ export function Sidebar({
 
   return (
     <aside
-      className={`flex h-full flex-col bg-[#1A1F2E] dark:bg-[#0f1318] overflow-hidden ${className}`}
+      className={`flex h-full flex-col bg-[#1A1F2E] dark:bg-[#0f1318] ${collapsed ? "overflow-visible" : "overflow-hidden"} ${className}`}
       aria-label="Main navigation"
     >
       {/* ── Logo ─────────────────────────────────────────────────────────── */}
@@ -184,7 +184,7 @@ export function Sidebar({
       </div>
 
       {/* ── Nav ──────────────────────────────────────────────────────────── */}
-      <nav className={`flex-1 overflow-y-auto py-4 space-y-5 ${collapsed ? "px-2" : "px-3"}`}>
+      <nav className={`flex-1 py-4 space-y-5 ${collapsed ? "px-2 overflow-visible" : "px-3 overflow-y-auto overflow-x-hidden"}`}>
 
         {/* MAIN MENU */}
         <div>
@@ -225,6 +225,11 @@ export function Sidebar({
             })}
           </ul>
         </div>
+
+        {/* Divider between sections in collapsed mode */}
+        {collapsed && (
+          <div className="border-t border-white/[0.06]" />
+        )}
 
         {/* PAGES */}
         <div>

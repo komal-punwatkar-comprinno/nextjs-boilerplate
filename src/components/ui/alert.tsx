@@ -108,7 +108,7 @@
             type="button"
             aria-label="Dismiss alert"
             onClick={() => setDismissed(true)}
-            className={`ml-auto shrink-0 rounded p-0.5 transition-colors hover:bg-black/10 dark:hover:bg-white/10 ${s.icon}`}
+            className={`cursor-pointer ml-auto shrink-0 rounded p-0.5 transition-colors hover:bg-black/10 dark:hover:bg-white/10 ${s.icon}`}
           >
             <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
               <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />

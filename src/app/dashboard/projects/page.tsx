@@ -125,6 +125,8 @@ export default function ProjectsPage() {
   const { query, setQuery } = useSearch();
   const [statusFilter, setStatusFilter] = useState("all");
   const modal = useModal();
+  const [viewProject, setViewProject] = useState<Project | null>(null);
+  const [editProject, setEditProject] = useState<Project | null>(null);
 
   // New project form state
   const [newProject, setNewProject] = useState({
@@ -248,10 +250,10 @@ export default function ProjectsPage() {
                   </div>
                 </Card.Body>
                 <Card.Footer className="flex items-center justify-end gap-2">
-                  <Button variant="ghost" size="sm">
+                  <Button variant="ghost" size="sm" onClick={() => setViewProject(project)}>
                     View Details
                   </Button>
-                  <Button variant="secondary" size="sm">
+                  <Button variant="secondary" size="sm" onClick={() => setEditProject(project)}>
                     Edit
                   </Button>
                 </Card.Footer>
@@ -312,6 +314,105 @@ export default function ProjectsPage() {
             }
           />
         </div>
+      </Modal>
+
+      {/* View Details Modal */}
+      <Modal
+        isOpen={!!viewProject}
+        onClose={() => setViewProject(null)}
+        title={viewProject?.name ?? "Project Details"}
+        size="md"
+        footer={
+          <Button variant="secondary" onClick={() => setViewProject(null)}>
+            Close
+          </Button>
+        }
+      >
+        {viewProject && (
+          <div className="space-y-4">
+            <div>
+              <p className="text-xs font-medium text-zinc-500 dark:text-[#9FAEC1]">Description</p>
+              <p className="mt-1 text-sm text-zinc-800 dark:text-[#E8EDF2]">{viewProject.description}</p>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-xs font-medium text-zinc-500 dark:text-[#9FAEC1]">Status</p>
+                <Badge variant={STATUS_BADGE_MAP[viewProject.status].variant} className="mt-1">
+                  {STATUS_BADGE_MAP[viewProject.status].label}
+                </Badge>
+              </div>
+              <div>
+                <p className="text-xs font-medium text-zinc-500 dark:text-[#9FAEC1]">Due Date</p>
+                <p className="mt-1 text-sm text-zinc-800 dark:text-[#E8EDF2]">
+                  {new Date(viewProject.dueDate).toLocaleDateString()}
+                </p>
+              </div>
+            </div>
+            <div>
+              <p className="text-xs font-medium text-zinc-500 dark:text-[#9FAEC1]">Progress</p>
+              <div className="mt-2">
+                <Progress value={viewProject.progress} />
+                <p className="mt-1 text-xs text-zinc-500 dark:text-[#9FAEC1]">{viewProject.progress}% complete</p>
+              </div>
+            </div>
+            <div>
+              <p className="text-xs font-medium text-zinc-500 dark:text-[#9FAEC1]">Team ({viewProject.team.length})</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {viewProject.team.map((member, idx) => (
+                  <div key={idx} className="flex items-center gap-2 rounded-lg border border-zinc-200 px-2.5 py-1.5 dark:border-[#2D3640]">
+                    <Avatar name={member.name} size="xs" />
+                    <span className="text-xs text-zinc-700 dark:text-[#E8EDF2]">{member.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </Modal>
+
+      {/* Edit Project Modal */}
+      <Modal
+        isOpen={!!editProject}
+        onClose={() => setEditProject(null)}
+        title={`Edit: ${editProject?.name ?? ""}`}
+        size="md"
+        footer={
+          <>
+            <Button variant="secondary" onClick={() => setEditProject(null)}>
+              Cancel
+            </Button>
+            <Button onClick={() => setEditProject(null)}>
+              Save Changes
+            </Button>
+          </>
+        }
+      >
+        {editProject && (
+          <div className="space-y-4">
+            <Input
+              label="Project Name"
+              defaultValue={editProject.name}
+            />
+            <Input
+              label="Description"
+              defaultValue={editProject.description}
+            />
+            <Select
+              label="Status"
+              options={[
+                { value: "active", label: "Active" },
+                { value: "completed", label: "Completed" },
+                { value: "on-hold", label: "On Hold" },
+              ]}
+              defaultValue={editProject.status}
+            />
+            <Input
+              label="Due Date"
+              type="date"
+              defaultValue={editProject.dueDate}
+            />
+          </div>
+        )}
       </Modal>
     </div>
   );

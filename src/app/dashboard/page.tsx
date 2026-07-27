@@ -239,6 +239,7 @@ export default function DashboardPage() {
                   className="flex items-center gap-3 border-b border-slate-50 py-3 last:border-0 dark:border-[#2D3640]/50"
                 >
                   <Checkbox
+                    id={`task-${i}`}
                     checked={task.done}
                     onChange={() => toggleTask(i)}
                     aria-label={`Mark "${task.title}" as ${task.done ? "incomplete" : "complete"}`}

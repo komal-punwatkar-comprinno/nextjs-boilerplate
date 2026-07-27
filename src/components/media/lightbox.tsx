@@ -75,7 +75,7 @@ export function Lightbox({ images, isOpen, onClose, initialIndex = 0 }: Lightbox
       <button
         type="button"
         onClick={onClose}
-        className="absolute right-4 top-4 z-10 rounded-full bg-black/40 p-2 text-white transition-colors hover:bg-black/60"
+        className="cursor-pointer absolute right-4 top-4 z-10 rounded-full bg-black/40 p-2 text-white transition-colors hover:bg-black/60"
         aria-label="Close lightbox"
       >
         <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

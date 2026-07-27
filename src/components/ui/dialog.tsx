@@ -90,7 +90,7 @@ export function Modal({
             type="button"
             onClick={onClose}
             aria-label="Close modal"
-            className="rounded-md p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:text-[#9FAEC1] dark:hover:bg-[#353B46] dark:hover:text-[#E8EDF2]"
+            className="cursor-pointer rounded-md p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:text-[#9FAEC1] dark:hover:bg-[#353B46] dark:hover:text-[#E8EDF2]"
           >
             <svg
               className="h-5 w-5"

@@ -223,7 +223,7 @@ function SecurityTab() {
               </p>
             </div>
             <Switch
-              label=""
+              id="switch-2fa"
               checked={twoFactor}
               onChange={() => setTwoFactor(!twoFactor)}
             />
@@ -320,7 +320,7 @@ function NotificationsTab() {
                 <p className="text-sm font-medium text-zinc-900 dark:text-[#E8EDF2]">Email notifications</p>
                 <p className="text-xs text-zinc-500 dark:text-[#9FAEC1]">Receive updates via email</p>
               </div>
-              <Switch checked={prefs.email} onChange={() => toggle("email")} />
+              <Switch id="switch-email" checked={prefs.email} onChange={() => toggle("email")} />
             </div>
 
             <div className="flex items-center justify-between">
@@ -328,7 +328,7 @@ function NotificationsTab() {
                 <p className="text-sm font-medium text-zinc-900 dark:text-[#E8EDF2]">Push notifications</p>
                 <p className="text-xs text-zinc-500 dark:text-[#9FAEC1]">Browser push notifications</p>
               </div>
-              <Switch checked={prefs.push} onChange={() => toggle("push")} />
+              <Switch id="switch-push" checked={prefs.push} onChange={() => toggle("push")} />
             </div>
 
             <div className="flex items-center justify-between">
@@ -336,7 +336,7 @@ function NotificationsTab() {
                 <p className="text-sm font-medium text-zinc-900 dark:text-[#E8EDF2]">Weekly digest</p>
                 <p className="text-xs text-zinc-500 dark:text-[#9FAEC1]">Summary of activity every Monday</p>
               </div>
-              <Switch checked={prefs.weeklyDigest} onChange={() => toggle("weeklyDigest")} />
+              <Switch id="switch-weekly" checked={prefs.weeklyDigest} onChange={() => toggle("weeklyDigest")} />
             </div>
 
             <div className="flex items-center justify-between">
@@ -344,7 +344,7 @@ function NotificationsTab() {
                 <p className="text-sm font-medium text-zinc-900 dark:text-[#E8EDF2]">Marketing emails</p>
                 <p className="text-xs text-zinc-500 dark:text-[#9FAEC1]">Product updates and offers</p>
               </div>
-              <Switch checked={prefs.marketing} onChange={() => toggle("marketing")} />
+              <Switch id="switch-marketing" checked={prefs.marketing} onChange={() => toggle("marketing")} />
             </div>
 
             <div className="flex items-center justify-between">
@@ -352,7 +352,7 @@ function NotificationsTab() {
                 <p className="text-sm font-medium text-zinc-900 dark:text-[#E8EDF2]">Security alerts</p>
                 <p className="text-xs text-zinc-500 dark:text-[#9FAEC1]">Login attempts and suspicious activity</p>
               </div>
-              <Switch checked={prefs.security} onChange={() => toggle("security")} />
+              <Switch id="switch-security" checked={prefs.security} onChange={() => toggle("security")} />
             </div>
 
             <div className="flex items-center justify-between">
@@ -360,7 +360,7 @@ function NotificationsTab() {
                 <p className="text-sm font-medium text-zinc-900 dark:text-[#E8EDF2]">Mention notifications</p>
                 <p className="text-xs text-zinc-500 dark:text-[#9FAEC1]">When someone mentions you</p>
               </div>
-              <Switch checked={prefs.mentions} onChange={() => toggle("mentions")} />
+              <Switch id="switch-mentions" checked={prefs.mentions} onChange={() => toggle("mentions")} />
             </div>
           </div>
         </Card.Body>
@@ -377,6 +377,7 @@ function NotificationsTab() {
 
 function AppearanceTab() {
   const { theme, setTheme } = useTheme();
+  const [selectedTheme, setSelectedTheme] = useState(theme);
   const [appearance, setAppearance] = useState({
     language: "en",
     compactMode: false,
@@ -390,6 +391,7 @@ function AppearanceTab() {
 
   const handleApply = () => {
     setApplying(true);
+    setTheme(selectedTheme as "light" | "dark");
     setTimeout(() => setApplying(false), 1500);
   };
 
@@ -406,8 +408,8 @@ function AppearanceTab() {
             <Select
               label="Theme"
               options={themeOptions}
-              value={theme}
-              onChange={(e) => setTheme(e.target.value as "light" | "dark")}
+              value={selectedTheme}
+              onChange={(e) => setSelectedTheme(e.target.value)}
             />
             <Select
               label="Language"
