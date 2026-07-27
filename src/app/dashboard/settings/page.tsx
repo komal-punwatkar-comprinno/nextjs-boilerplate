@@ -409,7 +409,7 @@ function AppearanceTab() {
               label="Theme"
               options={themeOptions}
               value={selectedTheme}
-              onChange={(e) => setSelectedTheme(e.target.value)}
+              onChange={(e) => setSelectedTheme(e.target.value as "light" | "dark")}
             />
             <Select
               label="Language"
