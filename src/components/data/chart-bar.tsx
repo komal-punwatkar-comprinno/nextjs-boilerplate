@@ -36,7 +36,9 @@ export function ChartBar({
   const barWidth = Math.min(40, (chartWidth / data.length) * 0.6);
   const barGap = (chartWidth - barWidth * data.length) / (data.length + 1);
 
-  const gridLines = 4;
+  const gridLines = maxValue <= 5 ? maxValue : Math.min(5, Math.ceil(maxValue));
+  const gridStep = maxValue <= 5 ? 1 : Math.ceil(maxValue / gridLines);
+  const adjustedMax = gridStep * gridLines;
   const defaultColor = "#4CCBBF";
 
   return (
@@ -51,6 +53,7 @@ export function ChartBar({
         {showGrid &&
           Array.from({ length: gridLines + 1 }).map((_, i) => {
             const y = padding.top + (chartHeight / gridLines) * i;
+            const val = adjustedMax - gridStep * i;
             return (
               <g key={`grid-${i}`}>
                 <line
@@ -67,7 +70,7 @@ export function ChartBar({
                   textAnchor="end"
                   className="fill-zinc-400 text-[10px] dark:fill-[#9FAEC1]"
                 >
-                  {Math.round(maxValue - (maxValue / gridLines) * i)}
+                  {val}
                 </text>
               </g>
             );
@@ -75,12 +78,12 @@ export function ChartBar({
 
         {/* Bars */}
         {data.map((d, i) => {
-          const barHeight = (d.value / maxValue) * chartHeight;
+          const barHeight = (d.value / adjustedMax) * chartHeight;
           const x = padding.left + barGap * (i + 1) + barWidth * i;
           const y = padding.top + chartHeight - barHeight;
 
           return (
-            <g key={`bar-${i}`}>
+            <g key={`bar-${i}`} className="group">
               <rect
                 x={x}
                 y={y}
@@ -89,7 +92,9 @@ export function ChartBar({
                 rx={3}
                 fill={d.color || defaultColor}
                 opacity={0.9}
+                className="transition-opacity hover:opacity-100"
               >
+                <title>{d.label}: {d.value}</title>
                 {animate && (
                   <animate
                     attributeName="height"
@@ -111,6 +116,16 @@ export function ChartBar({
                   />
                 )}
               </rect>
+
+              {/* Value on top of bar */}
+              <text
+                x={x + barWidth / 2}
+                y={y - 5}
+                textAnchor="middle"
+                className="fill-zinc-600 text-[9px] font-semibold dark:fill-[#E8EDF2] opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                {d.value}
+              </text>
 
               {/* Labels */}
               {showLabels && (

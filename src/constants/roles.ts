@@ -1,28 +1,42 @@
 /**
  * Application role definitions.
  *
- * Roles are strings that match the values stored in the Cognito user pool
- * groups (or the equivalent identity provider attribute).
+ * Roles match the `custom:role` attribute stored in the Cognito user pool.
+ * The hierarchy is: admin > manager > member.
  */
 export const ROLES = {
   ADMIN: "admin",
-  USER: "user",
-  VIEWER: "viewer",
+  MANAGER: "manager",
+  MEMBER: "member",
 } as const;
 
 export type Role = (typeof ROLES)[keyof typeof ROLES];
 
 /**
- * Returns `true` when the provided role list includes at least one of the
- * required roles.
+ * Returns `true` when the user's role is included in the required roles list.
  *
  * @example
- * hasRole(["admin"], [ROLES.ADMIN]) // true
- * hasRole(["user"], [ROLES.ADMIN])  // false
+ * hasRole("admin", [ROLES.ADMIN])           // true
+ * hasRole("member", [ROLES.ADMIN])          // false
+ * hasRole("manager", [ROLES.ADMIN, ROLES.MANAGER]) // true
  */
 export function hasRole(
-  userRoles: string[],
+  userRole: string,
   requiredRoles: Role[]
 ): boolean {
-  return requiredRoles.some((role) => userRoles.includes(role));
+  return requiredRoles.includes(userRole as Role);
+}
+
+/**
+ * Returns `true` when the user's role is admin.
+ */
+export function isAdmin(role: string): boolean {
+  return role === ROLES.ADMIN;
+}
+
+/**
+ * Returns `true` when the user's role is admin or manager.
+ */
+export function isManagerOrAbove(role: string): boolean {
+  return role === ROLES.ADMIN || role === ROLES.MANAGER;
 }

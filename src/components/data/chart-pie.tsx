@@ -97,10 +97,11 @@ export function ChartPie({
               key={i}
               d={path}
               fill={seg.color}
-              className="transition-opacity hover:opacity-80"
+              className="transition-opacity hover:opacity-80 cursor-pointer"
               stroke="white"
               strokeWidth={1.5}
             >
+              <title>{seg.label}: {seg.value} ({Math.round((seg.value / total) * 100)}%)</title>
               {animate && (
                 <animate
                   attributeName="opacity"

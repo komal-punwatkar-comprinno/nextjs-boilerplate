@@ -10,10 +10,20 @@ export { BaseService } from "./base-service";
 export {
   emailSchema,
   passwordSchema,
+  newPasswordSchema,
   requiredStringSchema,
   optionalStringSchema,
   positiveIntSchema,
   loginSchema,
+  newPasswordChallengeSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
   searchSchema,
 } from "./schemas";
-export type { LoginFormValues, SearchFormValues } from "./schemas";
+export type {
+  LoginFormValues,
+  NewPasswordChallengeFormValues,
+  ForgotPasswordFormValues,
+  ResetPasswordFormValues,
+  SearchFormValues,
+} from "./schemas";
