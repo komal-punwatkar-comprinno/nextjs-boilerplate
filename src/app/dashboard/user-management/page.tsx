@@ -154,7 +154,7 @@ export default function UserManagementPage() {
 
       {/* User Form Modal */}
       {formUser !== undefined && (
-        <UserFormModal user={formUser} teams={teams} managers={managers} onClose={() => setFormUser(undefined)} onSaved={() => { setFormUser(undefined); loadData(); }} />
+        <UserFormModal user={formUser} teams={teams} managers={managers} onClose={() => setFormUser(undefined)} onSaved={() => { setFormUser(undefined); toast({ message: formUser ? "User updated successfully" : "User added successfully", variant: "success" }); loadData(); }} />
       )}
       {/* Teams Management Modal */}
       {showTeamsModal && (

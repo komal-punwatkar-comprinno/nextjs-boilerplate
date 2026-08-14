@@ -71,7 +71,7 @@ export default function TrainingPlansPage() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <PageHeader title="Training Plans" description={`${filtered.length} plan${filtered.length !== 1 ? "s" : ""}`} />
         <div className="flex gap-2">
-          <Button variant="secondary" size="sm" onClick={() => trainingPlanService.downloadTemplate()}>
+          <Button variant="secondary" size="sm" onClick={async () => { try { await trainingPlanService.downloadTemplate(); } catch { toast({ message: "Failed to download template", variant: "error" }); } }}>
             <Icon name="download" size="sm" /> Template
           </Button>
           <Button variant="secondary" size="sm" onClick={() => fileInputRef.current?.click()}>
@@ -114,28 +114,43 @@ export default function TrainingPlansPage() {
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((p) => (
+          {filtered.map((p) => {
+            const itemCount = p.training_items?.length || 0;
+            return (
             <div key={p.plan_id} className="cursor-pointer" onClick={() => setViewPlan(p)}>
-            <Card className="flex flex-col p-5 hover:shadow-md transition-shadow h-full">
-              <div className="flex items-start justify-between">
-                <p className="text-sm font-semibold text-slate-800 dark:text-white">{p.plan_name}</p>
-                <Badge className={`text-[10px] ${(p.status || "Active") === "Active" ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400" : "bg-slate-100 text-slate-500"}`}>{p.status || "Active"}</Badge>
-              </div>
-              <div className="mt-2 flex flex-wrap gap-3 text-xs text-slate-500">
-                {p.target_team && <span><Icon name="users" size="sm" className="mr-1 inline" />{p.target_team}</span>}
-                {p.target_role && <span><Icon name="user" size="sm" className="mr-1 inline" />{p.target_role}</span>}
-                <span><Icon name="clock" size="sm" className="mr-1 inline" />{p.duration || 30} days</span>
-              </div>
-              {p.description && <p className="mt-2 text-xs text-slate-400 line-clamp-2">{p.description}</p>}
-              {/* Actions */}
-              <div className="mt-auto flex gap-2 pt-3 border-t border-slate-100 dark:border-[#2D3640]" onClick={(e) => e.stopPropagation()}>
-                <button onClick={() => setFormPlan(p)} className="rounded-md p-1.5 text-slate-400 hover:bg-slate-100 hover:text-[#1b2a49] dark:hover:bg-[#2D3640]" title="Edit"><Icon name="edit" size="sm" /></button>
-                <button onClick={() => trainingPlanService.exportPlanExcel(p.plan_id)} className="rounded-md p-1.5 text-slate-400 hover:bg-slate-100 hover:text-[#1b2a49] dark:hover:bg-[#2D3640]" title="Export Excel"><Icon name="download" size="sm" /></button>
-                <button onClick={() => handleDelete(p.plan_id, p.plan_name)} className="rounded-md p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20" title="Delete"><Icon name="trash" size="sm" /></button>
+            <Card className="flex flex-col overflow-hidden hover:shadow-md transition-all h-full">
+              {/* Top accent bar */}
+              <div className={`h-1 w-full ${(p.status || "Active") === "Active" ? "bg-emerald-400" : "bg-slate-300"}`} />
+
+              <div className="flex flex-col flex-1 p-5">
+                {/* Header: name + status */}
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-sm font-semibold text-slate-800 leading-tight dark:text-white">{p.plan_name}</p>
+                  <Badge className={`shrink-0 text-[10px] ${(p.status || "Active") === "Active" ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400" : "bg-slate-100 text-slate-500"}`}>{p.status || "Active"}</Badge>
+                </div>
+
+                {/* Meta info */}
+                <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-slate-500 dark:text-slate-400">
+                  {p.target_team && <span className="flex items-center gap-1"><Icon name="users" size="sm" />{p.target_team}</span>}
+                  {p.target_role && <span className="flex items-center gap-1 capitalize"><Icon name="user" size="sm" />{p.target_role}</span>}
+                  <span className="flex items-center gap-1"><Icon name="clock" size="sm" />{p.duration || 30} days</span>
+                  {itemCount > 0 && <span className="flex items-center gap-1"><Icon name="clipboard" size="sm" />{itemCount} topics</span>}
+                </div>
+
+                {/* Description */}
+                {p.description && <p className="mt-2 text-xs text-slate-400 line-clamp-2 dark:text-slate-500">{p.description}</p>}
+
+                {/* Actions */}
+                <div className="mt-auto flex items-center gap-1 pt-4 border-t border-slate-100 dark:border-[#2D3640] mt-4" onClick={(e) => e.stopPropagation()}>
+                  <button onClick={() => setFormPlan(p)} className="rounded-md p-2 text-slate-400 hover:bg-slate-100 hover:text-[#1b2a49] dark:hover:bg-[#2D3640] dark:hover:text-white" title="Edit"><Icon name="edit" size="sm" /></button>
+                  <button onClick={() => trainingPlanService.exportPlanExcel(p.plan_id)} className="rounded-md p-2 text-slate-400 hover:bg-slate-100 hover:text-[#1b2a49] dark:hover:bg-[#2D3640] dark:hover:text-white" title="Export Excel"><Icon name="download" size="sm" /></button>
+                  <button onClick={() => handleDelete(p.plan_id, p.plan_name)} className="rounded-md p-2 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400" title="Delete"><Icon name="trash" size="sm" /></button>
+                </div>
               </div>
             </Card>
             </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
