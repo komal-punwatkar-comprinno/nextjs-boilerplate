@@ -1,5 +1,7 @@
 /**
  * Barrel file for application services.
- * Import from "@/services" for any of these.
+ *
+ * Re-export service interfaces and implementations from here so consumers
+ * can import from `@/services`.
  */
-export { authService } from "./auth-service";
+export type { AuthService } from "./auth-service";

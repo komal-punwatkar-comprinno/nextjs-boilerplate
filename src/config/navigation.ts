@@ -5,7 +5,6 @@ export interface NavItem {
   href: string;
   icon?: string;
   badge?: string;
-  adminOnly?: boolean;
   children?: NavItem[];
 }
 
@@ -15,70 +14,60 @@ export interface NavigationConfig {
   footer: NavItem[];
 }
 
-/**
- * Sidebar navigation for authenticated dashboard pages.
- *
- * Items with `adminOnly: true` are only rendered when the user's role is "admin".
- * The sidebar component should check this flag against the current user's role.
- */
+/** Sidebar navigation for authenticated dashboard pages. */
 export const sidebarNavigation: NavItem[] = [
-  // ── Common (all roles) ──────────────────────────────────────────────────
   {
-    label: "Overview",
+    label: "Dashboard",
     href: routes.dashboard,
     icon: "home",
   },
   {
-    label: "Learning Progress",
-    href: routes.learningProgress,
-    icon: "trendUp",
+    label: "Analytics",
+    href: "/dashboard/analytics",
+    icon: "chart-bar",
   },
   {
-    label: "Certifications",
-    href: routes.certificationProgress,
-    icon: "certificate",
-  },
-  {
-    label: "Skillset Heatmap",
-    href: routes.skillsetHeatmap,
-    icon: "gridCells",
-  },
-
-  // ── Admin only ──────────────────────────────────────────────────────────
-  {
-    label: "Analytics Dashboard",
-    href: routes.analytics,
-    icon: "chartBar",
-    adminOnly: true,
-  },
-  {
-    label: "Skillset Templates",
-    href: routes.skillsetTemplates,
-    icon: "layerGroup",
-    adminOnly: true,
-  },
-  {
-    label: "Training Plans",
-    href: routes.trainingPlans,
-    icon: "calendar",
-    adminOnly: true,
-  },
-  {
-    label: "User Management",
-    href: routes.userManagement,
+    label: "Users",
+    href: "/dashboard/users",
     icon: "users",
-    adminOnly: true,
+  },
+  {
+    label: "Projects",
+    href: "/dashboard/projects",
+    icon: "folder",
+  },
+  {
+    label: "Messages",
+    href: "/dashboard/messages",
+    icon: "chat-bubble-left",
+    badge: "3",
+  },
+  {
+    label: "Settings",
+    href: "/dashboard/settings",
+    icon: "cog-6-tooth",
+  },
+  {
+    label: "Documentation",
+    href: "/dashboard/documentation",
+    icon: "book-open",
   },
 ];
 
 /** Top navigation bar links (public/marketing pages). */
 export const topbarNavigation: NavItem[] = [
-  { label: "Home", href: routes.home },
-  { label: "Login", href: routes.login },
+  { label: "Home", href: "/" },
+  { label: "Features", href: "/#features" },
+  { label: "Pricing", href: "/#pricing" },
+  { label: "Docs", href: "/docs" },
 ];
 
 /** Footer navigation links. */
-export const footerNavigation: NavItem[] = [];
+export const footerNavigation: NavItem[] = [
+  { label: "Privacy", href: "/privacy" },
+  { label: "Terms", href: "/terms" },
+  { label: "Contact", href: "/contact" },
+];
 
 /** Combined navigation config (for programmatic access). */
 export const navigationConfig: NavigationConfig = {

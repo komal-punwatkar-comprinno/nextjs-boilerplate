@@ -111,6 +111,3 @@ export type { ToastProviderProps, ToastOptions, ToastVariant, ToastPosition } fr
 
 export { Typography } from "./typography";
 export type { TypographyProps, TypographyVariant } from "./typography";
-
-export { ConfirmDialog } from "./confirm-dialog";
-export type { ConfirmDialogProps } from "./confirm-dialog";

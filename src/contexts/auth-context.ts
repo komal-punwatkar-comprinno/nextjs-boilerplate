@@ -11,10 +11,8 @@ export interface AuthContextValue {
   isLoading: boolean;
   /** `true` when a valid session exists. */
   isAuthenticated: boolean;
-  /** Trigger a logout: clears tokens and redirects to login. */
-  logout: () => void;
-  /** Update the user object in state and localStorage (e.g. after role sync). */
-  setUser: (user: AuthUser) => void;
+  /** Trigger a logout and clear the session. */
+  logout: () => Promise<void>;
 }
 
 /**

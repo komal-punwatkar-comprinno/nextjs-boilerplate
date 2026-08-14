@@ -52,55 +52,6 @@ export const loginSchema = z.object({
 });
 export type LoginFormValues = z.infer<typeof loginSchema>;
 
-/**
- * New password schema — enforces Cognito's default password policy:
- * - At least 8 characters
- * - At least 1 uppercase letter
- * - At least 1 lowercase letter
- * - At least 1 digit
- * - At least 1 special character
- */
-export const newPasswordSchema = z
-  .string()
-  .min(8, "Password must be at least 8 characters.")
-  .max(128, "Password must be fewer than 128 characters.")
-  .regex(/[A-Z]/, "Must include at least one uppercase letter.")
-  .regex(/[a-z]/, "Must include at least one lowercase letter.")
-  .regex(/[0-9]/, "Must include at least one number.")
-  .regex(/[^A-Za-z0-9]/, "Must include at least one special character.");
-
-/** New password challenge form (first login after admin-created account). */
-export const newPasswordChallengeSchema = z
-  .object({
-    new_password: newPasswordSchema,
-    confirm_password: z.string().min(1, "Please confirm your password."),
-  })
-  .refine((data) => data.new_password === data.confirm_password, {
-    message: "Passwords do not match.",
-    path: ["confirm_password"],
-  });
-export type NewPasswordChallengeFormValues = z.infer<typeof newPasswordChallengeSchema>;
-
-/** Forgot password form — just collects email. */
-export const forgotPasswordSchema = z.object({
-  email: emailSchema,
-});
-export type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
-
-/** Reset password form — email + verification code + new password. */
-export const resetPasswordSchema = z
-  .object({
-    email: emailSchema,
-    code: z.string().min(1, "Verification code is required."),
-    new_password: newPasswordSchema,
-    confirm_password: z.string().min(1, "Please confirm your password."),
-  })
-  .refine((data) => data.new_password === data.confirm_password, {
-    message: "Passwords do not match.",
-    path: ["confirm_password"],
-  });
-export type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
-
 /** Generic search / filter bar. */
 export const searchSchema = z.object({
   query: z.string().optional(),
