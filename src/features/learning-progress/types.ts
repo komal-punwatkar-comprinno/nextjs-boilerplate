@@ -108,7 +108,15 @@ export interface AssignTrainingPayload {
 }
 
 export interface BulkAssignPayload {
-  assignments: AssignTrainingPayload[];
+  user_emails: string[];
+  course_name: string;
+  training_id?: string;
+  training?: string;
+  start_date?: string;
+  end_date?: string;
+  target_date?: string;
+  duration?: string | number;
+  status?: string;
 }
 
 export interface UpdateProgressPayload {
@@ -120,8 +128,9 @@ export interface UpdateProgressPayload {
 
 export interface ExtensionRequestPayload {
   extension_type: "week" | "full";
-  extension_week_number?: number;
-  extension_new_date?: string;
+  week_number?: number;
+  new_week_date?: string;
+  new_end_date?: string;
   reason?: string;
 }
 

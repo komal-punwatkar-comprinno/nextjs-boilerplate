@@ -79,7 +79,7 @@ export function Navbar({ onMenuToggle }: TopBarProps) {
             className="flex cursor-pointer items-center justify-center rounded-full p-0.5 transition-colors hover:ring-2 hover:ring-slate-200 dark:hover:ring-[#3D4A5C]"
           >
             {/* Avatar circle with initials */}
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#1B2A49] text-xs font-semibold text-white">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#1B2A49] text-xs font-semibold text-white dark:bg-[#4CCBBF] dark:text-[#1C2127]">
               {userName.charAt(0).toUpperCase()}
             </div>
           </button>

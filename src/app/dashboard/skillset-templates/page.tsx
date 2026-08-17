@@ -84,9 +84,11 @@ export default function SkillsetTemplatesPage() {
 
       {/* Grid */}
       {filtered.length === 0 ? (
-        <div className="flex h-40 flex-col items-center justify-center gap-2 text-slate-400">
-          <Icon name="layerGroup" size="lg" />
-          <p className="text-sm">No templates found</p>
+        <div className="flex h-48 flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 dark:border-[#2D3640] dark:bg-[#1C2127]/50">
+          <div className="rounded-full bg-slate-100 p-3 dark:bg-[#2D3640]">
+            <Icon name="layerGroup" size="lg" className="text-slate-300 dark:text-slate-500" />
+          </div>
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">No templates found</p>
           <Button variant="primary" size="sm" onClick={() => { setEditingTemplate(null); setModalOpen(true); }}>Create your first template</Button>
         </div>
       ) : (
@@ -94,32 +96,38 @@ export default function SkillsetTemplatesPage() {
           {filtered.map((t) => {
             const skills = t.skills || [];
             return (
-              <Card key={t.template_id} className="flex flex-col p-5">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-semibold text-slate-800 truncate dark:text-white">{t.template_name}</p>
-                      <Badge className={`text-[10px] ${(t.status || "Active") === "Active" ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400" : "bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-400"}`}>{t.status || "Active"}</Badge>
+              <Card key={t.template_id} className="flex flex-col overflow-hidden border border-slate-200/80 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 dark:border-[#2D3640]">
+                <div className="p-5 flex flex-col flex-1">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-[#1b2a49] to-[#2a3d5f]">
+                          <Icon name="layerGroup" size="sm" className="text-white" />
+                        </div>
+                        <p className="text-sm font-semibold text-slate-800 truncate dark:text-white">{t.template_name}</p>
+                      </div>
+                      {t.description && <p className="mt-2 text-xs text-slate-500 dark:text-slate-400 line-clamp-2">{t.description}</p>}
                     </div>
-                    {t.description && <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 line-clamp-2">{t.description}</p>}
+                    <div className="flex shrink-0 gap-1 ml-2">
+                      <button onClick={() => { setEditingTemplate(t); setModalOpen(true); }} className="rounded-md p-1.5 text-slate-400 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 dark:hover:text-blue-400 transition-colors" title="Edit"><Icon name="edit" size="sm" /></button>
+                      <button onClick={() => handleDelete(t.template_id)} className="rounded-md p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors" title="Delete"><Icon name="trash" size="sm" /></button>
+                    </div>
                   </div>
-                  <div className="flex shrink-0 gap-1 ml-2">
-                    <button onClick={() => { setEditingTemplate(t); setModalOpen(true); }} className="rounded-md p-1.5 text-slate-400 hover:bg-slate-100 hover:text-[#1b2a49] dark:hover:bg-[#2D3640]" title="Edit"><Icon name="edit" size="sm" /></button>
-                    <button onClick={() => handleDelete(t.template_id)} className="rounded-md p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20" title="Delete"><Icon name="trash" size="sm" /></button>
+
+                  {/* Meta */}
+                  <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
+                    <span className="inline-flex items-center gap-1"><Icon name="clipboard" size="sm" />{skills.length} skill{skills.length !== 1 ? "s" : ""}</span>
+                    {t.target_team && <span className="inline-flex items-center gap-1"><Icon name="users" size="sm" />{t.target_team}</span>}
+                    <Badge className={`text-[10px] ${(t.status || "Active") === "Active" ? "bg-emerald-50 text-emerald-700 dark:bg-[#2D3640] dark:text-slate-300" : "bg-slate-100 text-slate-500 dark:bg-[#2D3640] dark:text-slate-400"}`}>{t.status || "Active"}</Badge>
                   </div>
-                </div>
-                {/* Meta */}
-                <div className="mt-3 flex flex-wrap gap-3 text-xs text-slate-500 dark:text-slate-400">
-                  <span><Icon name="clipboard" size="sm" className="mr-1 inline" />{skills.length} skill{skills.length !== 1 ? "s" : ""}</span>
-                  {t.target_team && <span><Icon name="users" size="sm" className="mr-1 inline" />{t.target_team}</span>}
-                  {t.created_at && <span><Icon name="calendar" size="sm" className="mr-1 inline" />{new Date(t.created_at).toLocaleDateString()}</span>}
-                </div>
-                {/* Skills preview */}
-                <div className="mt-3 flex flex-wrap gap-1">
-                  {skills.slice(0, 4).map((s, idx) => (
-                    <span key={`${s}-${idx}`} className="rounded bg-slate-100 px-2 py-0.5 text-[11px] text-slate-600 dark:bg-slate-700 dark:text-slate-300">{typeof s === "string" ? s : (s as any).skill_name || ""}</span>
-                  ))}
-                  {skills.length > 4 && <span className="rounded bg-slate-50 px-2 py-0.5 text-[11px] text-slate-400">+{skills.length - 4} more</span>}
+
+                  {/* Skills preview */}
+                  <div className="mt-4 flex flex-wrap gap-1.5 pt-3 border-t border-slate-100 dark:border-[#2D3640]">
+                    {skills.slice(0, 5).map((s, idx) => (
+                      <span key={`${s}-${idx}`} className="inline-flex items-center rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600 dark:bg-[#2D3640] dark:text-slate-300">{typeof s === "string" ? s : (s as any).skill_name || ""}</span>
+                    ))}
+                    {skills.length > 5 && <span className="inline-flex items-center rounded-md bg-slate-50 px-2 py-0.5 text-[11px] text-slate-400 dark:bg-[#1C2127] dark:text-slate-500">+{skills.length - 5} more</span>}
+                  </div>
                 </div>
               </Card>
             );

@@ -221,17 +221,15 @@ export function BulkAssignModal({ onClose, onAssigned }: BulkAssignModalProps) {
 
     try {
       await learningProgressService.bulkAssign({
-        assignments: Array.from(selectedMembers).map((email) => ({
-          user_email: email,
-          training_id: selectedPlan,
-          course_name: planName,
-          training: planName,
-          start_date: startDate,
-          end_date: endDate,
-          target_date: endDate,
-          duration,
-          status: "Not Started",
-        })),
+        user_emails: Array.from(selectedMembers),
+        course_name: planName,
+        training_id: selectedPlan,
+        training: planName,
+        start_date: startDate,
+        end_date: endDate,
+        target_date: endDate,
+        duration,
+        status: "Not Started",
       });
       onAssigned();
     } catch (err) {
@@ -317,8 +315,8 @@ export function LPExtensionRequestsModal({ onClose, onAction }: ExtensionRequest
   }, []);
 
   async function approve(progressId: string) {
-    if (!confirm("Approve this extension?")) return;
-    await learningProgressService.handleExtension(progressId, { action: "approve" });
+    if (!confirm("Approve this extension request? The target date and curriculum dates will be updated.")) return;
+    await learningProgressService.approveExtension(progressId);
     const data = await learningProgressService.getExtensionRequests();
     setRequests(data.requests || []);
     onAction();
@@ -327,7 +325,7 @@ export function LPExtensionRequestsModal({ onClose, onAction }: ExtensionRequest
   async function reject(progressId: string) {
     const reason = prompt("Rejection reason:");
     if (!reason) return;
-    await learningProgressService.handleExtension(progressId, { action: "reject", rejection_reason: reason });
+    await learningProgressService.rejectExtension(progressId, reason);
     const data = await learningProgressService.getExtensionRequests();
     setRequests(data.requests || []);
     onAction();

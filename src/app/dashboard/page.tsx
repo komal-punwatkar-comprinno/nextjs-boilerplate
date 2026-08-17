@@ -84,15 +84,15 @@ export default function DashboardPage() {
     (card) => !card.adminOnly || isAdmin
   );
 
-  // Pastel color mapping per card for visual variety
-  const pastelColors = [
-    "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400",
-    "bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400",
-    "bg-violet-50 text-violet-600 dark:bg-violet-900/20 dark:text-violet-400",
-    "bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400",
-    "bg-rose-50 text-rose-600 dark:bg-rose-900/20 dark:text-rose-400",
-    "bg-cyan-50 text-cyan-600 dark:bg-cyan-900/20 dark:text-cyan-400",
-    "bg-indigo-50 text-indigo-600 dark:bg-indigo-900/20 dark:text-indigo-400",
+  // Color scheme per card icon
+  const iconColors = [
+    "bg-blue-100 text-blue-600 dark:bg-blue-500/25 dark:text-blue-200",
+    "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/25 dark:text-emerald-200",
+    "bg-violet-100 text-violet-600 dark:bg-violet-500/25 dark:text-violet-200",
+    "bg-amber-100 text-amber-600 dark:bg-amber-500/25 dark:text-amber-200",
+    "bg-rose-100 text-rose-600 dark:bg-rose-500/25 dark:text-rose-200",
+    "bg-cyan-100 text-cyan-600 dark:bg-cyan-500/25 dark:text-cyan-200",
+    "bg-indigo-100 text-indigo-600 dark:bg-indigo-500/25 dark:text-indigo-200",
   ];
 
   return (
@@ -113,26 +113,26 @@ export default function DashboardPage() {
           <Link
             key={card.title}
             href={card.href}
-            className="group flex flex-col rounded-xl border border-slate-200/80 bg-white p-6 transition-all duration-200 hover:border-slate-300 hover:shadow-lg dark:border-[#2D3640] dark:bg-[#242B33] dark:hover:border-[#3D4A5C]"
+            className="group flex flex-col rounded-xl border border-slate-200 bg-white p-6 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 cursor-default dark:border-[#3D4A5C] dark:bg-[#2D3640] dark:hover:border-[#4CCBBF]/40"
           >
-            {/* Icon - centered, larger, with pastel background */}
-            <div className={`mx-auto flex h-14 w-14 items-center justify-center rounded-xl ${pastelColors[idx % pastelColors.length]}`}>
+            {/* Icon */}
+            <div className={`mx-auto flex h-14 w-14 items-center justify-center rounded-xl ${iconColors[idx % iconColors.length]}`}>
               <Icon name={card.icon} size="md" />
             </div>
 
-            {/* Title - centered */}
-            <h3 className="mt-4 text-center text-sm font-semibold text-slate-800 dark:text-white">
+            {/* Title */}
+            <h3 className="mt-4 text-center text-sm font-bold text-slate-800 dark:text-white">
               {card.title}
             </h3>
 
-            {/* Description - centered */}
-            <p className="mt-2 text-center text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+            {/* Description */}
+            <p className="mt-2 text-center text-xs leading-relaxed text-slate-600 dark:text-white/80">
               {card.description}
             </p>
 
             {/* CTA Button */}
-            <div className="mt-4 flex justify-center">
-              <span className="inline-flex items-center rounded-md bg-[#1B2A49] px-4 py-2 text-xs font-medium text-white transition-all group-hover:bg-[#2E4A7A] dark:bg-[#2D3640] dark:group-hover:bg-[#3D5A80]">
+            <div className="mt-5 flex justify-center">
+              <span className="inline-flex items-center rounded-lg bg-[#1B2A49] px-4 py-2 text-xs font-semibold text-white cursor-pointer transition-all group-hover:bg-[#4CCBBF] group-hover:text-[#1B2A49] dark:bg-[#4CCBBF] dark:text-[#1C2127] dark:group-hover:bg-[#4CCBBF]/80">
                 {card.buttonLabel}
               </span>
             </div>

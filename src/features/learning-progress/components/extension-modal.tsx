@@ -77,8 +77,9 @@ export function ExtensionModal({ record, onClose, onSubmitted }: ExtensionModalP
     try {
       await learningProgressService.requestExtension(record.progress_id, {
         extension_type: extensionType,
-        extension_week_number: extensionType === "week" ? weekNumber : undefined,
-        extension_new_date: requestNewDate,
+        week_number: extensionType === "week" ? weekNumber : undefined,
+        new_week_date: extensionType === "week" ? requestNewDate : undefined,
+        new_end_date: extensionType === "full" ? requestNewDate : undefined,
         reason: reason.trim(),
       });
       onSubmitted();

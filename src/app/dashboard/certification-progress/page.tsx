@@ -38,7 +38,11 @@ export default function CertificationProgressPage() {
   const loadData = useCallback(async () => {
     try {
       setLoading(true);
-      const items = await certificationService.list();
+      let items = await certificationService.list();
+      // Manager should only see their own team's certifications
+      if (role === "manager" && user?.team) {
+        items = items.filter((c) => c.team === user.team);
+      }
       setRecords(items);
     } catch (err) {
       setError("Failed to load certifications.");
@@ -46,7 +50,7 @@ export default function CertificationProgressPage() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [role, user]);
 
   useEffect(() => { loadData(); }, [loadData]);
 
@@ -125,22 +129,34 @@ export default function CertificationProgressPage() {
 
       {/* Stats bar (admin/manager) */}
       {isManagerOrAbove && (
-        <div className="grid grid-cols-4 gap-3">
-          <Card className="p-3 text-center">
-            <p className="text-lg font-bold text-slate-800 dark:text-white">{stats.total}</p>
-            <p className="text-xs text-slate-500">Total</p>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Card className="relative overflow-hidden border border-slate-200/80 bg-gradient-to-br from-slate-50 to-slate-100 p-4 dark:border-[#2D3640] dark:from-[#242B33] dark:to-[#242B33]">
+            <div className="absolute right-3 top-3 rounded-lg bg-slate-200/50 p-2 dark:bg-[#2D3640]">
+              <Icon name="clipboard" size="sm" className="text-slate-500 dark:text-slate-400" />
+            </div>
+            <p className="text-2xl font-bold text-slate-800 dark:text-white">{stats.total}</p>
+            <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">Total Certifications</p>
           </Card>
-          <Card className="p-3 text-center">
-            <p className="text-lg font-bold text-emerald-600">{stats.completed}</p>
-            <p className="text-xs text-slate-500">Completed</p>
+          <Card className="relative overflow-hidden border border-emerald-200/50 bg-gradient-to-br from-emerald-50 to-emerald-100/50 p-4 dark:border-[#2D3640] dark:from-[#242B33] dark:to-[#242B33]">
+            <div className="absolute right-3 top-3 rounded-lg bg-emerald-200/50 p-2 dark:bg-[#2D3640]">
+              <Icon name="check" size="sm" className="text-emerald-600 dark:text-slate-400" />
+            </div>
+            <p className="text-2xl font-bold text-emerald-600 dark:text-white">{stats.completed}</p>
+            <p className="mt-1 text-xs font-medium text-emerald-600/70 dark:text-slate-400">Completed</p>
           </Card>
-          <Card className="p-3 text-center">
-            <p className="text-lg font-bold text-blue-600">{stats.inProgress}</p>
-            <p className="text-xs text-slate-500">In Progress</p>
+          <Card className="relative overflow-hidden border border-blue-200/50 bg-gradient-to-br from-blue-50 to-blue-100/50 p-4 dark:border-[#2D3640] dark:from-[#242B33] dark:to-[#242B33]">
+            <div className="absolute right-3 top-3 rounded-lg bg-blue-200/50 p-2 dark:bg-[#2D3640]">
+              <Icon name="clock" size="sm" className="text-blue-600 dark:text-slate-400" />
+            </div>
+            <p className="text-2xl font-bold text-blue-600 dark:text-white">{stats.inProgress}</p>
+            <p className="mt-1 text-xs font-medium text-blue-600/70 dark:text-slate-400">In Progress</p>
           </Card>
-          <Card className="p-3 text-center">
-            <p className="text-lg font-bold text-slate-500">{stats.notStarted}</p>
-            <p className="text-xs text-slate-500">Not Started</p>
+          <Card className="relative overflow-hidden border border-amber-200/50 bg-gradient-to-br from-amber-50 to-amber-100/50 p-4 dark:border-[#2D3640] dark:from-[#242B33] dark:to-[#242B33]">
+            <div className="absolute right-3 top-3 rounded-lg bg-amber-200/50 p-2 dark:bg-[#2D3640]">
+              <Icon name="xCircle" size="sm" className="text-amber-600 dark:text-slate-400" />
+            </div>
+            <p className="text-2xl font-bold text-amber-600 dark:text-white">{stats.notStarted}</p>
+            <p className="mt-1 text-xs font-medium text-amber-600/70 dark:text-slate-400">Not Started</p>
           </Card>
         </div>
       )}
@@ -172,9 +188,12 @@ export default function CertificationProgressPage() {
 
       {/* Content */}
       {filtered.length === 0 ? (
-        <div className="flex h-40 flex-col items-center justify-center gap-2 text-slate-400">
-          <Icon name="clipboard" size="lg" />
-          <p className="text-sm">No certifications found</p>
+        <div className="flex h-48 flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 text-slate-400 dark:border-[#2D3640] dark:bg-[#1C2127]/50">
+          <div className="rounded-full bg-slate-100 p-3 dark:bg-[#2D3640]">
+            <Icon name="clipboard" size="lg" className="text-slate-300 dark:text-slate-500" />
+          </div>
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">No certifications found</p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">Try adjusting your filters or add a new certification</p>
         </div>
       ) : (
         <div className={role === "member" ? "space-y-4" : "grid gap-4 sm:grid-cols-2 lg:grid-cols-3"}>

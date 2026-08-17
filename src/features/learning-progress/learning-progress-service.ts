@@ -6,7 +6,6 @@ import type {
   BulkAssignPayload,
   UpdateProgressPayload,
   ExtensionRequestPayload,
-  ExtensionApprovalPayload,
   CurriculumTopic,
 } from "./types";
 
@@ -79,10 +78,17 @@ class LearningProgressService {
   }
 
   /**
-   * Approve or reject an extension request (admin/manager only).
+   * Approve an extension request (admin/manager only).
    */
-  async handleExtension(progressId: string, payload: ExtensionApprovalPayload): Promise<void> {
-    return apiClient.post<void>(`${this.basePath}/${progressId}/approve-extension`, payload);
+  async approveExtension(progressId: string): Promise<void> {
+    return apiClient.post<void>(`${this.basePath}/${progressId}/approve-extension`, {});
+  }
+
+  /**
+   * Reject an extension request (admin/manager only).
+   */
+  async rejectExtension(progressId: string, reason: string): Promise<void> {
+    return apiClient.post<void>(`${this.basePath}/${progressId}/reject-extension`, { reason });
   }
 
   /**

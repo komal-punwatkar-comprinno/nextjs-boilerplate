@@ -8,7 +8,7 @@ interface SkillChartsModalProps {
   onClose: () => void;
 }
 
-const BAR_COLORS = ["#ef4444", "#f97316", "#eab308", "#22c55e", "#10b981"];
+const BAR_COLORS = ["#94a3b8", "#f59e0b", "#60a5fa", "#34d399", "#4CCBBF"];
 
 /**
  * Skill Charts Modal — shows horizontal bar charts grouped by template.

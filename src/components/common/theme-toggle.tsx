@@ -16,7 +16,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
       onClick={toggleTheme}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       className={[
-        "rounded-md p-2 transition-colors",
+        "cursor-pointer rounded-md p-2 transition-colors",
         "text-slate-500 hover:bg-slate-100 hover:text-slate-700",
         "dark:text-[#9FAEC1] dark:hover:bg-[#2A3441] dark:hover:text-[#E8EDF2]",
         className,

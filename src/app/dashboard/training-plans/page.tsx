@@ -108,43 +108,67 @@ export default function TrainingPlansPage() {
 
       {/* Plans grid */}
       {filtered.length === 0 ? (
-        <div className="flex h-40 flex-col items-center justify-center gap-2 text-slate-400">
-          <Icon name="calendar" size="lg" />
-          <p className="text-sm">No training plans found</p>
+        <div className="flex h-48 flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 dark:border-[#2D3640] dark:bg-[#1C2127]/50">
+          <div className="rounded-full bg-slate-100 p-3 dark:bg-[#2D3640]">
+            <Icon name="calendar" size="lg" className="text-slate-300 dark:text-slate-500" />
+          </div>
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">No training plans found</p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">Create a plan or upload an Excel file</p>
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((p) => {
             const itemCount = p.training_items?.length || 0;
+            const weekCount = itemCount > 0 ? Math.max(...p.training_items!.map((i) => i.week || 1)) : 0;
             return (
             <div key={p.plan_id} className="cursor-pointer" onClick={() => setViewPlan(p)}>
-            <Card className="flex flex-col overflow-hidden hover:shadow-md transition-all h-full">
-              {/* Top accent bar */}
-              <div className={`h-1 w-full ${(p.status || "Active") === "Active" ? "bg-emerald-400" : "bg-slate-300"}`} />
-
+            <Card className="flex flex-col overflow-hidden border border-slate-200/80 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 h-full dark:border-[#2D3640]">
               <div className="flex flex-col flex-1 p-5">
-                {/* Header: name + status */}
+                {/* Header */}
                 <div className="flex items-start justify-between gap-2">
-                  <p className="text-sm font-semibold text-slate-800 leading-tight dark:text-white">{p.plan_name}</p>
-                  <Badge className={`shrink-0 text-[10px] ${(p.status || "Active") === "Active" ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400" : "bg-slate-100 text-slate-500"}`}>{p.status || "Active"}</Badge>
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#1b2a49] to-[#2a3d5f] shadow-sm">
+                      <Icon name="calendar" size="sm" className="text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-slate-800 leading-tight dark:text-white">{p.plan_name}</p>
+                      {p.description && <p className="mt-1 text-[11px] text-slate-400 line-clamp-1 dark:text-slate-500">{p.description}</p>}
+                    </div>
+                  </div>
+                  <Badge className={`shrink-0 text-[10px] px-2 py-0.5 ${(p.status || "Active") === "Active" ? "bg-emerald-50 text-emerald-700 dark:bg-[#2D3640] dark:text-slate-300" : "bg-slate-100 text-slate-500 dark:bg-[#2D3640] dark:text-slate-400"}`}>{p.status || "Active"}</Badge>
                 </div>
 
-                {/* Meta info */}
-                <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-slate-500 dark:text-slate-400">
-                  {p.target_team && <span className="flex items-center gap-1"><Icon name="users" size="sm" />{p.target_team}</span>}
-                  {p.target_role && <span className="flex items-center gap-1 capitalize"><Icon name="user" size="sm" />{p.target_role}</span>}
-                  <span className="flex items-center gap-1"><Icon name="clock" size="sm" />{p.duration || 30} days</span>
-                  {itemCount > 0 && <span className="flex items-center gap-1"><Icon name="clipboard" size="sm" />{itemCount} topics</span>}
+                {/* Stats row */}
+                <div className="mt-4 grid grid-cols-3 gap-2">
+                  <div className="rounded-lg bg-slate-50 px-3 py-2 text-center dark:bg-[#1C2127]">
+                    <p className="text-sm font-bold text-slate-800 dark:text-white">{p.duration || 30}</p>
+                    <p className="text-[9px] text-slate-500 dark:text-slate-400">Days</p>
+                  </div>
+                  <div className="rounded-lg bg-blue-50 px-3 py-2 text-center dark:bg-[#1C2127]">
+                    <p className="text-sm font-bold text-blue-700 dark:text-white">{weekCount}</p>
+                    <p className="text-[9px] text-blue-600 dark:text-slate-400">Weeks</p>
+                  </div>
+                  <div className="rounded-lg bg-amber-50 px-3 py-2 text-center dark:bg-[#1C2127]">
+                    <p className="text-sm font-bold text-amber-700 dark:text-white">{itemCount}</p>
+                    <p className="text-[9px] text-amber-600 dark:text-slate-400">Topics</p>
+                  </div>
                 </div>
 
-                {/* Description */}
-                {p.description && <p className="mt-2 text-xs text-slate-400 line-clamp-2 dark:text-slate-500">{p.description}</p>}
+                {/* Meta tags */}
+                <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400">
+                  {p.target_team && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 dark:bg-[#2D3640] dark:text-slate-400"><Icon name="users" size="sm" />{p.target_team}</span>
+                  )}
+                  {p.target_role && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 capitalize dark:bg-[#2D3640] dark:text-slate-400"><Icon name="user" size="sm" />{p.target_role}</span>
+                  )}
+                </div>
 
                 {/* Actions */}
                 <div className="mt-auto flex items-center gap-1 pt-4 border-t border-slate-100 dark:border-[#2D3640] mt-4" onClick={(e) => e.stopPropagation()}>
-                  <button onClick={() => setFormPlan(p)} className="rounded-md p-2 text-slate-400 hover:bg-slate-100 hover:text-[#1b2a49] dark:hover:bg-[#2D3640] dark:hover:text-white" title="Edit"><Icon name="edit" size="sm" /></button>
-                  <button onClick={() => trainingPlanService.exportPlanExcel(p.plan_id)} className="rounded-md p-2 text-slate-400 hover:bg-slate-100 hover:text-[#1b2a49] dark:hover:bg-[#2D3640] dark:hover:text-white" title="Export Excel"><Icon name="download" size="sm" /></button>
-                  <button onClick={() => handleDelete(p.plan_id, p.plan_name)} className="rounded-md p-2 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400" title="Delete"><Icon name="trash" size="sm" /></button>
+                  <button onClick={() => setFormPlan(p)} className="rounded-md p-2 text-slate-400 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 dark:hover:text-blue-400 transition-colors" title="Edit"><Icon name="edit" size="sm" /></button>
+                  <button onClick={() => trainingPlanService.exportPlanExcel(p.plan_id)} className="rounded-md p-2 text-slate-400 hover:bg-emerald-50 hover:text-emerald-600 dark:hover:bg-emerald-900/20 dark:hover:text-emerald-400 transition-colors" title="Export Excel"><Icon name="download" size="sm" /></button>
+                  <button onClick={() => handleDelete(p.plan_id, p.plan_name)} className="rounded-md p-2 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors" title="Delete"><Icon name="trash" size="sm" /></button>
                 </div>
               </div>
             </Card>

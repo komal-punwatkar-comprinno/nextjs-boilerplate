@@ -29,15 +29,15 @@ const variantClasses: Record<ButtonVariant, string> = {
   primary: [
     // Light — SkillSphere navy primary
     "bg-[#1b2a49] text-white hover:bg-[#2a3d5f] focus-visible:ring-[#1b2a49]",
-    // Dark — SkillSphere coral accent
-    "dark:bg-[#ff9472] dark:text-[#1b2a49] dark:hover:bg-[#e8845f] dark:focus-visible:ring-[#ff9472]",
+    // Dark — teal accent
+    "dark:bg-[#4CCBBF] dark:text-[#1b2a49] dark:hover:bg-[#3AAFA4] dark:focus-visible:ring-[#4CCBBF]",
   ].join(" "),
 
   secondary: [
     // Light — white bordered
     "bg-white text-[#1b2a49] border border-slate-300 hover:bg-slate-50 focus-visible:ring-slate-300",
-    // Dark — transparent coral outline
-    "dark:bg-transparent dark:text-[#ff9472] dark:border-[#ff9472] dark:hover:bg-[rgba(255,148,114,0.12)] dark:hover:text-[#ff9472] dark:focus-visible:ring-[#ff9472]",
+    // Dark — transparent teal outline
+    "dark:bg-transparent dark:text-[#4CCBBF] dark:border-[#4CCBBF] dark:hover:bg-[rgba(76,203,191,0.12)] dark:hover:text-[#4CCBBF] dark:focus-visible:ring-[#4CCBBF]",
   ].join(" "),
 
   ghost: [

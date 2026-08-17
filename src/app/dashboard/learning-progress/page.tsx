@@ -22,7 +22,7 @@ import {
 } from "@/features/learning-progress/components";
 import { Icon } from "@/components/ui/icon";
 import { useToast } from "@/components/ui/toast";
-import { Badge, Card, PageHeader, Spinner } from "@/components";
+import { Card, PageHeader, Spinner } from "@/components";
 
 // ─── Enrichment Logic ────────────────────────────────────────────────────────
 
@@ -201,7 +201,7 @@ export default function LearningProgressPage() {
       }
       return true;
     });
-  }, [records, statusFilter, teamFilter, extensionFilter, debouncedQuery]);
+  }, [records, statusFilter, teamFilter, memberFilter, extensionFilter, debouncedQuery]);
 
   const teams = useMemo(() => [...new Set(records.map((r) => r.display_team))].filter((t) => t !== "N/A").sort(), [records]);
   const uniqueMembers = useMemo(() => {
@@ -268,7 +268,7 @@ export default function LearningProgressPage() {
             </button>
           )}
           {isAdmin && (
-            <button onClick={() => setShowBulkModal(true)} className="rounded-lg border border-[#1b2a49] px-3 py-2 text-xs font-medium text-[#1b2a49] hover:bg-[#1b2a49]/5 dark:border-[#ff9472] dark:text-[#ff9472]">
+            <button onClick={() => setShowBulkModal(true)} className="rounded-lg border border-[#1b2a49] px-3 py-2 text-xs font-medium text-[#1b2a49] hover:bg-[#1b2a49]/5 dark:border-[#4CCBBF] dark:text-[#4CCBBF]">
               <Icon name="users" size="sm" className="mr-1 inline" /> Bulk Assign
             </button>
           )}
@@ -279,6 +279,40 @@ export default function LearningProgressPage() {
           )}
         </div>
       </div>
+
+      {/* ── Stats (admin/manager) ── */}
+      {isManagerOrAbove && (
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <Card className="relative overflow-hidden border border-slate-200/80 bg-gradient-to-br from-slate-50 to-slate-100 p-4 dark:border-[#2D3640] dark:from-[#242B33] dark:to-[#242B33]">
+            <div className="absolute right-3 top-3 rounded-lg bg-slate-200/50 p-2 dark:bg-[#2D3640]">
+              <Icon name="clipboard" size="sm" className="text-slate-500 dark:text-slate-400" />
+            </div>
+            <p className="text-2xl font-bold text-slate-800 dark:text-white">{filtered.length}</p>
+            <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">Total Trainings</p>
+          </Card>
+          <Card className="relative overflow-hidden border border-emerald-200/50 bg-gradient-to-br from-emerald-50 to-emerald-100/50 p-4 dark:border-[#2D3640] dark:from-[#242B33] dark:to-[#242B33]">
+            <div className="absolute right-3 top-3 rounded-lg bg-emerald-200/50 p-2 dark:bg-[#2D3640]">
+              <Icon name="check" size="sm" className="text-emerald-600 dark:text-slate-400" />
+            </div>
+            <p className="text-2xl font-bold text-emerald-600 dark:text-white">{filtered.filter((r) => r.effective_status === "Completed").length}</p>
+            <p className="mt-1 text-xs font-medium text-emerald-600/70 dark:text-slate-400">Completed</p>
+          </Card>
+          <Card className="relative overflow-hidden border border-blue-200/50 bg-gradient-to-br from-blue-50 to-blue-100/50 p-4 dark:border-[#2D3640] dark:from-[#242B33] dark:to-[#242B33]">
+            <div className="absolute right-3 top-3 rounded-lg bg-blue-200/50 p-2 dark:bg-[#2D3640]">
+              <Icon name="clock" size="sm" className="text-blue-600 dark:text-slate-400" />
+            </div>
+            <p className="text-2xl font-bold text-blue-600 dark:text-white">{filtered.filter((r) => r.effective_status === "In Progress").length}</p>
+            <p className="mt-1 text-xs font-medium text-blue-600/70 dark:text-slate-400">In Progress</p>
+          </Card>
+          <Card className="relative overflow-hidden border border-red-200/50 bg-gradient-to-br from-red-50 to-red-100/50 p-4 dark:border-[#2D3640] dark:from-[#242B33] dark:to-[#242B33]">
+            <div className="absolute right-3 top-3 rounded-lg bg-red-200/50 p-2 dark:bg-[#2D3640]">
+              <Icon name="xCircle" size="sm" className="text-red-600 dark:text-slate-400" />
+            </div>
+            <p className="text-2xl font-bold text-red-600 dark:text-white">{filtered.filter((r) => r.isDelayed).length}</p>
+            <p className="mt-1 text-xs font-medium text-red-600/70 dark:text-slate-400">Overdue</p>
+          </Card>
+        </div>
+      )}
 
       {/* ── Filters ── */}
       <Card className="p-4">
@@ -332,9 +366,12 @@ export default function LearningProgressPage() {
 
       {/* ── Content ── */}
       {filtered.length === 0 ? (
-        <div className="flex h-40 flex-col items-center justify-center gap-2 text-slate-400">
-          <Icon name="clipboard" size="lg" />
-          <p className="text-sm">No training records found</p>
+        <div className="flex h-48 flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 dark:border-[#2D3640] dark:bg-[#1C2127]/50">
+          <div className="rounded-full bg-slate-100 p-3 dark:bg-[#2D3640]">
+            <Icon name="clipboard" size="lg" className="text-slate-300 dark:text-slate-500" />
+          </div>
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">No training records found</p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">Try adjusting your filters or assign a new training</p>
         </div>
       ) : role === "member" ? (
         <div className="space-y-3">
@@ -430,26 +467,35 @@ function MemberGroupCard({
   onDelete: (id: string) => void;
 }) {
   return (
-    <Card className="overflow-hidden">
-      <button onClick={onToggle} className="flex w-full items-center gap-4 p-4 text-left transition-colors hover:bg-slate-50 dark:hover:bg-[#2D3640]/40">
-        <Icon name="chevronRight" size="sm" className={`shrink-0 text-slate-400 transition-transform ${isExpanded ? "rotate-90" : ""}`} />
+    <Card className="overflow-hidden border border-slate-200/80 shadow-sm transition-all duration-200 hover:shadow-md dark:border-[#3D4A5C] dark:bg-[#242B33]">
+      <button onClick={onToggle} className="flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-slate-50/80 dark:hover:bg-[#2D3640]/60">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#1b2a49] to-[#2a3d5f] text-xs font-bold text-white shadow-sm dark:from-[#4CCBBF] dark:to-[#3AAFA4] dark:text-[#1C2127]">
+          {group.name.charAt(0).toUpperCase()}
+        </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <p className="text-sm font-semibold text-slate-800 dark:text-white">{group.name}</p>
-            <Badge className="bg-slate-100 text-slate-500 text-[10px] dark:bg-slate-700 dark:text-slate-400">{group.team}</Badge>
+            {group.team && group.team !== "N/A" && (
+              <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-600 dark:bg-[#2D3640] dark:text-slate-400">{group.team}</span>
+            )}
           </div>
-          <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{group.records.length} training{group.records.length !== 1 ? "s" : ""}</p>
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{group.records.length} training{group.records.length !== 1 ? "s" : ""} assigned</p>
         </div>
-        <ProgressRing value={group.totalProgress} />
-        <div className="hidden items-center gap-3 text-xs sm:flex">
-          <span className="text-emerald-600">{group.stats.completed} ✓</span>
-          <span className="text-blue-600">{group.stats.inProgress} ◐</span>
-          <span className="text-slate-500">{group.stats.notStarted} ○</span>
-          {group.stats.overdue > 0 && <span className="text-red-600">{group.stats.overdue} !</span>}
+        <div className="flex items-center gap-5">
+          <ProgressRing value={group.totalProgress} />
+          <div className="hidden min-w-[130px] flex-col gap-1.5 sm:flex">
+            <span className="inline-flex items-center rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-transparent dark:text-slate-300">{group.stats.completed} Completed</span>
+            <span className="inline-flex items-center rounded-md bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 dark:bg-transparent dark:text-slate-300">{group.stats.inProgress} In Progress</span>
+            <span className="inline-flex items-center rounded-md bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 dark:bg-transparent dark:text-slate-400">{group.stats.notStarted} Not Started</span>
+            {group.stats.overdue > 0 && (
+              <span className="inline-flex items-center rounded-md bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700 dark:bg-transparent dark:text-slate-300">{group.stats.overdue} Overdue</span>
+            )}
+          </div>
         </div>
+        <Icon name="chevronRight" size="sm" className={`shrink-0 text-slate-400 transition-transform duration-200 ${isExpanded ? "rotate-90" : ""}`} />
       </button>
       {isExpanded && (
-        <div className="space-y-2 border-t border-slate-100 bg-slate-50/50 p-3 dark:border-[#2D3640] dark:bg-[#1C2127]/50">
+        <div className="space-y-2 border-t border-slate-100 bg-slate-50/30 p-4 dark:border-[#2D3640] dark:bg-[#1C2127]/50">
           {group.records.map((r) => (
             <TrainingCard
               key={r.progress_id}

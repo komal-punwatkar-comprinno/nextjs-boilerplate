@@ -12,10 +12,10 @@ import { TableSkeleton } from "@/components/common/page-skeleton";
 
 function statusLabel(status?: string): { text: string; color: string } {
   switch (status) {
-    case "CONFIRMED": return { text: "Active", color: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400" };
-    case "FORCE_CHANGE_PASSWORD": return { text: "Pending", color: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400" };
-    case "DISABLED": return { text: "Disabled", color: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400" };
-    default: return { text: status || "—", color: "bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300" };
+    case "CONFIRMED": return { text: "Active", color: "bg-emerald-100 text-emerald-700 dark:bg-[#2D3640] dark:text-slate-300" };
+    case "FORCE_CHANGE_PASSWORD": return { text: "Pending", color: "bg-amber-100 text-amber-700 dark:bg-[#2D3640] dark:text-slate-300" };
+    case "DISABLED": return { text: "Disabled", color: "bg-red-100 text-red-700 dark:bg-[#2D3640] dark:text-slate-400" };
+    default: return { text: status || "—", color: "bg-slate-100 text-slate-600 dark:bg-[#2D3640] dark:text-slate-300" };
   }
 }
 
@@ -89,6 +89,38 @@ export default function UserManagementPage() {
         </div>
       </div>
 
+      {/* Stats */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <Card className="relative overflow-hidden border border-slate-200/80 bg-gradient-to-br from-slate-50 to-slate-100 p-4 dark:border-[#2D3640] dark:from-[#242B33] dark:to-[#2D3640]">
+          <div className="absolute right-3 top-3 rounded-lg bg-slate-200/50 p-2 dark:bg-slate-600/30">
+            <Icon name="users" size="sm" className="text-slate-500 dark:text-slate-300" />
+          </div>
+          <p className="text-2xl font-bold text-slate-800 dark:text-white">{users.length}</p>
+          <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">Total Users</p>
+        </Card>
+        <Card className="relative overflow-hidden border border-purple-200/50 bg-gradient-to-br from-purple-50 to-purple-100/50 p-4 dark:border-[#2D3640] dark:from-[#242B33] dark:to-[#242B33]">
+          <div className="absolute right-3 top-3 rounded-lg bg-purple-200/50 p-2 dark:bg-[#2D3640]">
+            <Icon name="user" size="sm" className="text-purple-600 dark:text-slate-400" />
+          </div>
+          <p className="text-2xl font-bold text-purple-600 dark:text-white">{users.filter((u) => u.role === "admin").length}</p>
+          <p className="mt-1 text-xs font-medium text-purple-600/70 dark:text-slate-400">Admins</p>
+        </Card>
+        <Card className="relative overflow-hidden border border-blue-200/50 bg-gradient-to-br from-blue-50 to-blue-100/50 p-4 dark:border-[#2D3640] dark:from-[#242B33] dark:to-[#242B33]">
+          <div className="absolute right-3 top-3 rounded-lg bg-blue-200/50 p-2 dark:bg-[#2D3640]">
+            <Icon name="user" size="sm" className="text-blue-600 dark:text-slate-400" />
+          </div>
+          <p className="text-2xl font-bold text-blue-600 dark:text-white">{users.filter((u) => u.role === "manager").length}</p>
+          <p className="mt-1 text-xs font-medium text-blue-600/70 dark:text-slate-400">Managers</p>
+        </Card>
+        <Card className="relative overflow-hidden border border-emerald-200/50 bg-gradient-to-br from-emerald-50 to-emerald-100/50 p-4 dark:border-[#2D3640] dark:from-[#242B33] dark:to-[#242B33]">
+          <div className="absolute right-3 top-3 rounded-lg bg-emerald-200/50 p-2 dark:bg-[#2D3640]">
+            <Icon name="users" size="sm" className="text-emerald-600 dark:text-slate-400" />
+          </div>
+          <p className="text-2xl font-bold text-emerald-600 dark:text-white">{users.filter((u) => u.role === "member").length}</p>
+          <p className="mt-1 text-xs font-medium text-emerald-600/70 dark:text-slate-400">Members</p>
+        </Card>
+      </div>
+
       {/* Filters */}
       <Card className="p-4">
         <div className="flex flex-wrap items-center gap-3">
@@ -117,32 +149,32 @@ export default function UserManagementPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-slate-200 bg-slate-50 dark:border-[#2D3640] dark:bg-[#1C2127]">
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-500">Name</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-500">Email</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-500">Role</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-500">Team</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-500">Manager</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-500">Status</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-slate-500">Actions</th>
+              <tr className="bg-[#1b2a49] dark:bg-[#4CCBBF]/20">
+                <th className="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-white/90">Name</th>
+                <th className="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-white/90">Email</th>
+                <th className="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-white/90">Role</th>
+                <th className="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-white/90">Team</th>
+                <th className="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-white/90">Manager</th>
+                <th className="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-white/90">Status</th>
+                <th className="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-white/90">Actions</th>
               </tr>
             </thead>
             <tbody>
               {filtered.length === 0 ? (
-                <tr><td colSpan={7} className="px-4 py-8 text-center text-slate-500">No users found</td></tr>
-              ) : filtered.map((u) => {
+                <tr><td colSpan={7} className="px-5 py-8 text-center text-slate-500">No users found</td></tr>
+              ) : filtered.map((u, i) => {
                 const s = statusLabel(u.status);
                 return (
-                  <tr key={u.user_id} className="border-b border-slate-100 dark:border-[#2D3640]/50 hover:bg-slate-50 dark:hover:bg-[#2D3640]/20">
-                    <td className="px-4 py-3 font-medium text-slate-800 dark:text-white">{u.name}</td>
-                    <td className="px-4 py-3 text-slate-600 dark:text-slate-400">{u.email}</td>
-                    <td className="px-4 py-3"><Badge className={`text-[10px] capitalize ${u.role === "admin" ? "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400" : u.role === "manager" ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400" : "bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300"}`}>{u.role}</Badge></td>
-                    <td className="px-4 py-3 text-slate-600 dark:text-slate-400">{u.team || "—"}</td>
-                    <td className="px-4 py-3 text-slate-600 dark:text-slate-400">{u.manager_name || u.manager || "—"}</td>
-                    <td className="px-4 py-3"><Badge className={`text-[10px] ${s.color}`}>{s.text}</Badge></td>
-                    <td className="px-4 py-3 whitespace-nowrap">
-                      <button onClick={() => setFormUser(u)} className="mr-2 rounded-md p-1.5 text-slate-400 hover:bg-slate-100 hover:text-[#1b2a49] dark:hover:bg-[#2D3640]" title="Edit"><Icon name="edit" size="sm" /></button>
-                      <button onClick={() => setDeleteTarget({ id: u.user_id, name: u.name })} className="rounded-md p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20" title="Delete"><Icon name="trash" size="sm" /></button>
+                  <tr key={u.user_id} className={`border-b border-slate-100 dark:border-[#2D3640]/50 ${i % 2 === 0 ? "bg-white dark:bg-[#242B33]" : "bg-slate-50/50 dark:bg-[#1C2127]/30"}`}>
+                    <td className="px-5 py-3.5 font-semibold text-slate-800 dark:text-white whitespace-nowrap">{u.name}</td>
+                    <td className="px-5 py-3.5 text-slate-600 dark:text-slate-400">{u.email}</td>
+                    <td className="px-5 py-3.5"><Badge className={`text-[10px] capitalize ${u.role === "admin" ? "bg-purple-100 text-purple-700 dark:bg-[#2D3640] dark:text-slate-300" : u.role === "manager" ? "bg-blue-100 text-blue-700 dark:bg-[#2D3640] dark:text-slate-300" : "bg-slate-100 text-slate-600 dark:bg-[#2D3640] dark:text-slate-300"}`}>{u.role}</Badge></td>
+                    <td className="px-5 py-3.5 text-slate-600 dark:text-slate-400">{u.team || "—"}</td>
+                    <td className="px-5 py-3.5 text-slate-600 dark:text-slate-400">{u.manager_name || u.manager || "—"}</td>
+                    <td className="px-5 py-3.5"><Badge className={`text-[10px] ${s.color}`}>{s.text}</Badge></td>
+                    <td className="px-5 py-3.5 whitespace-nowrap">
+                      <button onClick={() => setFormUser(u)} className="mr-2 rounded-md p-1.5 text-slate-400 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 dark:hover:text-blue-400 transition-colors" title="Edit"><Icon name="edit" size="sm" /></button>
+                      <button onClick={() => setDeleteTarget({ id: u.user_id, name: u.name })} className="rounded-md p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors" title="Delete"><Icon name="trash" size="sm" /></button>
                     </td>
                   </tr>
                 );

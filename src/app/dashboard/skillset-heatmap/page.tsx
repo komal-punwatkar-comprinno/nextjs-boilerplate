@@ -126,15 +126,9 @@ export default function SkillsetHeatmapPage() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <PageHeader title="Skillset Heatmap" description={`${filtered.length} member${filtered.length !== 1 ? "s" : ""}`} />
         <div className="flex items-center gap-2">
-          {/* Skill level legend */}
-          <div className="hidden items-center gap-2 text-[10px] text-slate-500 lg:flex">
-            {["0-None", "1-Basic", "2-Inter", "3-Adv", "4-Expert"].map((label, i) => (
-              <span key={i} className="flex items-center gap-1"><span className={`inline-block h-3 w-3 rounded-sm ${RATING_COLORS[i]}`} />{label}</span>
-            ))}
-          </div>
           {/* Admin/Manager actions */}
           {isManagerOrAbove && (
-            <button onClick={() => setShowPending(true)} className="rounded-lg border border-slate-200 px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 dark:border-[#2D3640] dark:text-slate-300 dark:hover:bg-[#2D3640]">
+            <button onClick={() => setShowPending(true)} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 dark:border-[#2D3640] dark:bg-[#242B33] dark:text-slate-300 dark:hover:bg-[#2D3640]">
               <Icon name="clipboard" size="sm" className="mr-1 inline" /> Pending Ratings
             </button>
           )}
@@ -145,6 +139,27 @@ export default function SkillsetHeatmapPage() {
           )}
         </div>
       </div>
+
+      {/* Rating Legend */}
+      {isManagerOrAbove && (
+        <Card className="px-4 py-3">
+          <div className="flex items-center gap-4 text-xs text-slate-500">
+            <span className="font-medium text-slate-700 dark:text-slate-300">Skill Levels:</span>
+            {[
+              { label: "None", dot: "bg-slate-300" },
+              { label: "Basic", dot: "bg-red-300" },
+              { label: "Intermediate", dot: "bg-orange-300" },
+              { label: "Advanced", dot: "bg-amber-400" },
+              { label: "Expert", dot: "bg-emerald-400" },
+            ].map(({ label, dot }, i) => (
+              <span key={i} className="flex items-center gap-1.5">
+                <span className={`h-2.5 w-2.5 rounded-full ${dot}`} />
+                <span>{i} - {label}</span>
+              </span>
+            ))}
+          </div>
+        </Card>
+      )}
 
       {/* Filters */}
       <Card className="p-4">
@@ -199,27 +214,45 @@ export default function SkillsetHeatmapPage() {
 
       {/* Content */}
       {filtered.length === 0 ? (
-        <div className="flex h-40 flex-col items-center justify-center gap-2 text-slate-400">
-          <Icon name="gridCells" size="lg" />
-          <p className="text-sm">No members found</p>
+        <div className="flex h-48 flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 dark:border-[#2D3640] dark:bg-[#1C2127]/50">
+          <div className="rounded-full bg-slate-100 p-3 dark:bg-[#2D3640]">
+            <Icon name="gridCells" size="lg" className="text-slate-300 dark:text-slate-500" />
+          </div>
+          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">No members found</p>
+          <p className="text-xs text-slate-400 dark:text-slate-500">Try adjusting your filters or assign a framework</p>
         </div>
       ) : viewMode === "team-cards" && teamGroups ? (
         /* Team View */
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {Object.entries(teamGroups).map(([team, stats]) => {
             const avg = stats.skillCount > 0 ? (stats.totalRating / stats.skillCount).toFixed(1) : "0";
+            const avgNum = parseFloat(avg);
+            const ratingColor = avgNum >= 3 ? "text-emerald-600 dark:text-emerald-400" : avgNum >= 2 ? "text-amber-600 dark:text-amber-400" : "text-red-600 dark:text-red-400";
             return (
-              <Card key={team} className="p-5">
-                <p className="text-sm font-semibold text-slate-800 dark:text-white">{team}</p>
-                <p className="text-xs text-slate-500">{stats.members} members · {stats.skillCount} skill ratings</p>
-                <p className="mt-2 text-2xl font-bold text-[#1b2a49] dark:text-[#ff9472]">★ {avg}</p>
-                {stats.templates.size > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-1">
-                    {Array.from(stats.templates).slice(0, 3).map((t) => (
-                      <span key={t} className="rounded bg-slate-100 px-1.5 py-0.5 text-[10px] text-slate-500 dark:bg-slate-700 dark:text-slate-400">{t}</span>
-                    ))}
+              <Card key={team} className="overflow-hidden border border-slate-200/80 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 dark:border-[#2D3640]">
+                <div className="p-5">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#1b2a49] to-[#2a3d5f] text-xs font-bold text-white shadow-sm">
+                      {team.charAt(0).toUpperCase()}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-slate-800 dark:text-white">{team}</p>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400">{stats.members} members · {stats.skillCount} ratings</p>
+                    </div>
+                    <div className="text-right">
+                      <p className={`text-xl font-bold ${ratingColor}`}>★ {avg}</p>
+                      <p className="text-[10px] text-slate-400">avg rating</p>
+                    </div>
                   </div>
-                )}
+                  {stats.templates.size > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-1.5 pt-3 border-t border-slate-100 dark:border-[#2D3640]">
+                      {Array.from(stats.templates).slice(0, 4).map((t) => (
+                        <span key={t} className="inline-flex items-center rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-600 dark:bg-[#2D3640] dark:text-slate-400">{t}</span>
+                      ))}
+                      {stats.templates.size > 4 && <span className="text-[10px] text-slate-400">+{stats.templates.size - 4} more</span>}
+                    </div>
+                  )}
+                </div>
               </Card>
             );
           })}
@@ -232,26 +265,27 @@ export default function SkillsetHeatmapPage() {
             const skills = Object.entries(member.skills || {});
 
             return (
-              <Card key={member.user_email} className="flex flex-col p-5">
+              <Card key={member.user_email} className="flex flex-col overflow-hidden border border-slate-200/80 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 dark:border-[#3D4A5C] dark:bg-[#242B33] dark:hover:border-[#4CCBBF]/30">
+                <div className="p-5 flex flex-col flex-1">
                 {/* Header: avatar + name + rating */}
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#1b2a49] text-sm font-bold text-white">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#1b2a49] to-[#2a3d5f] text-sm font-bold text-white shadow-sm dark:from-[#4CCBBF] dark:to-[#3AAFA4] dark:text-[#1C2127]">
                     {member.member_name.charAt(0).toUpperCase()}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-slate-800 truncate dark:text-white">{member.member_name}</p>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400">{member.team || "No Team"}</p>
+                    {member.team && <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-600 dark:bg-[#2D3640] dark:text-slate-300">{member.team}</span>}
                   </div>
                   <div className="text-right">
-                    <p className={`text-lg font-bold ${ratingColor}`}>★ {avgRating}</p>
+                    <p className={`text-xl font-bold ${ratingColor} dark:text-white`}>★ {avgRating}</p>
                     <p className="text-[10px] text-slate-400">{skillCount} skills</p>
                   </div>
                 </div>
 
-                {skills.length === 0 && <p className="mt-3 text-xs text-slate-400 italic">No skills assigned</p>}
+                {skills.length === 0 && <p className="mt-4 text-xs text-slate-400 italic">No skills assigned</p>}
 
                 {/* Actions */}
-                <div className="mt-auto flex gap-2 pt-4 border-t border-slate-100 dark:border-[#2D3640] mt-4">
+                <div className="mt-auto flex gap-2 pt-4 border-t border-slate-100 dark:border-[#3D4A5C]/50 mt-4">
                   <Button variant="secondary" size="sm" className="flex-1" leftIcon={<Icon name="clipboard" size="sm" />} onClick={() => setDetailMember(member)}>
                     Skills
                   </Button>
@@ -260,6 +294,7 @@ export default function SkillsetHeatmapPage() {
                       📊 Charts
                     </Button>
                   )}
+                </div>
                 </div>
               </Card>
             );
@@ -294,7 +329,7 @@ export default function SkillsetHeatmapPage() {
         />
       )}
       {showPending && (
-        <PendingRatingsModal onClose={() => setShowPending(false)} onAction={loadData} />
+        <PendingRatingsModal onClose={() => setShowPending(false)} onAction={loadData} role={role} userTeam={user?.team} members={members} />
       )}
       {showAssign && (
         <AssignFrameworkModal templates={templates} onClose={() => setShowAssign(false)} onAssigned={loadData} />
@@ -305,13 +340,31 @@ export default function SkillsetHeatmapPage() {
 
 // ─── Pending Ratings Modal (manager/admin) ────────────────────────────────────
 
-function PendingRatingsModal({ onClose, onAction }: { onClose: () => void; onAction: () => void }) {
+function PendingRatingsModal({ onClose, onAction, role, userTeam, members }: { onClose: () => void; onAction: () => void; role: string; userTeam?: string; members: HeatmapMember[] }) {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Build a set of team member emails/names for filtering
+  const teamMemberIds = useMemo(() => {
+    if (role !== "manager" || !userTeam) return null;
+    const ids = new Set<string>();
+    members.filter((m) => m.team === userTeam).forEach((m) => {
+      ids.add(m.user_email);
+      ids.add(m.member_name);
+    });
+    return ids;
+  }, [role, userTeam, members]);
+
   useEffect(() => {
-    skillsetHeatmapService.getPendingApprovals().then(setItems).finally(() => setLoading(false));
-  }, []);
+    skillsetHeatmapService.getPendingApprovals().then((data) => {
+      // For managers, filter to only their team members
+      if (teamMemberIds) {
+        setItems(data.filter((i: any) => teamMemberIds.has(i.user_id) || teamMemberIds.has(i.user_email)));
+      } else {
+        setItems(data);
+      }
+    }).finally(() => setLoading(false));
+  }, [teamMemberIds]);
 
   // Group by user_id
   const grouped = useMemo(() => {
@@ -328,7 +381,7 @@ function PendingRatingsModal({ onClose, onAction }: { onClose: () => void; onAct
     if (!confirm("Approve this rating?")) return;
     await skillsetHeatmapService.verifyRating(userId, skillName);
     const updated = await skillsetHeatmapService.getPendingApprovals();
-    setItems(updated);
+    setItems(teamMemberIds ? updated.filter((i: any) => teamMemberIds.has(i.user_id) || teamMemberIds.has(i.user_email)) : updated);
     onAction();
   }
 
@@ -337,7 +390,7 @@ function PendingRatingsModal({ onClose, onAction }: { onClose: () => void; onAct
     if (!reason) return;
     await skillsetHeatmapService.rejectRating(userId, skillName, reason);
     const updated = await skillsetHeatmapService.getPendingApprovals();
-    setItems(updated);
+    setItems(teamMemberIds ? updated.filter((i: any) => teamMemberIds.has(i.user_id) || teamMemberIds.has(i.user_email)) : updated);
     onAction();
   }
 
