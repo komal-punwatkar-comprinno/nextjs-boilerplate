@@ -64,7 +64,7 @@ function NavItem({ item, collapsed }: { item: SidebarNavItem; collapsed: boolean
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className={cn(baseClasses, "w-full")}
+          className={cn(baseClasses, "w-full cursor-pointer")}
           aria-expanded={isOpen}
         >
           {item.icon && (

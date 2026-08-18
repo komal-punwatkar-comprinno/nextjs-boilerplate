@@ -73,12 +73,12 @@ export default function SkillsetTemplatesPage() {
             <input type="text" placeholder="Search templates or skills..." value={query} onChange={(e) => setQuery(e.target.value)} className="w-full rounded-lg border border-slate-200 bg-white py-2 pl-9 pr-3 text-sm outline-none focus:border-[#1b2a49] focus:ring-1 focus:ring-[#1b2a49] dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white" />
           </div>
           {teams.length > 0 && (
-            <select value={teamFilter} onChange={(e) => setTeamFilter(e.target.value)} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
+            <select value={teamFilter} onChange={(e) => setTeamFilter(e.target.value)} className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
               <option value="">All Teams</option>
               {teams.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           )}
-          {(teamFilter || query) && <button onClick={clearFilters} className="rounded-lg px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-[#2D3640]">Clear</button>}
+          {(teamFilter || query) && <button onClick={clearFilters} className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-[#2D3640]">Clear</button>}
         </div>
       </Card>
 
@@ -109,8 +109,8 @@ export default function SkillsetTemplatesPage() {
                       {t.description && <p className="mt-2 text-xs text-slate-500 dark:text-slate-400 line-clamp-2">{t.description}</p>}
                     </div>
                     <div className="flex shrink-0 gap-1 ml-2">
-                      <button onClick={() => { setEditingTemplate(t); setModalOpen(true); }} className="rounded-md p-1.5 text-slate-400 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 dark:hover:text-blue-400 transition-colors" title="Edit"><Icon name="edit" size="sm" /></button>
-                      <button onClick={() => handleDelete(t.template_id)} className="rounded-md p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors" title="Delete"><Icon name="trash" size="sm" /></button>
+                      <button onClick={() => { setEditingTemplate(t); setModalOpen(true); }} className="cursor-pointer rounded-md p-1.5 text-slate-400 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20 dark:hover:text-blue-400 transition-colors" title="Edit"><Icon name="edit" size="sm" /></button>
+                      <button onClick={() => handleDelete(t.template_id)} className="cursor-pointer rounded-md p-1.5 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors" title="Delete"><Icon name="trash" size="sm" /></button>
                     </div>
                   </div>
 

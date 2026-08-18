@@ -67,7 +67,7 @@
                 type="button"
                 onClick={() => toggle(item.id)}
                 aria-expanded={isOpen}
-                className="flex w-full items-center justify-between px-4 py-4 text-left text-sm font-medium text-zinc-800 transition-colors hover:bg-zinc-50 dark:text-[#E2E8F0] dark:hover:bg-[#252D3A]"
+                className="flex w-full cursor-pointer items-center justify-between px-4 py-4 text-left text-sm font-medium text-zinc-800 transition-colors hover:bg-zinc-50 dark:text-[#E2E8F0] dark:hover:bg-[#252D3A]"
               >
                 <span className={isOpen ? "text-[#4CCBBF]" : ""}>{item.title}</span>
                 <span className="ml-4 shrink-0 text-lg leading-none">

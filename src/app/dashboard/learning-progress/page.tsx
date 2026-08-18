@@ -258,22 +258,22 @@ export default function LearningProgressPage() {
         />
         <div className="flex flex-wrap gap-2">
           {isManagerOrAbove && (
-            <button onClick={() => setShowExtRequestsModal(true)} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 dark:border-[#2D3640] dark:bg-[#242B33] dark:text-slate-300">
+            <button onClick={() => setShowExtRequestsModal(true)} className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 dark:border-[#2D3640] dark:bg-[#242B33] dark:text-slate-300">
               <Icon name="clock" size="sm" className="mr-1 inline" /> Extension Requests
             </button>
           )}
           {isAdmin && (
-            <button onClick={() => setShowAssignModal(true)} className="rounded-lg bg-[#1b2a49] px-3 py-2 text-xs font-medium text-white hover:bg-[#2a3d5f]">
+            <button onClick={() => setShowAssignModal(true)} className="cursor-pointer rounded-lg bg-[#1b2a49] px-3 py-2 text-xs font-medium text-white hover:bg-[#2a3d5f]">
               <Icon name="plus" size="sm" className="mr-1 inline" /> Assign Training
             </button>
           )}
           {isAdmin && (
-            <button onClick={() => setShowBulkModal(true)} className="rounded-lg border border-[#1b2a49] px-3 py-2 text-xs font-medium text-[#1b2a49] hover:bg-[#1b2a49]/5 dark:border-[#4CCBBF] dark:text-[#4CCBBF]">
+            <button onClick={() => setShowBulkModal(true)} className="cursor-pointer rounded-lg border border-[#1b2a49] px-3 py-2 text-xs font-medium text-[#1b2a49] hover:bg-[#1b2a49]/5 dark:border-[#4CCBBF] dark:text-[#4CCBBF]">
               <Icon name="users" size="sm" className="mr-1 inline" /> Bulk Assign
             </button>
           )}
           {isManagerOrAbove && (
-            <button onClick={handleExport} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 dark:border-[#2D3640] dark:bg-[#242B33] dark:text-slate-300">
+            <button onClick={handleExport} className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 dark:border-[#2D3640] dark:bg-[#242B33] dark:text-slate-300">
               <Icon name="download" size="sm" className="mr-1 inline" /> Export
             </button>
           )}
@@ -327,7 +327,7 @@ export default function LearningProgressPage() {
               className="w-full rounded-lg border border-slate-200 bg-white py-2 pl-9 pr-3 text-sm outline-none focus:border-[#4CCBBF] focus:ring-1 focus:ring-[#4CCBBF] dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white"
             />
           </div>
-          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
+          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
             <option value="">All Status</option>
             <option value="Not Started">Not Started</option>
             <option value="In Progress">In Progress</option>
@@ -335,19 +335,19 @@ export default function LearningProgressPage() {
             <option value="Delayed">Delayed</option>
           </select>
           {teams.length > 0 && isManagerOrAbove && (
-            <select value={teamFilter} onChange={(e) => setTeamFilter(e.target.value)} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
+            <select value={teamFilter} onChange={(e) => setTeamFilter(e.target.value)} className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
               <option value="">All Teams</option>
               {teams.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           )}
           {isManagerOrAbove && uniqueMembers.length > 0 && (
-            <select value={memberFilter} onChange={(e) => setMemberFilter(e.target.value)} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
+            <select value={memberFilter} onChange={(e) => setMemberFilter(e.target.value)} className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
               <option value="">All Members</option>
               {uniqueMembers.map(([email, name]) => <option key={email} value={email}>{name}</option>)}
             </select>
           )}
           {isManagerOrAbove && (
-            <select value={extensionFilter} onChange={(e) => setExtensionFilter(e.target.value)} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
+            <select value={extensionFilter} onChange={(e) => setExtensionFilter(e.target.value)} className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
               <option value="">All Extensions</option>
               <option value="pending">Pending Approval</option>
               <option value="approved">Approved</option>
@@ -357,7 +357,7 @@ export default function LearningProgressPage() {
             </select>
           )}
           {(statusFilter || teamFilter || extensionFilter || memberFilter || query) && (
-            <button onClick={clearFilters} className="rounded-lg px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-[#2D3640]">
+            <button onClick={clearFilters} className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-[#2D3640]">
               Clear
             </button>
           )}
@@ -468,7 +468,7 @@ function MemberGroupCard({
 }) {
   return (
     <Card className="overflow-hidden border border-slate-200/80 shadow-sm transition-all duration-200 hover:shadow-md dark:border-[#3D4A5C] dark:bg-[#242B33]">
-      <button onClick={onToggle} className="flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-slate-50/80 dark:hover:bg-[#2D3640]/60">
+      <button onClick={onToggle} className="flex w-full cursor-pointer items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-slate-50/80 dark:hover:bg-[#2D3640]/60">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#1b2a49] to-[#2a3d5f] text-xs font-bold text-white shadow-sm dark:from-[#4CCBBF] dark:to-[#3AAFA4] dark:text-[#1C2127]">
           {group.name.charAt(0).toUpperCase()}
         </div>

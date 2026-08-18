@@ -6,6 +6,7 @@ import { usePermissions } from "@/hooks/use-permissions";
 import { useSearch } from "@/hooks/use-search";
 import { skillsetHeatmapService } from "@/features/skillset-heatmap";
 import type { HeatmapMember, SkillData, SkillTemplate } from "@/features/skillset-heatmap";
+import { userManagementService } from "@/features/user-management";
 import { RatingModal, MemberDetailModal, SkillChartsModal } from "@/features/skillset-heatmap/components";
 import { Icon } from "@/components/ui/icon";
 import { Button, Card, PageHeader, Spinner } from "@/components";
@@ -128,12 +129,12 @@ export default function SkillsetHeatmapPage() {
         <div className="flex items-center gap-2">
           {/* Admin/Manager actions */}
           {isManagerOrAbove && (
-            <button onClick={() => setShowPending(true)} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 dark:border-[#2D3640] dark:bg-[#242B33] dark:text-slate-300 dark:hover:bg-[#2D3640]">
+            <button onClick={() => setShowPending(true)} className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50 dark:border-[#2D3640] dark:bg-[#242B33] dark:text-slate-300 dark:hover:bg-[#2D3640]">
               <Icon name="clipboard" size="sm" className="mr-1 inline" /> Pending Ratings
             </button>
           )}
           {isAdmin && (
-            <button onClick={() => setShowAssign(true)} className="rounded-lg bg-[#1b2a49] px-3 py-2 text-xs font-medium text-white hover:bg-[#2a3d5f]">
+            <button onClick={() => setShowAssign(true)} className="cursor-pointer rounded-lg bg-[#1b2a49] px-3 py-2 text-xs font-medium text-white hover:bg-[#2a3d5f]">
               <Icon name="plus" size="sm" className="mr-1 inline" /> Assign Framework
             </button>
           )}
@@ -166,7 +167,7 @@ export default function SkillsetHeatmapPage() {
         <div className="flex flex-wrap items-center gap-3">
           {/* View mode */}
           {isManagerOrAbove && (
-            <select value={viewMode} onChange={(e) => setViewMode(e.target.value as typeof viewMode)} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
+            <select value={viewMode} onChange={(e) => setViewMode(e.target.value as typeof viewMode)} className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
               <option value="individual-cards">Individual - Cards</option>
               <option value="team-cards">Team - Cards</option>
             </select>
@@ -182,7 +183,7 @@ export default function SkillsetHeatmapPage() {
 
           {/* Team filter */}
           {teams.length > 0 && isAdmin && (
-            <select value={teamFilter} onChange={(e) => setTeamFilter(e.target.value)} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
+            <select value={teamFilter} onChange={(e) => setTeamFilter(e.target.value)} className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
               <option value="">All Teams</option>
               {teams.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
@@ -190,14 +191,14 @@ export default function SkillsetHeatmapPage() {
 
           {/* Template filter */}
           {templates.length > 0 && (
-            <select value={templateFilter} onChange={(e) => setTemplateFilter(e.target.value)} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
+            <select value={templateFilter} onChange={(e) => setTemplateFilter(e.target.value)} className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
               <option value="">All Templates</option>
               {templates.map((t) => <option key={t.template_id} value={t.template_name}>{t.template_name}</option>)}
             </select>
           )}
 
           {/* Level filter */}
-          <select value={levelFilter} onChange={(e) => setLevelFilter(e.target.value)} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
+          <select value={levelFilter} onChange={(e) => setLevelFilter(e.target.value)} className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
             <option value="">All Levels</option>
             <option value="0">0 - None</option>
             <option value="1">1 - Basic</option>
@@ -207,7 +208,7 @@ export default function SkillsetHeatmapPage() {
           </select>
 
           {(teamFilter || levelFilter || templateFilter || query) && (
-            <button onClick={clearFilters} className="rounded-lg bg-red-50 px-3 py-2 text-xs font-medium text-red-600 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-400">✕ Clear</button>
+            <button onClick={clearFilters} className="cursor-pointer rounded-lg bg-red-50 px-3 py-2 text-xs font-medium text-red-600 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-400">✕ Clear</button>
           )}
         </div>
       </Card>
@@ -399,7 +400,7 @@ function PendingRatingsModal({ onClose, onAction, role, userTeam, members }: { o
       <div className="w-full max-w-3xl max-h-[80vh] overflow-y-auto rounded-xl bg-white p-6 shadow-2xl dark:bg-[#242B33]" onClick={(e) => e.stopPropagation()}>
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-bold text-slate-800 dark:text-white">Pending Ratings</h2>
-          <button onClick={onClose} className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2D3640]"><Icon name="x" size="sm" /></button>
+          <button onClick={onClose} className="cursor-pointer rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2D3640]"><Icon name="x" size="sm" /></button>
         </div>
         {loading ? <div className="py-8 text-center"><Spinner size="md" /></div> :
           items.length === 0 ? <p className="py-8 text-center text-sm text-slate-500">No pending ratings to review.</p> :
@@ -428,8 +429,8 @@ function PendingRatingsModal({ onClose, onAction, role, userTeam, members }: { o
                           <td className="px-4 py-2 text-slate-700 dark:text-slate-300">{skill.rating}/4</td>
                           <td className="px-4 py-2 text-slate-500 dark:text-slate-400 max-w-[200px] truncate">{skill.comments || "—"}</td>
                           <td className="px-4 py-2 whitespace-nowrap">
-                            <button onClick={() => approve(skill.user_id, skill.skill_name)} className="mr-2 rounded bg-emerald-600 px-2 py-1 text-xs text-white hover:bg-emerald-700">✓ Approve</button>
-                            <button onClick={() => reject(skill.user_id, skill.skill_name)} className="rounded bg-red-600 px-2 py-1 text-xs text-white hover:bg-red-700">✕ Reject</button>
+                            <button onClick={() => approve(skill.user_id, skill.skill_name)} className="cursor-pointer mr-2 rounded bg-emerald-600 px-2 py-1 text-xs text-white hover:bg-emerald-700">✓ Approve</button>
+                            <button onClick={() => reject(skill.user_id, skill.skill_name)} className="cursor-pointer rounded bg-red-600 px-2 py-1 text-xs text-white hover:bg-red-700">✕ Reject</button>
                           </td>
                         </tr>
                       ))}
@@ -448,50 +449,218 @@ function PendingRatingsModal({ onClose, onAction, role, userTeam, members }: { o
 // ─── Assign Framework Modal (admin only) ──────────────────────────────────────
 
 function AssignFrameworkModal({ templates, onClose, onAssigned }: { templates: SkillTemplate[]; onClose: () => void; onAssigned: () => void }) {
+  const [assignType, setAssignType] = useState<"team" | "user">("team");
+
+  // Team assignment state
+  const [teams, setTeams] = useState<string[]>([]);
+  const [selectedTeam, setSelectedTeam] = useState("");
+  const [filteredTemplates, setFilteredTemplates] = useState<SkillTemplate[]>([]);
   const [selectedTemplate, setSelectedTemplate] = useState("");
-  const [userEmails, setUserEmails] = useState("");
+
+  // Individual assignment state
+  const [users, setUsers] = useState<{ email: string; name: string; team?: string }[]>([]);
+  const [selectedUser, setSelectedUser] = useState("");
+  const [selectedTemplateUser, setSelectedTemplateUser] = useState("");
+
   const [assigning, setAssigning] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Load teams and users on mount
+  useEffect(() => {
+    async function load() {
+      try {
+        const [teamsData, usersData] = await Promise.all([
+          userManagementService.getTeams(),
+          userManagementService.list(),
+        ]);
+        setTeams(teamsData);
+        setUsers(usersData.map((u: any) => ({ email: u.email, name: u.name, team: u.team })));
+      } catch {
+        setError("Failed to load teams/users.");
+      }
+    }
+    load();
+  }, []);
+
+  // Filter templates by selected team
+  function handleTeamChange(team: string) {
+    setSelectedTeam(team);
+    setSelectedTemplate("");
+    if (!team) { setFilteredTemplates([]); return; }
+    const filtered = templates.filter(t => t.target_team === team || !t.target_team);
+    setFilteredTemplates(filtered);
+  }
+
   async function handleAssign() {
-    if (!selectedTemplate) { setError("Select a template."); return; }
-    if (!userEmails.trim()) { setError("Enter at least one email."); return; }
-    setAssigning(true); setError(null);
+    setError(null);
+
+    if (assignType === "user") {
+      if (!selectedUser) { setError("Please select a user."); return; }
+      if (!selectedTemplateUser) { setError("Please select a template."); return; }
+      setAssigning(true);
+      try {
+        await skillsetHeatmapService.bulkAssign({ template_id: selectedTemplateUser, user_emails: [selectedUser] });
+        onAssigned();
+        onClose();
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Assignment failed.");
+      } finally { setAssigning(false); }
+      return;
+    }
+
+    // Team assignment
+    if (!selectedTeam) { setError("Please select a team."); return; }
+    if (!selectedTemplate) { setError("Please select a template."); return; }
+    setAssigning(true);
     try {
-      const emails = userEmails.split(/[,\n]/).map(e => e.trim()).filter(Boolean);
-      await skillsetHeatmapService.bulkAssign({
-        assignments: emails.map(email => ({ user_email: email, template_id: selectedTemplate })),
-      });
+      const teamUsers = users.filter(u => u.team === selectedTeam);
+      if (teamUsers.length === 0) { setError("No users found in this team."); setAssigning(false); return; }
+      const userEmails = teamUsers.map(u => u.email);
+      await skillsetHeatmapService.bulkAssign({ template_id: selectedTemplate, user_emails: userEmails });
       onAssigned();
       onClose();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to assign.");
+      setError(err instanceof Error ? err.message : "Assignment failed.");
     } finally { setAssigning(false); }
   }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4" onClick={onClose}>
       <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-2xl dark:bg-[#242B33]" onClick={(e) => e.stopPropagation()}>
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-bold text-slate-800 dark:text-white">Assign Framework</h2>
-          <button onClick={onClose} className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2D3640]"><Icon name="x" size="sm" /></button>
+        <div className="mb-5 flex items-center justify-between">
+          <h2 className="text-base font-bold text-slate-800 dark:text-white">
+            🗂 Assign Skillset Framework
+          </h2>
+          <button onClick={onClose} className="cursor-pointer rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2D3640]">
+            <Icon name="x" size="sm" />
+          </button>
         </div>
-        {error && <div className="mb-4 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-700 dark:bg-red-900/20 dark:text-red-400">{error}</div>}
+
+        {error && (
+          <div className="mb-4 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-700 dark:bg-red-900/20 dark:text-red-400">{error}</div>
+        )}
+
         <div className="space-y-4">
+          {/* Assignment Type Toggle */}
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">Template</label>
-            <select value={selectedTemplate} onChange={(e) => setSelectedTemplate(e.target.value)} className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
-              <option value="">Select template...</option>
-              {templates.map(t => <option key={t.template_id} value={t.template_id}>{t.template_name}</option>)}
-            </select>
+            <p className="mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+              ⚙ Assignment Type <span className="text-red-500">*</span>
+            </p>
+            <div className="flex gap-6">
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                <input
+                  type="radio"
+                  name="assignType"
+                  checked={assignType === "team"}
+                  onChange={() => { setAssignType("team"); setError(null); }}
+                  className="cursor-pointer accent-[#1b2a49]"
+                />
+                Team
+              </label>
+              <label className="flex cursor-pointer items-center gap-2 text-sm text-slate-700 dark:text-slate-300">
+                <input
+                  type="radio"
+                  name="assignType"
+                  checked={assignType === "user"}
+                  onChange={() => { setAssignType("user"); setError(null); }}
+                  className="cursor-pointer accent-[#1b2a49]"
+                />
+                Individual User
+              </label>
+            </div>
           </div>
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">User Emails (comma or newline separated)</label>
-            <textarea value={userEmails} onChange={(e) => setUserEmails(e.target.value)} rows={4} placeholder="user1@example.com&#10;user2@example.com" className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white" />
-          </div>
-          <div className="flex justify-end gap-2">
-            <Button variant="secondary" size="sm" onClick={onClose}>Cancel</Button>
-            <Button variant="primary" size="sm" isLoading={assigning} onClick={handleAssign}>Assign</Button>
+
+          {/* Team Assignment */}
+          {assignType === "team" && (
+            <>
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
+                  👥 Select Team <span className="text-red-500">*</span>
+                </label>
+                <select
+                  value={selectedTeam}
+                  onChange={(e) => handleTeamChange(e.target.value)}
+                  className="cursor-pointer w-full rounded-lg border border-slate-200 px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white"
+                >
+                  <option value="">-- Choose a team --</option>
+                  {teams.map(t => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </div>
+
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
+                  📋 Select Framework <span className="text-red-500">*</span>
+                </label>
+                <select
+                  value={selectedTemplate}
+                  onChange={(e) => setSelectedTemplate(e.target.value)}
+                  disabled={!selectedTeam}
+                  className="cursor-pointer w-full rounded-lg border border-slate-200 px-3 py-2 text-sm disabled:opacity-50 dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white"
+                >
+                  <option value="">{selectedTeam ? "-- Choose a framework --" : "-- First select a team --"}</option>
+                  {filteredTemplates.map(t => <option key={t.template_id} value={t.template_id}>{t.template_name}</option>)}
+                </select>
+                {selectedTeam && filteredTemplates.length === 0 && (
+                  <p className="mt-1 text-xs text-amber-600 dark:text-amber-400">No templates found for this team.</p>
+                )}
+                {selectedTemplate && (
+                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Skills from this framework will be assigned with default rating 0</p>
+                )}
+              </div>
+
+              <div className="rounded-lg border-l-4 border-blue-400 bg-blue-50 px-3 py-2 text-xs text-blue-700 dark:bg-blue-900/20 dark:text-blue-300">
+                ℹ <strong>Note:</strong> This will create skill records for all team members. Existing skills will not be overwritten.
+              </div>
+            </>
+          )}
+
+          {/* Individual User Assignment */}
+          {assignType === "user" && (
+            <>
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
+                  👤 Select User <span className="text-red-500">*</span>
+                </label>
+                <select
+                  value={selectedUser}
+                  onChange={(e) => setSelectedUser(e.target.value)}
+                  className="cursor-pointer w-full rounded-lg border border-slate-200 px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white"
+                >
+                  <option value="">-- Choose a user --</option>
+                  {users.map(u => (
+                    <option key={u.email} value={u.email}>
+                      {u.name} {u.team ? `(${u.team})` : "(No team)"}
+                    </option>
+                  ))}
+                </select>
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Selected user will receive the framework</p>
+              </div>
+
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
+                  📋 Select Framework <span className="text-red-500">*</span>
+                </label>
+                <select
+                  value={selectedTemplateUser}
+                  onChange={(e) => setSelectedTemplateUser(e.target.value)}
+                  className="cursor-pointer w-full rounded-lg border border-slate-200 px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white"
+                >
+                  <option value="">-- Choose a framework --</option>
+                  {templates.map(t => <option key={t.template_id} value={t.template_id}>{t.template_name}</option>)}
+                </select>
+                {selectedTemplateUser && (
+                  <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Skills from this framework will be assigned with default rating 0</p>
+                )}
+              </div>
+            </>
+          )}
+
+          {/* Action Buttons */}
+          <div className="flex justify-end gap-2 pt-2">
+            <Button variant="secondary" size="sm" onClick={onClose}>✕ Cancel</Button>
+            <Button variant="primary" size="sm" isLoading={assigning} onClick={handleAssign}>
+              ✓ {assignType === "team" ? "Assign to Team" : "Assign to User"}
+            </Button>
           </div>
         </div>
       </div>

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { routes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
 import { sidebarNavigation } from "@/config/navigation";
 import { Icon } from "@/components/ui/icon";
@@ -77,17 +76,8 @@ export function Sidebar({ className = "", collapsed = false, userRole = "member"
         </ul>
       </nav>
 
-      {/* ── Footer / Logout ───────────────────────────────────────── */}
-      <div className="border-t border-white/[0.06] px-2 py-3">
-        <Link
-          href={routes.login}
-          className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[#94A3B8] transition-colors hover:bg-white/[0.05] hover:text-red-400"
-          title={collapsed ? "Logout" : undefined}
-        >
-          <Icon name="logout" size="sm" className="shrink-0" />
-          {!collapsed && <span>Logout</span>}
-        </Link>
-      </div>
+      {/* ── Footer ────────────────────────────────────────────────── */}
+      <div className="border-t border-white/[0.06] px-2 py-3" />
     </aside>
   );
 }

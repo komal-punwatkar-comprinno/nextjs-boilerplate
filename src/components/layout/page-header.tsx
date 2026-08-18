@@ -81,7 +81,7 @@ export function PageHeader({
               aria-selected={tab.active}
               onClick={() => onTabChange?.(tab.value)}
               className={cn(
-                "whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                "whitespace-nowrap cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
                 "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900",
                 "dark:text-[#9FAEC1] dark:hover:bg-[#2A3441] dark:hover:text-[#E8EDF2]",
                 tab.active &&

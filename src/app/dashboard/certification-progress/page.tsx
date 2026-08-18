@@ -168,20 +168,20 @@ export default function CertificationProgressPage() {
             <Icon name="search" size="sm" className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <input type="text" placeholder="Search certifications..." value={query} onChange={(e) => setQuery(e.target.value)} className="w-full rounded-lg border border-slate-200 bg-white py-2 pl-9 pr-3 text-sm outline-none focus:border-[#1b2a49] focus:ring-1 focus:ring-[#1b2a49] dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white" />
           </div>
-          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
+          <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
             <option value="">All Status</option>
             <option value="Not started">Not started</option>
             <option value="In Progress">In Progress</option>
             <option value="Completed">Completed</option>
           </select>
           {teams.length > 0 && isManagerOrAbove && (
-            <select value={teamFilter} onChange={(e) => setTeamFilter(e.target.value)} className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
+            <select value={teamFilter} onChange={(e) => setTeamFilter(e.target.value)} className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white">
               <option value="">All Teams</option>
               {teams.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           )}
           {(statusFilter || teamFilter || query) && (
-            <button onClick={clearFilters} className="rounded-lg px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-[#2D3640]">Clear</button>
+            <button onClick={clearFilters} className="cursor-pointer rounded-lg px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-[#2D3640]">Clear</button>
           )}
         </div>
       </Card>
@@ -196,7 +196,7 @@ export default function CertificationProgressPage() {
           <p className="text-xs text-slate-400 dark:text-slate-500">Try adjusting your filters or add a new certification</p>
         </div>
       ) : (
-        <div className={role === "member" ? "space-y-4" : "grid gap-4 sm:grid-cols-2 lg:grid-cols-3"}>
+        <div className={role === "member" ? "" : "grid gap-4 sm:grid-cols-2 lg:grid-cols-3"}>
           {groups.map((group) => (
             <MemberCertCard
               key={group.member}
@@ -259,7 +259,7 @@ function ExtensionRequestsModal({ requests, onClose, onAction }: {
       <div className="w-full max-w-2xl max-h-[80vh] overflow-y-auto rounded-xl bg-white p-6 shadow-2xl dark:bg-[#242B33]" onClick={(e) => e.stopPropagation()}>
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-bold text-slate-800 dark:text-white">Extension Requests</h2>
-          <button onClick={onClose} className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2D3640]"><Icon name="x" size="sm" /></button>
+          <button onClick={onClose} className="cursor-pointer rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2D3640]"><Icon name="x" size="sm" /></button>
         </div>
 
         {requests.length === 0 ? (
@@ -284,7 +284,7 @@ function ExtensionRequestsModal({ requests, onClose, onAction }: {
                 <div className="mt-3 flex gap-2">
                   <button
                     onClick={() => onAction(req.record_id, "approve")}
-                    className="rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
+                    className="cursor-pointer rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-emerald-700"
                   >
                     ✓ Approve
                   </button>
@@ -293,7 +293,7 @@ function ExtensionRequestsModal({ requests, onClose, onAction }: {
                       const reason = prompt("Reason for rejection:");
                       if (reason) onAction(req.record_id, "reject", reason);
                     }}
-                    className="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700"
+                    className="cursor-pointer rounded-lg bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700"
                   >
                     ✕ Reject
                   </button>

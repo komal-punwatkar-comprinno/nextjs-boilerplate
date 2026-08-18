@@ -75,7 +75,7 @@ export function Dropdown({ trigger, items, placement = "bottom-start", className
                 setOpen(false);
               }}
               className={[
-                "flex w-full items-center gap-2.5 px-4 py-2 text-left text-sm transition-colors",
+                "flex w-full cursor-pointer items-center gap-2.5 px-4 py-2 text-left text-sm transition-colors",
                 "disabled:pointer-events-none disabled:opacity-40",
                 item.danger
                   ? "text-red-600 hover:bg-red-50 dark:text-[#ED495D] dark:hover:bg-[#ED495D]/10"

@@ -69,7 +69,7 @@ export function EditProgressModal({ record, onClose, onSaved }: EditProgressModa
       >
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-bold text-slate-800 dark:text-white">Edit Progress</h2>
-          <button onClick={onClose} className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2D3640]">
+          <button onClick={onClose} className="cursor-pointer rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2D3640]">
             <Icon name="x" size="sm" />
           </button>
         </div>
@@ -89,7 +89,7 @@ export function EditProgressModal({ record, onClose, onSaved }: EditProgressModa
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value as typeof status)}
-              className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white"
+              className="cursor-pointer w-full rounded-lg border border-slate-200 px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white"
             >
               <option value="Not Started">Not Started</option>
               <option value="In Progress">In Progress</option>
@@ -104,7 +104,7 @@ export function EditProgressModal({ record, onClose, onSaved }: EditProgressModa
               type="date"
               value={completionDate}
               onChange={(e) => setCompletionDate(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white"
+              className="cursor-pointer w-full rounded-lg border border-slate-200 px-3 py-2 text-sm dark:border-[#2D3640] dark:bg-[#1C2127] dark:text-white"
             />
           </div>
 

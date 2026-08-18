@@ -82,13 +82,13 @@ export function CertItem({ cert, canEdit, canDelete, canRequestExtension, onEdit
       {/* Actions — always at bottom */}
       <div className="mt-auto flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-[#3D4A5C]/50 mt-4">
         {canEdit && (
-          <button onClick={() => onEdit(cert)} className="rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-[#3D4A5C] dark:hover:text-white transition-colors" title="Edit"><Icon name="edit" size="sm" /></button>
+          <button onClick={() => onEdit(cert)} className="cursor-pointer rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-[#3D4A5C] dark:hover:text-white transition-colors" title="Edit"><Icon name="edit" size="sm" /></button>
         )}
         {canDelete && (
-          <button onClick={() => onDelete(cert.record_id, cert.certification_name)} className="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-400/10 dark:hover:text-red-300 transition-colors" title="Delete"><Icon name="trash" size="sm" /></button>
+          <button onClick={() => onDelete(cert.record_id, cert.certification_name)} className="cursor-pointer rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-400/10 dark:hover:text-red-300 transition-colors" title="Delete"><Icon name="trash" size="sm" /></button>
         )}
         {canRequestExtension && (
-          <button onClick={() => onRequestExtension(cert)} className="rounded-lg p-2 text-slate-400 hover:bg-amber-50 hover:text-amber-600 dark:hover:bg-amber-400/10 dark:hover:text-amber-300 transition-colors" title="Request Extension"><Icon name="clock" size="sm" /></button>
+          <button onClick={() => onRequestExtension(cert)} className="cursor-pointer rounded-lg p-2 text-slate-400 hover:bg-amber-50 hover:text-amber-600 dark:hover:bg-amber-400/10 dark:hover:text-amber-300 transition-colors" title="Request Extension"><Icon name="clock" size="sm" /></button>
         )}
       </div>
     </div>
@@ -108,8 +108,12 @@ interface MemberCertCardProps {
 
 export function MemberCertCard({ group, userRole, userName, onEdit, onDelete, onRequestExtension }: MemberCertCardProps) {
   const [showDetail, setShowDetail] = useState(false);
-  const canEdit = userRole === "admin" || userRole === "manager" || (userRole === "member" && group.member === userName);
-  const canDelete = userRole === "admin" || (userRole === "member" && group.member === userName);
+
+  // A member can always edit/delete their own certs since the page only shows their own data.
+  // Admins and managers can edit all; only admins can delete.
+  const isMember = userRole === "member";
+  const canEdit = userRole === "admin" || userRole === "manager" || isMember;
+  const canDelete = userRole === "admin" || isMember;
 
   const completed = group.certifications.filter((c) => c.status === "Completed").length;
   const inProgress = group.certifications.filter((c) => c.status === "In Progress").length;
@@ -117,17 +121,20 @@ export function MemberCertCard({ group, userRole, userName, onEdit, onDelete, on
 
   // For member view — show cards directly (no summary)
   if (userRole === "member") {
-    const count = group.certifications.length;
-    const gridClass = count === 1 ? "grid gap-4 grid-cols-1 max-w-lg" : count === 2 ? "grid gap-4 grid-cols-2" : "grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3";
     return (
-      <div className={gridClass}>
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {group.certifications.map((cert) => (
           <CertItem
             key={cert.record_id}
             cert={cert}
             canEdit={canEdit}
             canDelete={canDelete}
-            canRequestExtension={cert.member_name === userName && cert.status !== "Completed" && cert.extension_status !== "pending"}
+            canRequestExtension={
+              canEdit &&
+              cert.status !== "Completed" &&
+              cert.extension_status !== "pending" &&
+              cert.extension_status !== "approved"
+            }
             onEdit={onEdit}
             onDelete={onDelete}
             onRequestExtension={onRequestExtension}
@@ -181,7 +188,7 @@ export function MemberCertCard({ group, userRole, userName, onEdit, onDelete, on
                 <h2 className="text-lg font-bold text-slate-800 dark:text-white">{group.member}</h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">{group.team || "No Team"} · {group.certifications.length} certification{group.certifications.length !== 1 ? "s" : ""}</p>
               </div>
-              <button onClick={() => setShowDetail(false)} className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2D3640]">
+              <button onClick={() => setShowDetail(false)} className="cursor-pointer rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2D3640]">
                 <Icon name="x" size="sm" />
               </button>
             </div>

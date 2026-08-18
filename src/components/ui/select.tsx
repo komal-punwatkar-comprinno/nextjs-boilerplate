@@ -34,7 +34,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           aria-invalid={Boolean(error)}
           aria-describedby={error ? `${selectId}-error` : hint ? `${selectId}-hint` : undefined}
           className={[
-            "h-9 w-full rounded-md border px-3 py-2 text-sm",
+            "h-9 w-full cursor-pointer rounded-md border px-3 py-2 text-sm",
             "bg-white text-zinc-900",
             "dark:bg-[#353B46] dark:text-[#E8EDF2]",
             "focus:outline-none focus:ring-2 focus:ring-offset-1",

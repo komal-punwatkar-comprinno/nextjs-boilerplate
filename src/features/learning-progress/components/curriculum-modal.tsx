@@ -199,7 +199,7 @@ export function CurriculumModal({ record, onClose, onSaved }: CurriculumModalPro
                       <select
                         value={statuses[index] || topic.status}
                         onChange={(e) => handleStatusChange(index, e.target.value)}
-                        className={`shrink-0 rounded-md border px-2 py-1 text-xs font-medium ${
+                        className={`cursor-pointer shrink-0 rounded-md border px-2 py-1 text-xs font-medium ${
                           (statuses[index] || topic.status) === "Completed"
                             ? "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-400"
                             : (statuses[index] || topic.status) === "In Progress"
@@ -243,7 +243,7 @@ function ModalWrapper({ children, title, onClose }: { children: React.ReactNode;
       >
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-bold text-slate-800 dark:text-white">{title}</h2>
-          <button onClick={onClose} className="rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2D3640]">
+          <button onClick={onClose} className="cursor-pointer rounded-lg p-1 text-slate-400 hover:bg-slate-100 dark:hover:bg-[#2D3640]">
             <Icon name="x" size="sm" />
           </button>
         </div>

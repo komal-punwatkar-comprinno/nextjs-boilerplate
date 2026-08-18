@@ -56,7 +56,8 @@ export interface CommentPayload {
 }
 
 export interface BulkAssignPayload {
-  assignments: { user_email: string; template_id: string }[];
+  template_id: string;
+  user_emails: string[];
 }
 
 /** Computed stats for a member card */

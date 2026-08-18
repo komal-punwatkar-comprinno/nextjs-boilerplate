@@ -84,7 +84,7 @@ export function MegaMenu({
   return (
     <div ref={containerRef} className={cn("relative", className)}>
       {/* Trigger */}
-      <div onClick={onToggle} role="button" aria-expanded={isOpen} tabIndex={0}>
+      <div onClick={onToggle} role="button" aria-expanded={isOpen} tabIndex={0} className="cursor-pointer">
         {trigger}
       </div>
 
@@ -111,7 +111,7 @@ export function MegaMenu({
                       <a
                         href={item.href}
                         className={cn(
-                          "flex items-start gap-3 rounded-lg px-3 py-2 transition-colors",
+                          "flex cursor-pointer items-start gap-3 rounded-lg px-3 py-2 transition-colors",
                           "text-zinc-700 hover:bg-zinc-50",
                           "dark:text-[#E8EDF2] dark:hover:bg-[#242B33]"
                         )}

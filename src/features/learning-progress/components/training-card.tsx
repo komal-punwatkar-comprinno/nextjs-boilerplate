@@ -79,7 +79,7 @@ export function TrainingCard({
       {/* Header row — clickable to expand */}
       <button
         onClick={() => setExpanded((v) => !v)}
-        className="flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-slate-50 dark:hover:bg-[#2D3640]/40"
+        className="flex w-full cursor-pointer items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-slate-50 dark:hover:bg-[#2D3640]/40"
       >
         <Icon
           name="chevronRight"
